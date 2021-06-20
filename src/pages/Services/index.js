@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Grid, Typography, makeStyles, Button } from "@material-ui/core/";
 import MainCategoryTable from "../../components/tables/mainCategory/mainCategory";
 import MainCategoryModal from "../../components/modal/mainCategory/mainCategory";
-import TutorialsList from "../../components/TutorialsList";
+import ServicesList from "../../components/ServicesList";
 const useStyles = makeStyles({
   root: {
     width: "100%",
@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MainCategory() {
+export default function Services() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -30,12 +30,12 @@ export default function MainCategory() {
       <Grid container className={classes.contentHeader}>
         <Grid item>
           <Typography variant="h4" gutterBottom style={{ marginRight: "1rem" }}>
-            Main Category
+           Services
           </Typography>
         </Grid>
         <Grid item>
           {/* <MainCategoryModal /> */}
-          <Link to={"/add"}>
+          <Link to={"/add-service"}>
             <Button variant="contained" color="primary">
               Create New
             </Button>
@@ -44,7 +44,7 @@ export default function MainCategory() {
       </Grid>
       <Grid container style={{ width: " 100%" }}>
         <Grid item xs={12} md={10}>
-          <TutorialsList />
+          <ServicesList />
         </Grid>
       </Grid>
     </>

@@ -1,8 +1,9 @@
 import React from "react";
 import { Grid, Typography, makeStyles, Button } from "@material-ui/core/";
-import SubCategoryTable from "../../components/tables/subCategory/subCategory";
-import SubCategoryModal from "../../components/modal/subCategory/subCategory";
-
+// import SubCategoryTable from "../../components/tables/subCategory/subCategory";
+// import SubCategoryModal from "../../components/modal/subCategory/subCategory";
+import SubCategoryTableMain from "../../components/SubCategory";
+import {Link} from "react-router-dom";
 const useStyles = makeStyles({
   root: {
     width: "100%",
@@ -26,11 +27,17 @@ export default function SubCategory() {
         </Grid>
         <Grid item>
           {/* <SubCategoryModal /> */}
+          <Link to={"/add-category"}>
+            <Button variant="contained" color="primary">
+              Create New
+            </Button>
+          </Link>
         </Grid>
       </Grid>
       <Grid container style={{ width: " 100%" }}>
         <Grid item xs={12} md={10}>
           {/* <SubCategoryTable /> */}
+          <SubCategoryTableMain />
         </Grid>
       </Grid>
     </>
