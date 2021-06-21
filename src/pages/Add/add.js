@@ -8,8 +8,6 @@ const AddTutorial = (props) => {
   const initialTutorialState = {
     id: null,
     title: "",
-    description: "",
-    published: false,
   };
   const [tutorial, setTutorial] = useState(initialTutorialState);
   const [submitted, setSubmitted] = useState(false);
@@ -22,7 +20,6 @@ const AddTutorial = (props) => {
   const saveTutorial = () => {
     var data = {
       title: tutorial.title,
-      description: tutorial.description,
     };
 
     TutorialDataService.create(data)
@@ -31,8 +28,6 @@ const AddTutorial = (props) => {
         setTutorial({
           id: response.data.id,
           title: response.data.title,
-          description: response.data.description,
-          published: response.data.published,
         });
         setSubmitted(true);
         console.log(response.data);

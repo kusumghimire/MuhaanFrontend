@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 // import TutorialDataService from "../services/TutorialService";
-import ZoneApi from "../services/ZoneApi";
+import ZoneApiList from "../services/ZoneApi";
 import { useTable } from "react-table";
 
 const ZoneList = (props) => {
   const [tutorials, setTutorials] = useState([]);
   const tutorialsRef = useRef();
-
+  const history= useHistory();
   tutorialsRef.current = tutorials;
 
   useEffect(() => {
@@ -17,7 +18,7 @@ const ZoneList = (props) => {
   }, []);
 
   const retrieveTutorials = () => {
-    ZoneApi.getAll()
+    ZoneApiList.getAll()
       .then((response) => {
         setTutorials(response.data);
       })
@@ -32,17 +33,17 @@ const ZoneList = (props) => {
 
 
 
-  const openTutorial = (rowIndex) => {
-    // const id = tutorialsRef.current[rowIndex].id;
-    // props.history.push("/category/update/" + id);
+  const openTutorial = (rowIndex, data) => {
+    const id = tutorialsRef.current[rowIndex].id;
+    history.push(`/zone/update/${id }`, data);
   };
 
-  const deleteTutorial = (rowIndex) => {
+  const deleteTutorial = async (rowIndex) => {
     const id = tutorialsRef.current[rowIndex].id;
 
-    ZoneApi.remove(id)
+   await ZoneApiList.remove(id)
       .then((response) => {
-        props.history.push("/add-on");
+        // props.history.push("/add-on");
 
         let newTutorials = [...tutorialsRef.current];
         newTutorials.splice(rowIndex, 1);
@@ -53,6 +54,9 @@ const ZoneList = (props) => {
         console.log(e);
       });
   };
+
+
+
 
   const columns = useMemo(
     () => [
@@ -83,15 +87,11 @@ const ZoneList = (props) => {
               <span style={{marginRight:"0.5rem"}} onClick={() => openTutorial(rowIdx)}>
                 <i className="far fa-edit action mr-2"></i>
               </span>
-              <form onSubmit={() => deleteTutorial(rowIdx)}>
-                <buttton >
-              <span >
+
+              <span onSubmit={() => deleteTutorial(rowIdx)}>
                 <i className="fas fa-trash action"></i>
               </span>
-
-                </buttton>
-              </form>
-             
+            
             </div>
           );
         },

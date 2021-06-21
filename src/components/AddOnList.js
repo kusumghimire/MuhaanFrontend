@@ -1,26 +1,20 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
-// import TutorialDataService from "../services/TutorialService";
 import AddOnApiService from "../services/AddOnApi";
 import { useTable } from "react-table";
 
 const AddOnList = (props) => {
   const [tutorials, setTutorials] = useState([]);
-  const [searchTitle, setSearchTitle] = useState("");
   const tutorialsRef = useRef();
-
+  const history= useHistory();
   tutorialsRef.current = tutorials;
 
   useEffect(() => {
     retrieveTutorials();
   }, []);
-
-  const onChangeSearchTitle = (e) => {
-    const searchTitle = e.target.value;
-    setSearchTitle(searchTitle);
-  };
 
   const retrieveTutorials = () => {
     AddOnApiService.getAll()
@@ -36,11 +30,9 @@ const AddOnList = (props) => {
     retrieveTutorials();
   };
 
-
-
-  const openTutorial = (rowIndex) => {
-    // const id = tutorialsRef.current[rowIndex].id;
-    // props.history.push("/category/update/" + id);
+  const openTutorial = (rowIndex, data) => {
+    const id = tutorialsRef.current[rowIndex].id;
+    history.push(`/add-on/update/${id }`, data);
   };
 
   const deleteTutorial = (rowIndex) => {

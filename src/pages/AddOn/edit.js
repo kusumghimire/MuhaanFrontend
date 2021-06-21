@@ -2,10 +2,10 @@ import { PanoramaSharp } from "@material-ui/icons";
 import React, { useState, useEffect } from "react";
 import TutorialDataService from "../../services/TutorialService";
 
-const UpdateMainTutorial = props => {
+const AddOnEdit = props => {
   const initialTutorialState = {
     id: "",
-    title: "",
+    cat: "",
   };
   const [currentTutorial, setCurrentTutorial] = useState(initialTutorialState);
   const [message, setMessage] = useState("");
@@ -27,13 +27,12 @@ const UpdateMainTutorial = props => {
   const retrieveTutorials = () => {
     TutorialDataService.getAll()
     .then((response) => {
-      console.log(response);
       // setTutorials(response.data);
       
       const res= response && response.data && response.data.filter(item=>item.id ===  parseInt(props.match.params.id))
       setCurrentTutorial({
                 id:res[0].id,
-                title:res[0].title
+                cat:res[0].cat
               });
     })
       .catch((e) => {
@@ -65,43 +64,20 @@ const UpdateMainTutorial = props => {
   };
 
 
-
-
   return (
     <div>
 
         <div className="edit-form">
           <h4>Edit Main Category</h4>
           <form>
-          {/* <div className="form-group">
-              <label htmlFor="title">Category</label>
-              
-              <select
-                type="text"
-                className="form-control"
-                id="title"
-                name="cat"
-                value={currentTutorial.title}
-                onChange={handleInputChange}
-              >
-                {
-                  .map(item=>{
-                    return(
-                      <option value="" key="">{.cat}</option>
-                    )
-                  })
-                }
-              </select>
-            </div> */}
             <div className="form-group">
-              <label htmlFor="title">Sub Category</label>
-              
+              <label htmlFor="title">Title</label>
               <input
                 type="text"
                 className="form-control"
                 id="title"
                 name="title"
-                value={currentTutorial.title}
+                value={currentTutorial.cat}
                 onChange={handleInputChange}
               />
             </div>
@@ -118,10 +94,9 @@ const UpdateMainTutorial = props => {
           >
             Update
           </button>
-          <p>{message}</p>
         </div>
     </div>
   );
 };
 
-export default UpdateMainTutorial;
+export default AddOnEdit;

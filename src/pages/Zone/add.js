@@ -5,15 +5,13 @@ import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 
 const AddZone = (props) => {
-  const initialTutorialState = {
-    id: null,
-    title: "",
-    description: "",
-    published: false,
-  };
-  const [tutorial, setTutorial] = useState(initialTutorialState);
+  // const initialTutorialState = {
+  //   id: null,
+  //   name: "",
+  // };
+  const [tutorial, setTutorial] = useState({});
   const [submitted, setSubmitted] = useState(false);
-
+ console.log(tutorial)
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setTutorial({ ...tutorial, [name]: value });
@@ -21,18 +19,17 @@ const AddZone = (props) => {
 
   const saveTutorial = () => {
     var data = {
-      title: tutorial.title,
-      description: tutorial.description,
+      name: tutorial.name,
     };
+    console.log(data)
+    
 
     ZoneApi.create(data)
       .then((response) => {
         props.history.push("zone");
         setTutorial({
           id: response.data.id,
-          title: response.data.title,
-          description: response.data.description,
-          published: response.data.published,
+          name: response.data.name,
         });
         setSubmitted(true);
         console.log(response.data);
@@ -42,19 +39,19 @@ const AddZone = (props) => {
       });
   };
 
-  const newTutorial = () => {
-    setTutorial(initialTutorialState);
-    setSubmitted(false);
-  };
+  // const newTutorial = () => {
+  //   setTutorial(initialTutorialState);
+  //   setSubmitted(false);
+  // };
 
   return (
     <div className="submit-form">
       {submitted ? (
         <div>
           <h2>You submitted successfully!</h2>
-          <button className="btn btn-success" onClick={newTutorial}>
+          {/* <button className="btn btn-success" onClick={newTutorial}>
             Add
-          </button>
+          </button> */}
         </div>
       ) : (
         <div>
@@ -69,11 +66,11 @@ const AddZone = (props) => {
                 <input
                   type="text"
                   className="form-control"
-                  id="title"
+                  id="name"
                   required
-                  value={tutorial.title}
+                  value={tutorial.name}
                   onChange={handleInputChange}
-                  name="title"
+                  name="name"
                 />
               </div>
             </Grid>

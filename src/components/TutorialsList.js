@@ -6,10 +6,11 @@ import "@fortawesome/fontawesome-free/js/all.js";
 // import TutorialDataService from "../services/TutorialService";
 import TutorialDataService from "../services/TutorialService";
 import { useTable } from "react-table";
+import server from '../api'
+import axios from "axios";
 
 const TutorialsList = (props) => {
   const [tutorials, setTutorials] = useState([]);
-  const [searchTitle, setSearchTitle] = useState("");
   const tutorialsRef = useRef();
 const history= useHistory();
   tutorialsRef.current = tutorials;
@@ -17,11 +18,6 @@ const history= useHistory();
   useEffect(() => {
     retrieveTutorials();
   }, []);
-
-  const onChangeSearchTitle = (e) => {
-    const searchTitle = e.target.value;
-    setSearchTitle(searchTitle);
-  };
 
   const retrieveTutorials = () => {
     TutorialDataService.getAll()
@@ -59,22 +55,41 @@ const history= useHistory();
   // };
 
 
-  const token= JSON.parse(localStorage.getItem('token'));
-  console.log(token);
-async function deleteTutorial(credentials) {
-  console.log(credentials)
-  return fetch(`https://muhaan.enterprisesgravity.com/dashboard/category/delete/${credentials}`, {
-    method: "OPTIONS",
-    headers: {
+//   const token= JSON.parse(localStorage.getItem('token'));
+//   console.log(token);
+// async function deleteTutorial(credentials) {
+//   console.log(credentials)
+//   return fetch(`https://muhaan.enterprisesgravity.com/dashboard/category/delete/${credentials}`, {
+//     method: "DELETE",
+//     headers: {
 
-          "Authorization":`Token ${token}`,    
-          "Content-type": "application/json",
-          "Accept": "application/json",    
-      "Access-Control-Allow-Origin": "*",
-    },
-    // body: JSON.stringify(credentials),
-  }).then((data) => data.json());
-}
+//           "Authorization":`Token ${token}`,    
+//           "Content-type": "application/json",
+//           "Accept": "application/json",    
+//       "Access-Control-Allow-Origin": "*",
+//     },
+//     // body: JSON.stringify(credentials),
+//   }).then((data) => data.json());
+// }
+
+const deleteTutorial =async (rowIndex) => {
+  const id = tutorialsRef.current[rowIndex].id;
+  console.log(id);
+  
+
+  await TutorialDataService.remove(id)
+    .then((response) => {
+      // props.history.push(`category/delete/${id}`);
+
+      let newTutorials = [...tutorialsRef.current];
+      newTutorials.splice(rowIndex, 1);
+
+      setTutorials(newTutorials);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
 
   const openTutorial = (rowIndex, data) => {
     const id = tutorialsRef.current[rowIndex].id;

@@ -35,7 +35,7 @@ export default function Zone() {
         </Grid>
         <Grid item>
           {/* <MainCategoryModal /> */}
-          <Link to={"/add-service"}>
+          <Link to={"/add-zone"}>
             <Button variant="contained" color="primary">
               Create New
             </Button>

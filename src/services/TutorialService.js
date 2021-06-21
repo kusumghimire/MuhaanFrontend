@@ -1,7 +1,7 @@
 import http from "../api";
 
 const getAll = () => {
-  console.log(http.get())
+  // console.log(getAll())
   return http.get("/category/");
   
 };
@@ -11,15 +11,15 @@ const get = (id) => {
 };
 
 const create = (data) => {
-  return http.post("/create/", data);
+  return http.post("category/create/", data);
 };
 
 const update = (id, data) => {
-  return http.put(`/category/update/${id}`, data);
+  return http.put(`/category/update/${id}/`, data);
 };
 
 const remove = (id) => {
-  return http.delete(`/category/delete/${id}`);
+  return http.delete(`/category/delete/${id}/`);
 };
 
 const removeAll = () => {

@@ -23,7 +23,7 @@ import {
 } from "./pages";
 import AddTutorial from "./pages/Add/add";
 import AddTutorialCategory from "./pages/SubCategory/add";
-// import AddZone from "./page/Zone/add";
+import AddZone from "./pages/Zone/add";
 import UpdateMainCategory from "./pages/MainCategory/edit";
 import useToken from "./useToken";
 
@@ -41,7 +41,7 @@ function App() {
           {/* <MainLayout > */}
           <Route path="/add" component={AddTutorial} />
           <Route path="/add-category" component={AddTutorialCategory} />
-          {/* <Route path="/add-zone" component={AddZone} /> */}
+          <Route path="/add-zone" component={AddZone} />
 
           <Route path="/" exact component={Dashboard} />
           <Route path="/main-category" component={MainCategory} />
