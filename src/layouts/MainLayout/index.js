@@ -115,12 +115,12 @@ function MainLayout(props) {
         <NavLink to="/zone" icon={CalendarViewDayIcon}>
          Zone
         </NavLink>
-        <NavLink to="/time-slot" icon={QueryBuilderIcon}>
+        {/* <NavLink to="/time-slot" icon={QueryBuilderIcon}>
           Time Slot & Date
         </NavLink>
         <NavLink to="/banner" icon={PanoramaIcon}>
           Banner
-        </NavLink>
+        </NavLink> */}
         <NavLink to="/service-provider" icon={GroupAddIcon}>
           Service Provider
         </NavLink>
@@ -133,9 +133,9 @@ function MainLayout(props) {
         <NavLink to="/customers" icon={GroupIcon}>
           Customers
         </NavLink>
-        <NavLink to="/review" icon={StarOutlineIcon}>
+        {/* <NavLink to="/review" icon={StarOutlineIcon}>
           Review & Rating
-        </NavLink>
+        </NavLink> */}
       </List>
     </Drawer>
   );

@@ -10,8 +10,9 @@ export default axios.create({
     "Content-type": "application/json",
     "Accept": "application/json",    
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET,OPTIONS,POST,PUT"
+    // "Access-Control-Allow-Methods": "GET,OPTIONS,POST,PUT"
   }
+
 });
 
 

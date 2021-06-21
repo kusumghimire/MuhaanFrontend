@@ -58,32 +58,34 @@ const history= useHistory();
   //     });
   // };
 
-  const openTutorial = (rowIndex) => {
-    const id = tutorialsRef.current[rowIndex].id;
-    history.push(`/category/update/${id }`);
-  };
 
-  const deleteTutorial = (rowIndex) => {
+  const token= JSON.parse(localStorage.getItem('token'));
+  console.log(token);
+async function deleteTutorial(credentials) {
+  console.log(credentials)
+  return fetch(`https://muhaan.enterprisesgravity.com/dashboard/category/delete/${credentials}`, {
+    method: "OPTIONS",
+    headers: {
+
+          "Authorization":`Token ${token}`,    
+          "Content-type": "application/json",
+          "Accept": "application/json",    
+      "Access-Control-Allow-Origin": "*",
+    },
+    // body: JSON.stringify(credentials),
+  }).then((data) => data.json());
+}
+
+  const openTutorial = (rowIndex, data) => {
     const id = tutorialsRef.current[rowIndex].id;
-    TutorialDataService.remove(id)
-    .then((response) => {
-      props.history.push("/category");
-      
-      let newTutorials = [...tutorialsRef.current];
-      newTutorials.splice(rowIndex, 1);
-      
-      setTutorials(newTutorials);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+    history.push(`/category/update/${id }`, data);
   };
 
   const columns = useMemo(
     () => [
       {
         Header: "Main Category",
-        accessor: "title",
+        accessor: "cat",
       },
       // {
       //   Header: "Description",

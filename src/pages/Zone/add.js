@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 // import TutorialDataService from "../services/TutorialService";
-import TutorialDataService from "../../services/TutorialService";
+import ZoneApi from "../../services/ZoneApi";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 
-const AddTutorialCategory = (props) => {
+const AddZone = (props) => {
   const initialTutorialState = {
     id: null,
     title: "",
-    cat: "",
+    description: "",
+    published: false,
   };
   const [tutorial, setTutorial] = useState(initialTutorialState);
   const [submitted, setSubmitted] = useState(false);
@@ -21,16 +22,16 @@ const AddTutorialCategory = (props) => {
   const saveTutorial = () => {
     var data = {
       title: tutorial.title,
-      cat: tutorial.cat,
+      description: tutorial.description,
     };
 
-    TutorialDataService.create(data)
+    ZoneApi.create(data)
       .then((response) => {
-        props.history.push("sub-category");
+        props.history.push("zone");
         setTutorial({
           id: response.data.id,
           title: response.data.title,
-          cat: response.data.cat,
+          description: response.data.description,
           published: response.data.published,
         });
         setSubmitted(true);
@@ -61,8 +62,10 @@ const AddTutorialCategory = (props) => {
             <Grid item md={8}>
               <div className="form-group mt-3 mb-3">
                 <label htmlFor="title">
-                  <Typography variant="h4">Main Category</Typography>
-                </label>
+                    <Typography variant="h4">
+                    Title
+                    </Typography>
+                    </label>
                 <input
                   type="text"
                   className="form-control"
@@ -74,21 +77,20 @@ const AddTutorialCategory = (props) => {
                 />
               </div>
             </Grid>
-            <Grid item md={8}>
-              <div className="form-group form-group mt-3 mb-3">
-                <label htmlFor="description">Sub Category</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="subcategory"
-                  required
-                  value={tutorial.cat}
-                  onChange={handleInputChange}
-                  name="sub category"
-                />
-              </div>
-            </Grid>
           </Grid>
+
+          {/* <div className="form-group">
+            <label htmlFor="description">Description</label>
+            <input
+              type="text"
+              className="form-control"
+              id="description"
+              required
+              value={tutorial.description}
+              onChange={handleInputChange}
+              name="description"
+            />
+          </div> */}
 
           <button onClick={saveTutorial} className="btn btn-success">
             Submit
@@ -99,4 +101,4 @@ const AddTutorialCategory = (props) => {
   );
 };
 
-export default AddTutorialCategory;
+export default AddZone;
