@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Grid, Typography, makeStyles,Button } from "@material-ui/core/";
-import OrderTable from "../../components/tables/orders/order";
+import InprogressServiceRequest from "../../components/InprogressServiceRequest";
 const useStyles = makeStyles({
   root: {
     width: "100%",
@@ -20,7 +20,7 @@ export default function ProcessingOrder() {
       <Grid container className={classes.contentHeader}>
         <Grid item >
         <Typography variant="h4" gutterBottom style={{marginRight:"1rem"}}>
-             Processing  Orders
+             Processing  Service
         </Typography>
         </Grid>
         <Grid item>
@@ -31,7 +31,7 @@ export default function ProcessingOrder() {
       </Grid>
       <Grid container style={{ width: " 100%" }}>
         <Grid item xs={12} md={12}>
-          <OrderTable />
+          <InprogressServiceRequest />
         </Grid>
       </Grid>
     </>

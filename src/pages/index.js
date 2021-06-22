@@ -10,6 +10,9 @@ export { default as Banner } from "./Banner";
 export { default as ServiceProvider } from "./ServiceProvider";
 export { default as Orders } from "./OrdersRequest";
 export { default as ProcessingOrder } from "./ProcessingOrder";
+export { default as CompletedOrder } from "./CompletedOrder";
+export { default as CancelledOrder } from "./CancelledOrder";
+
 export { default as MakeDecision } from "./MakeDecision";
 export { default as Review } from "./Review";
 export { default as Customers } from "./Customers";

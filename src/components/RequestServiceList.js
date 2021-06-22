@@ -3,8 +3,7 @@ import { useHistory } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
-// import TutorialDataService from "../services/TutorialService";
-import ZoneApiList from "../services/ZoneApi";
+import RequestServiceApi from "../services/RequestServiceListApi";
 import { useTable } from "react-table";
 
 const RequestServiceList = (props) => {
@@ -18,7 +17,7 @@ const RequestServiceList = (props) => {
   }, []);
 
   const retrieveTutorials = () => {
-    ZoneApiList.getAll()
+    RequestServiceApi.getAll()
       .then((response) => {
         setTutorials(response.data);
       })
@@ -31,27 +30,16 @@ const RequestServiceList = (props) => {
     retrieveTutorials();
   };
 
-  const deleteTutorial = async(rowIndex) => {
-    const id = tutorialsRef.current[rowIndex].id;
-    console.log(id);
-
-   await ZoneApiList.remove(id)
-      .then((response) => {
-        // props.history.push("/add-on");
-
-        let newTutorials = [...tutorialsRef.current];
-        newTutorials.splice(rowIndex, 1);
-
-        setTutorials(newTutorials);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+// Here it need to be dropdown
+  const openTutorial = (rowIndex, data) => {
+    // const id = tutorialsRef.current[rowIndex].id;
+    // history.push(`/zone/update/${id }`, data);
   };
 
-  const openTutorial = (rowIndex, data) => {
-    const id = tutorialsRef.current[rowIndex].id;
-    history.push(`/zone/update/${id }`, data);
+// Here it need to be dropdown
+const decisionRequest = (rowIndex, data) => {
+    // const id = tutorialsRef.current[rowIndex].id;
+    // history.push(`/zone/update/${id }`, data);
   };
 
   const columns = useMemo(
@@ -61,7 +49,7 @@ const RequestServiceList = (props) => {
         accessor: "id",
       },
       {
-        Header: "Zone",
+        Header: "Name",
         accessor: "name",
       },
       {
@@ -73,11 +61,13 @@ const RequestServiceList = (props) => {
             <div>
             
               <span style={{marginRight:"0.5rem"}} onClick={() => openTutorial(rowIdx)}>
-                <i className="far fa-edit action mr-2"></i>
+                {/* <i className="far fa-edit action mr-2"></i> */}
+                Preview Data
               </span>
 
-              <span onSubmit={() => deleteTutorial(rowIdx)}>
-                <i className="fas fa-trash action"></i>
+              <span onSubmit={() => decisionRequest(rowIdx)}>
+                {/* <i className="fas fa-trash action"></i> */}
+                Make A decision
               </span>
             
             </div>

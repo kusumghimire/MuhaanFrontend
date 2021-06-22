@@ -14,17 +14,21 @@ import {
   Customers,
   Login,
   ProcessingOrder,
+  CancelledOrder,
+  CompletedOrder,
   MakeDecision,
   Reset,
   Logout,
   AddOn,
   Services,
-  Zone
+  Zone,
+
 } from "./pages";
 import AddTutorial from "./pages/Add/add";
 import AddTutorialCategory from "./pages/SubCategory/add";
 import AddZone from "./pages/Zone/add";
 import UpdateMainCategory from "./pages/MainCategory/edit";
+import UpdateZone from "./pages/Zone/edit";
 import useToken from "./useToken";
 
 function App() {
@@ -56,11 +60,15 @@ function App() {
           <Route path="/orders" component={Orders} />
           <Route path="/make-decision" component={MakeDecision} />
           <Route path="/processing-orders" component={ProcessingOrder} />
+          <Route path="/cancelled-orders" component={CancelledOrder} />
+          <Route path="/completed-orders" component={CompletedOrder} />
+
           <Route path="/review" component={Review} />
           <Route path="/customers" component={Customers} />
           <Route path="/logout" component={Logout} />
 
           <Route path="/category/update/:id" component={UpdateMainCategory} />
+          <Route path="/zone/update/:id" component={UpdateZone} />
         </MainLayout>
       </Switch>
     </Router>

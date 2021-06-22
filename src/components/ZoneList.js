@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
-// import TutorialDataService from "../services/TutorialService";
 import ZoneApiList from "../services/ZoneApi";
 import { useTable } from "react-table";
 
@@ -31,10 +30,9 @@ const ZoneList = (props) => {
     retrieveTutorials();
   };
 
-  const deleteTutorial = async(rowIndex) => {
+  const deleteTutorial = async (rowIndex) => {
     const id = tutorialsRef.current[rowIndex].id;
     console.log(id);
-
    await ZoneApiList.remove(id)
       .then((response) => {
         // props.history.push("/add-on");
@@ -72,11 +70,11 @@ const ZoneList = (props) => {
           return (
             <div>
             
-              <span style={{marginRight:"0.5rem"}} onClick={() => openTutorial(rowIdx)}>
+            <span style={{marginRight:"1.5rem"}} onClick={() => openTutorial(rowIdx)}>
                 <i className="far fa-edit action mr-2"></i>
               </span>
 
-              <span onSubmit={() => deleteTutorial(rowIdx)}>
+              <span onClick={() => deleteTutorial(rowIdx)}>
                 <i className="fas fa-trash action"></i>
               </span>
             

@@ -3,15 +3,13 @@ import { useHistory } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
-import TutorialDataService from "../services/TutorialService";
+import CompletedServicesApi from "../services/CompletedServicesApi";
 import { useTable } from "react-table";
-import server from '../api'
 
-
-const TutorialsList = (props) => {
+const CompletedServiceList = (props) => {
   const [tutorials, setTutorials] = useState([]);
   const tutorialsRef = useRef();
-const history= useHistory();
+  const history= useHistory();
   tutorialsRef.current = tutorials;
 
   useEffect(() => {
@@ -19,7 +17,7 @@ const history= useHistory();
   }, []);
 
   const retrieveTutorials = () => {
-    TutorialDataService.getAll()
+    CompletedServicesApi.getAll()
       .then((response) => {
         setTutorials(response.data);
       })
@@ -32,74 +30,27 @@ const history= useHistory();
     retrieveTutorials();
   };
 
-  // const removeAllTutorials = () => {
-  //   TutorialDataService.removeAll()
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       refreshList();
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // };
-
-  // const findByTitle = () => {
-  //   TutorialDataService.findByTitle(searchTitle)
-  //     .then((response) => {
-  //       setTutorials(response.data);
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // };
-
-
-//   const token= JSON.parse(localStorage.getItem('token'));
-//   console.log(token);
-// async function deleteTutorial(credentials) {
-//   console.log(credentials)
-//   return fetch(`https://muhaan.enterprisesgravity.com/dashboard/category/delete/${credentials}`, {
-//     method: "DELETE",
-//     headers: {
-
-//           "Authorization":`Token ${token}`,    
-//           "Content-type": "application/json",
-//           "Accept": "application/json",    
-//       "Access-Control-Allow-Origin": "*",
-//     },
-//     // body: JSON.stringify(credentials),
-//   }).then((data) => data.json());
-// }
-
-const deleteTutorial = async (rowIndex) => {
-  const id = tutorialsRef.current[rowIndex].id;
-  console.log(id);
-  
-
-  await TutorialDataService.remove(id)
-    .then((response) => {
-      // props.history.push(`category/delete/${id}`);
-
-      let newTutorials = [...tutorialsRef.current];
-      newTutorials.splice(rowIndex, 1);
-
-      setTutorials(newTutorials);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-};
-
+// Here it need to be dropdown
   const openTutorial = (rowIndex, data) => {
-    const id = tutorialsRef.current[rowIndex].id;
-    history.push(`/category/update/${id}`, data);
+    // const id = tutorialsRef.current[rowIndex].id;
+    // history.push(`/zone/update/${id }`, data);
+  };
+
+// Here it need to be dropdown
+const decisionRequest = (rowIndex, data) => {
+    // const id = tutorialsRef.current[rowIndex].id;
+    // history.push(`/zone/update/${id }`, data);
   };
 
   const columns = useMemo(
     () => [
       {
-        Header: "Main Category",
-        accessor: "title",
+        Header: "Id",
+        accessor: "id",
+      },
+      {
+        Header: "Name",
+        accessor: "name",
       },
       {
         Header: "Actions",
@@ -109,14 +60,16 @@ const deleteTutorial = async (rowIndex) => {
           return (
             <div>
             
-              <span style={{marginRight:"1.5rem"}} onClick={() => openTutorial(rowIdx)}>
-                <i className="far fa-edit action mr-2"></i>
+              <span style={{marginRight:"0.5rem"}} onClick={() => openTutorial(rowIdx)}>
+                {/* <i className="far fa-edit action mr-2"></i> */}
+                Preview Data
               </span>
-              
-              <span onClick={() => deleteTutorial(rowIdx)}>
-                <i className="fas fa-trash action"></i>
+
+              <span onSubmit={() => decisionRequest(rowIdx)}>
+                {/* <i className="fas fa-trash action"></i> */}
+                Make A decision
               </span>
-             
+            
             </div>
           );
         },
@@ -174,4 +127,4 @@ const deleteTutorial = async (rowIndex) => {
   );
 };
 
-export default TutorialsList;
+export default CompletedServiceList;

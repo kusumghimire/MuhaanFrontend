@@ -125,10 +125,16 @@ function MainLayout(props) {
           Service Provider
         </NavLink>
         <NavLink to="/orders" icon={AddCircleOutlineIcon}>
-          Pending Orders
+          Pending Services
         </NavLink>
         <NavLink to="/processing-orders" icon={ControlPointDuplicateIcon}>
-          Processing Order
+          Processing Services
+        </NavLink>
+        <NavLink to="/completed-orders" icon={ControlPointDuplicateIcon}>
+          Completed Services
+        </NavLink>
+        <NavLink to="/cancelled-orders" icon={ControlPointDuplicateIcon}>
+          Cancelled Services
         </NavLink>
         <NavLink to="/customers" icon={GroupIcon}>
           Customers
