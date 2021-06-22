@@ -31,15 +31,9 @@ const ZoneList = (props) => {
     retrieveTutorials();
   };
 
-
-
-  const openTutorial = (rowIndex, data) => {
+  const deleteTutorial = async(rowIndex) => {
     const id = tutorialsRef.current[rowIndex].id;
-    history.push(`/zone/update/${id }`, data);
-  };
-
-  const deleteTutorial = async (rowIndex) => {
-    const id = tutorialsRef.current[rowIndex].id;
+    console.log(id);
 
    await ZoneApiList.remove(id)
       .then((response) => {
@@ -55,8 +49,10 @@ const ZoneList = (props) => {
       });
   };
 
-
-
+  const openTutorial = (rowIndex, data) => {
+    const id = tutorialsRef.current[rowIndex].id;
+    history.push(`/zone/update/${id }`, data);
+  };
 
   const columns = useMemo(
     () => [
@@ -68,14 +64,6 @@ const ZoneList = (props) => {
         Header: "Zone",
         accessor: "name",
       },
-
-      // {
-      //   Header: "Status",
-      //   accessor: "published",
-      //   Cell: (props) => {
-      //     return props.value ? "Published" : "Pending";
-      //   },
-      // },
       {
         Header: "Actions",
         accessor: "actions",
@@ -145,12 +133,6 @@ const ZoneList = (props) => {
           </tbody>
         </table>
       </div>
-
-      {/* <div className="col-md-8">
-        <button className="btn btn-sm btn-danger" onClick={removeAllTutorials}>
-          Remove All
-        </button>
-      </div> */}
     </div>
   );
 };

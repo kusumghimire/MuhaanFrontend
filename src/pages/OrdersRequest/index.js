@@ -20,7 +20,7 @@ export default function ServiceProvider() {
       <Grid container className={classes.contentHeader}>
         <Grid item >
         <Typography variant="h4" gutterBottom style={{marginRight:"1rem"}}>
-        Orders
+        Request Service
         </Typography>
         </Grid>
         <Grid item>

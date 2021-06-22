@@ -9,7 +9,7 @@ const get = (id) => {
 };
 
 const create = (data) => {
-  return http.post("add-on/create/", data);
+  return http.post(`add-on/create/`, data);
 };
 
 const update = (id, data) => {
@@ -19,11 +19,6 @@ const update = (id, data) => {
 const remove = (id) => {
   return http.delete(`add-on/delete/${id}`);
 };
-
-
-// const findByTitle = (title) => {
-//   return http.get(`/category?title=${title}`);
-// };
 
 const AddOnApi = {
   getAll,

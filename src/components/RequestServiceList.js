@@ -4,15 +4,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 // import TutorialDataService from "../services/TutorialService";
-import TutorialDataService from "../services/TutorialService";
+import ZoneApiList from "../services/ZoneApi";
 import { useTable } from "react-table";
-import server from '../api'
-import axios from "axios";
 
-const TutorialsList = (props) => {
+const RequestServiceList = (props) => {
   const [tutorials, setTutorials] = useState([]);
   const tutorialsRef = useRef();
-const history= useHistory();
+  const history= useHistory();
   tutorialsRef.current = tutorials;
 
   useEffect(() => {
@@ -20,7 +18,7 @@ const history= useHistory();
   }, []);
 
   const retrieveTutorials = () => {
-    TutorialDataService.getAll()
+    ZoneApiList.getAll()
       .then((response) => {
         setTutorials(response.data);
       })
@@ -33,74 +31,38 @@ const history= useHistory();
     retrieveTutorials();
   };
 
-  // const removeAllTutorials = () => {
-  //   TutorialDataService.removeAll()
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       refreshList();
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // };
+  const deleteTutorial = async(rowIndex) => {
+    const id = tutorialsRef.current[rowIndex].id;
+    console.log(id);
 
-  // const findByTitle = () => {
-  //   TutorialDataService.findByTitle(searchTitle)
-  //     .then((response) => {
-  //       setTutorials(response.data);
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // };
+   await ZoneApiList.remove(id)
+      .then((response) => {
+        // props.history.push("/add-on");
 
+        let newTutorials = [...tutorialsRef.current];
+        newTutorials.splice(rowIndex, 1);
 
-//   const token= JSON.parse(localStorage.getItem('token'));
-//   console.log(token);
-// async function deleteTutorial(credentials) {
-//   console.log(credentials)
-//   return fetch(`https://muhaan.enterprisesgravity.com/dashboard/category/delete/${credentials}`, {
-//     method: "DELETE",
-//     headers: {
-
-//           "Authorization":`Token ${token}`,    
-//           "Content-type": "application/json",
-//           "Accept": "application/json",    
-//       "Access-Control-Allow-Origin": "*",
-//     },
-//     // body: JSON.stringify(credentials),
-//   }).then((data) => data.json());
-// }
-
-const deleteTutorial =async (rowIndex) => {
-  const id = tutorialsRef.current[rowIndex].id;
-  console.log(id);
-  
-
-  await TutorialDataService.remove(id)
-    .then((response) => {
-      // props.history.push(`category/delete/${id}`);
-
-      let newTutorials = [...tutorialsRef.current];
-      newTutorials.splice(rowIndex, 1);
-
-      setTutorials(newTutorials);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-};
+        setTutorials(newTutorials);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   const openTutorial = (rowIndex, data) => {
     const id = tutorialsRef.current[rowIndex].id;
-    history.push(`/category/update/${id }`, data);
+    history.push(`/zone/update/${id }`, data);
   };
 
   const columns = useMemo(
     () => [
       {
-        Header: "Main Category",
-        accessor: "cat",
+        Header: "Id",
+        accessor: "id",
+      },
+      {
+        Header: "Zone",
+        accessor: "name",
       },
       {
         Header: "Actions",
@@ -113,11 +75,11 @@ const deleteTutorial =async (rowIndex) => {
               <span style={{marginRight:"0.5rem"}} onClick={() => openTutorial(rowIdx)}>
                 <i className="far fa-edit action mr-2"></i>
               </span>
-              
-              <span onClick={() => deleteTutorial(rowIdx)}>
+
+              <span onSubmit={() => deleteTutorial(rowIdx)}>
                 <i className="fas fa-trash action"></i>
               </span>
-             
+            
             </div>
           );
         },
@@ -175,4 +137,4 @@ const deleteTutorial =async (rowIndex) => {
   );
 };
 
-export default TutorialsList;
+export default RequestServiceList;

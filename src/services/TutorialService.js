@@ -2,7 +2,7 @@ import http from "../api";
 
 const getAll = () => {
   // console.log(getAll())
-  return http.get("/category/");
+  return http.get(`/category/`);
   
 };
 
@@ -11,7 +11,7 @@ const get = (id) => {
 };
 
 const create = (data) => {
-  return http.post("category/create/", data);
+  return http.post(`/category/create/`, data);
 };
 
 const update = (id, data) => {
@@ -20,10 +20,6 @@ const update = (id, data) => {
 
 const remove = (id) => {
   return http.delete(`/category/delete/${id}/`);
-};
-
-const removeAll = () => {
-  return http.delete(`/category`);
 };
 
 const findByTitle = (title) => {
@@ -36,7 +32,6 @@ const TutorialService = {
   create,
   update,
   remove,
-  removeAll,
   findByTitle,
 };
 
