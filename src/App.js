@@ -22,10 +22,11 @@ import {
   AddOn,
   Services,
   Zone,
-
 } from "./pages";
 import AddTutorial from "./pages/Add/add";
 import AddTutorialCategory from "./pages/SubCategory/add";
+import AddOnListAdd from "./pages/AddOn/add";
+import AddOnEdit from "./pages/AddOn/edit";
 import AddZone from "./pages/Zone/add";
 import UpdateMainCategory from "./pages/MainCategory/edit";
 import UpdateZone from "./pages/Zone/edit";
@@ -50,7 +51,11 @@ function App() {
           <Route path="/" exact component={Dashboard} />
           <Route path="/main-category" component={MainCategory} />
           <Route path="/sub-category" component={SubCategory} />
-          <Route path="/add-on" component={AddOn} />
+
+          <Route exact path="/add-on" component={AddOn} />
+          <Route exact path="/add-on/addlist" component={AddOnListAdd} />
+          <Route exact path="/add-on/update/:id" component={AddOnEdit} />
+
           <Route path="/services" component={Services} />
           <Route exact path="/zone" component={Zone} />
 

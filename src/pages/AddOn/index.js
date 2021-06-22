@@ -35,7 +35,7 @@ export default function AddOn() {
         </Grid>
         <Grid item>
           {/* <MainCategoryModal /> */}
-          <Link to={"/add"}>
+          <Link to={"/add-on/addlist"}>
             <Button variant="contained" color="primary">
               Create New
             </Button>

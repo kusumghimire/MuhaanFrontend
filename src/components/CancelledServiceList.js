@@ -49,8 +49,30 @@ const decisionRequest = (rowIndex, data) => {
         accessor: "id",
       },
       {
-        Header: "Name",
-        accessor: "name",
+        Header: "Service",
+        accessor: "service",
+      },
+      {
+        Header: "Service Provider",
+        accessor: "service_provider",
+      },
+      {
+        Header: "Quantity",
+        accessor: "quantity",
+      },
+     
+      {
+        Header: "Requested Date",
+        accessor: "requested_date",
+      },
+     
+      {
+        Header: "Requested Time",
+        accessor: "requested_time",
+      },
+      {
+        Header: "Status",
+        accessor: "status",
       },
       {
         Header: "Actions",

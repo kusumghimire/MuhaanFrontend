@@ -4,96 +4,150 @@ import AddOnApiList from "../../services/AddOnApi";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 
-const AddOnList = (props) => {
-  const initialTutorialState = {
-    id: null,
-    title: "",
-  };
-  const [tutorial, setTutorial] = useState(initialTutorialState);
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setTutorial({ ...tutorial, [name]: value });
-  };
-
-  const saveTutorial = () => {
-    var data = {
-      title: tutorial.title,
+const AddOnListAdd = () => {
+    const initialTutorialState = {
+      id: null,
+      name: "",
+      description: "",
+      service:"",
+      image:"",
+      rate:"",
+      published: false
     };
-
-    AddOnApiList.create(data)
-      .then((response) => {
-        props.history.push("add-on");
-        setTutorial({
-          id: response.data.id,
-          title: response.data.title,
+    const [tutorial, setTutorial] = useState(initialTutorialState);
+    const [submitted, setSubmitted] = useState(false);
+  
+    const handleInputChange = event => {
+      const { name, value } = event.target;
+      setTutorial({ ...tutorial, [name]: value });
+    };
+  
+    const saveTutorial = () => {
+      var data = {
+        name: tutorial.name,
+        description: tutorial.description,
+        service: tutorial.service,
+        image: tutorial.image,
+        rate: tutorial.rate,
+      };
+  
+      AddOnApiList.create(data)
+        .then(response => {
+          setTutorial({
+            id: response.data.id,
+            name: response.data.name,
+            description: response.data.description,
+            service: response.data.service,
+            image: response.data.image,
+            rate: response.data.rate,
+          });
+          setSubmitted(true);
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
         });
-        setSubmitted(true);
-        console.log(response.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+    };
+  
+    const newTutorial = () => {
+      setTutorial(initialTutorialState);
+      setSubmitted(false);
+    };
+  
+    return (
+      <div className="submit-form">
+        {submitted ? (
+          <div>
+            <h4>You submitted successfully!</h4>
+            <button className="btn btn-success" onClick={newTutorial}>
+              Add
+            </button>
+          </div>
+        ) : (
+          <div>
+         <Grid container>
+             <Grid item md={8}>
+            
+         <Grid item>
+          <Typography variant="h4" gutterBottom style={{ marginRight: "1rem" }}>
+           Add On 
+          </Typography>
+        </Grid>
+            <div className="form-group  mt-3 mb-3">
+              <label htmlFor="title">Title</label>
+              <input
+                type="text"
+                className="form-control"
+                id="name"
+                required
+                value={tutorial.name}
+                onChange={handleInputChange}
+                name="name"
+              />
+            </div>
+  
+            <div className="form-group  mt-3 mb-3">
+              <label htmlFor="description">Description</label>
+              <input
+                type="text"
+                className="form-control"
+                id="description"
+                required
+                value={tutorial.description}
+                onChange={handleInputChange}
+                name="description"
+              />
+            </div>
 
-  const newTutorial = () => {
-    setTutorial(initialTutorialState);
-    setSubmitted(false);
-  };
+            <div className="form-group  mt-3 mb-3" >
+              <label htmlFor="service">Service</label>
+              <input
+                type="text"
+                className="form-control"
+                id="service"
+                required
+                value={tutorial.service}
+                onChange={handleInputChange}
+                name="service"
+              />
+            </div>
 
-  return (
-    <div className="submit-form">
-      {submitted ? (
-        <div>
-          <h2>You submitted successfully!</h2>
-          <button className="btn btn-success" onClick={newTutorial}>
-            Add
-          </button>
-        </div>
-      ) : (
-        <div>
-          <Grid container>
-            <Grid item md={8}>
-              <div className="form-group mt-3 mb-3">
-                <label htmlFor="title">
-                    <Typography variant="h4">
-                   Main Category
-                    </Typography>
-                    </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="title"
-                  required
-                  value={tutorial.title}
-                  onChange={handleInputChange}
-                  name="title"
-                />
-              </div>
+            <div className="form-group  mt-3 mb-3">
+              <label htmlFor="image">Image</label>
+              <input
+                type="file"
+                className="form-control"
+                id="image"
+                required
+                value={tutorial.image}
+                onChange={handleInputChange}
+                name="image"
+              />
+            </div>
+
+            <div className="form-group mt-3 mb-3">
+              <label htmlFor="rate">Rate</label>
+              <input
+                type="number"
+                className="form-control"
+                id="rate"
+                required
+                value={tutorial.rate}
+                onChange={handleInputChange}
+                name="rate"
+              />
+            </div>
+
+            <button onClick={saveTutorial} className="btn btn-success">
+              Submit
+            </button>
             </Grid>
-          </Grid>
-
-          {/* <div className="form-group">
-            <label htmlFor="description">Description</label>
-            <input
-              type="text"
-              className="form-control"
-              id="description"
-              required
-              value={tutorial.description}
-              onChange={handleInputChange}
-              name="description"
-            />
-          </div> */}
-
-          <button onClick={saveTutorial} className="btn btn-success">
-            Submit
-          </button>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default AddOnList;
+            </Grid>
+          </div>
+        )}
+      </div>
+    );
+  };
+  
+  export default AddOnListAdd;
+  
