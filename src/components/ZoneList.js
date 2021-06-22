@@ -49,7 +49,7 @@ const ZoneList = (props) => {
 
   const openTutorial = (rowIndex, data) => {
     const id = tutorialsRef.current[rowIndex].id;
-    history.push(`/zone/update/${id }`, data);
+    history.push(`/zone/update/${id}`, data);
   };
 
   const columns = useMemo(

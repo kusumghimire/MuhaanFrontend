@@ -68,7 +68,7 @@ const AddOnEdit = props => {
     <div>
 
         <div className="edit-form">
-          <h4>Edit Main Category</h4>
+          <h4>Edit Add On</h4>
           <form>
             <div className="form-group">
               <label htmlFor="title">Title</label>
@@ -83,10 +83,6 @@ const AddOnEdit = props => {
             </div>
           </form>
 
-          {/* <button className="badge badge-danger mr-2" onClick={deleteTutorial}>
-            Delete
-          </button> */}
-
           <button
             type="submit"
             className="btn btn-success mt-3 mb-3"
@@ -94,6 +90,7 @@ const AddOnEdit = props => {
           >
             Update
           </button>
+          
         </div>
     </div>
   );

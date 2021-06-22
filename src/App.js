@@ -45,14 +45,14 @@ function App() {
           {/* <MainLayout > */}
           <Route path="/add" component={AddTutorial} />
           <Route path="/add-category" component={AddTutorialCategory} />
-          <Route path="/add-zone" component={AddZone} />
+          <Route exact path="/zone/add" component={AddZone} />
 
           <Route path="/" exact component={Dashboard} />
           <Route path="/main-category" component={MainCategory} />
           <Route path="/sub-category" component={SubCategory} />
           <Route path="/add-on" component={AddOn} />
           <Route path="/services" component={Services} />
-          <Route path="/zone" component={Zone} />
+          <Route exact path="/zone" component={Zone} />
 
           <Route path="/time-slot" component={TimeSlot} />
           <Route path="/banner" component={Banner} />
@@ -68,7 +68,7 @@ function App() {
           <Route path="/logout" component={Logout} />
 
           <Route path="/category/update/:id" component={UpdateMainCategory} />
-          <Route path="/zone/update/:id" component={UpdateZone} />
+          <Route exact path="/zone/update/:id" component={UpdateZone} />
         </MainLayout>
       </Switch>
     </Router>

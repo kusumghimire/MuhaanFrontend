@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-// import TutorialDataService from "../services/TutorialService";
-import TutorialDataService from "../../services/TutorialService";
+// import AddOnApiList from "../services/TutorialService";
+import AddOnApiList from "../../services/AddOnApi";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 
-const AddTutorial = (props) => {
+const AddOnList = (props) => {
   const initialTutorialState = {
     id: null,
     title: "",
@@ -22,9 +22,9 @@ const AddTutorial = (props) => {
       title: tutorial.title,
     };
 
-    TutorialDataService.create(data)
+    AddOnApiList.create(data)
       .then((response) => {
-        props.history.push("main-category");
+        props.history.push("add-on");
         setTutorial({
           id: response.data.id,
           title: response.data.title,
@@ -96,4 +96,4 @@ const AddTutorial = (props) => {
   );
 };
 
-export default AddTutorial;
+export default AddOnList;

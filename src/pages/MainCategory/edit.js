@@ -65,9 +65,6 @@ const UpdateMainTutorial = props => {
       });
   };
 
-
-
-
   return (
     <div>
 

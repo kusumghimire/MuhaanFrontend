@@ -37,42 +37,23 @@ const SubCategoryTableMain = (props) => {
     retrieveTutorials();
   };
 
-  const removeAllTutorials = () => {
-    TutorialDataService.removeAll()
-      .then((response) => {
-        console.log(response.data);
-        refreshList();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
-  const findByTitle = () => {
-    TutorialDataService.findByTitle(searchTitle)
-      .then((response) => {
-        setTutorials(response.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
   const openTutorial = (rowIndex) => {
     // const id = tutorialsRef.current[rowIndex].id;
     // props.history.push("/category/update/" + id);
   };
 
-  const deleteTutorial = (rowIndex) => {
+  const deleteTutorial = async (rowIndex) => {
     const id = tutorialsRef.current[rowIndex].id;
-
-    TutorialDataService.remove(id)
+    console.log(id);
+    
+  
+    await TutorialDataService.remove(id)
       .then((response) => {
-        props.history.push("/category");
-
+        // props.history.push(`category/delete/${id}`);
+  
         let newTutorials = [...tutorialsRef.current];
         newTutorials.splice(rowIndex, 1);
-
+  
         setTutorials(newTutorials);
       })
       .catch((e) => {
@@ -90,13 +71,6 @@ const SubCategoryTableMain = (props) => {
         Header: "Sub category",
         accessor: "cat",
       },
-      // {
-      //   Header: "Status",
-      //   accessor: "published",
-      //   Cell: (props) => {
-      //     return props.value ? "Published" : "Pending";
-      //   },
-      // },
       {
         Header: "Actions",
         accessor: "actions",
@@ -107,6 +81,7 @@ const SubCategoryTableMain = (props) => {
               <span style={{marginRight:"0.5rem"}} onClick={() => openTutorial(rowIdx)}>
                 <i className="far fa-edit action mr-2"></i>
               </span>
+
               <span onClick={() => deleteTutorial(rowIdx)}>
                 <i className="fas fa-trash action"></i>
               </span>

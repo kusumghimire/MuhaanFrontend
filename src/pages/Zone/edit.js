@@ -32,13 +32,13 @@ const UpdateZone = props => {
   }, []);
   
   const handleInputChange = event => {
-    const { title, value } = event.target;
-    setCurrentTutorial({ ...currentTutorial, [title]: value });
+    const { name, value } = event.target;
+    setCurrentTutorial({ ...currentTutorial, [name]: value });
   };
 
   const updateZone = () => {
     console.log(currentTutorial)
-    ZoneApi.update(currentTutorial.id, currentTutorial)
+    ZoneApi.update(currentTutorial.id, {name:currentTutorial.name})
     
       .then(response => {
         console.log(response.data);
@@ -82,7 +82,7 @@ const UpdateZone = props => {
                 type="text"
                 className="form-control"
                 id="title"
-                name="title"
+                name="name"
                 value={currentTutorial.name}
                 onChange={handleInputChange}
               />
