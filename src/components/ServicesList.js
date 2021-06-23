@@ -86,6 +86,10 @@ const ServicesList = (props) => {
         accessor: "description",
       },
       {
+        Header: "Rate",
+        accessor: "rate",
+      },
+      {
         Header: "Discount",
         accessor: "discount",
       },
