@@ -96,14 +96,10 @@ const AddOnList = (props) => {
               <span style={{marginRight:"0.5rem"}} onClick={() => openTutorial(rowIdx)}>
                 <i className="far fa-edit action mr-2"></i>
               </span>
-              <form onSubmit={() => deleteTutorial(rowIdx)}>
-                <buttton >
-              <span >
+              
+              <span onClick={() => deleteTutorial(rowIdx)}>
                 <i className="fas fa-trash action"></i>
               </span>
-
-                </buttton>
-              </form>
              
             </div>
           );
