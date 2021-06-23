@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-// import AddOnApiList from "../services/TutorialService";
 import AddOnApiList from "../../services/AddOnApi";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
-import { FormatBoldTwoTone } from "@material-ui/icons";
 
-const AddOnListAdd = (props) => {
+const AddServiceProvider = (props) => {
   const initialTutorialState = {
     id: null,
     name: "",
@@ -89,7 +87,7 @@ const AddOnListAdd = (props) => {
                   gutterBottom
                   style={{ marginRight: "1rem" }}
                 >
-                  Add On
+               Service Provider
                 </Typography>
               </Grid>
 
@@ -169,4 +167,4 @@ const AddOnListAdd = (props) => {
   );
 };
 
-export default AddOnListAdd;
+export default AddServiceProvider;

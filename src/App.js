@@ -28,7 +28,9 @@ import AddTutorialCategory from "./pages/SubCategory/add";
 import AddOnListAdd from "./pages/AddOn/add";
 import AddOnEdit from "./pages/AddOn/edit";
 import AddZone from "./pages/Zone/add";
-import AddServices from "./pages/Services/add";
+import AddServices from "./pages/Services1/add";
+import EditServices from "./pages/Services1/edit";
+import AddServiceProvider from "./pages/ServiceProvider/add";
 import UpdateMainCategory from "./pages/MainCategory/edit";
 import UpdateZone from "./pages/Zone/edit";
 import useToken from "./useToken";
@@ -59,12 +61,15 @@ function App() {
 
           <Route exact path="/services" component={Services} />
           <Route exact path="/services/add" component={AddServices} />
+          <Route exact path="/services/update/:id" component={EditServices} />
 
           <Route exact path="/zone" component={Zone} />
 
           <Route exact path="/time-slot" component={TimeSlot} />
           <Route exact path="/banner" component={Banner} />
           <Route exact path="/service-provider" component={ServiceProvider} />
+          <Route exact path="/service-provider/add" component={AddServiceProvider} />
+
           <Route exact path="/orders" component={Orders} />
           <Route exact path="/make-decision" component={MakeDecision} />
           <Route exact path="/processing-orders" component={ProcessingOrder} />

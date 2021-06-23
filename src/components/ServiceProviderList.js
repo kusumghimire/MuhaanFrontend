@@ -3,14 +3,13 @@ import { useHistory } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
-import ServiceApi from "../services/ServicesApi";
+import AddOnApiService from "../services/AddOnApi";
 import { useTable } from "react-table";
 
-const ServicesList = (props) => {
+const ServiceProviderList = (props) => {
   const [tutorials, setTutorials] = useState([]);
   const tutorialsRef = useRef();
   const history= useHistory();
-
   tutorialsRef.current = tutorials;
 
   useEffect(() => {
@@ -18,7 +17,7 @@ const ServicesList = (props) => {
   }, []);
 
   const retrieveTutorials = () => {
-    ServiceApi.getAll()
+    AddOnApiService.getAll()
       .then((response) => {
         setTutorials(response.data);
       })
@@ -31,21 +30,18 @@ const ServicesList = (props) => {
     retrieveTutorials();
   };
 
-
-
   const openTutorial = (rowIndex, data) => {
     const id = tutorialsRef.current[rowIndex].id;
-    history.push(`/services/update/${id }`, data);
+    history.push(`/add-on/update/${id }`, data);
   };
-
 
   const deleteTutorial = async (rowIndex) => {
     const id = tutorialsRef.current[rowIndex].id;
     console.log(id);
     
-  
-    await ServiceApi.remove(id)
+    await AddOnApiService.remove(id)
       .then((response) => {
+        // props.history.push(`category/delete/${id}`);
   
         let newTutorials = [...tutorialsRef.current];
         newTutorials.splice(rowIndex, 1);
@@ -56,7 +52,6 @@ const ServicesList = (props) => {
         console.log(e);
       });
   };
-  
 
   const columns = useMemo(
     () => [
@@ -65,34 +60,25 @@ const ServicesList = (props) => {
         accessor: "id",
       },
       {
-        Header: "Services",
-        accessor: "category",
-      },
-      {
-        Header: "Zone",
-        accessor: "zone[0].name",
-      },
-
-      {
-        Header: "Title",
-        accessor: "title",
-      },
-      {
-        Header: "Image",
-        accessor: "image",
+        Header: "Name",
+        accessor: "name",
       },
       {
         Header: "Description",
         accessor: "description",
       },
       {
-        Header: "Discount",
-        accessor: "discount",
+        Header: "Image",
+        accessor: "image",
       },
       {
-        Header: "Payment Choice",
-        accessor: "payment_choice",
+        Header: "Rate",
+        accessor: "rate",
       },
+      // {
+      //   Header: "Description",
+      //   accessor: "description",
+      // },
       // {
       //   Header: "Status",
       //   accessor: "published",
@@ -179,4 +165,4 @@ const ServicesList = (props) => {
   );
 };
 
-export default ServicesList;
+export default ServiceProviderList;

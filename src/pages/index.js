@@ -2,7 +2,7 @@ export { default as Dashboard } from "./Dashboard";
 export { default as MainCategory } from "./MainCategory";
 export { default as SubCategory } from "./SubCategory";
 export {default as AddOn} from "./AddOn";
-export {default as Services} from "./Services";
+export {default as Services} from "./Services1";
 export {default as Zone} from "./Zone";
 
 export { default as TimeSlot } from "./TimeSlot";
