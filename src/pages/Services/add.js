@@ -7,9 +7,13 @@ import { Typography } from "@material-ui/core";
 const AddServices = (props) => {
   const initialTutorialState = {
     id: null,
+    category: "",
+    zone: "",
     title: "",
-    cat: "",
-    published: false,
+    image: "",
+    description: "",
+    discount: "",
+    payment_choice: "",
   };
   const [tutorial, setTutorial] = useState(initialTutorialState);
   const [submitted, setSubmitted] = useState(false);
@@ -19,20 +23,33 @@ const AddServices = (props) => {
     setTutorial({ ...tutorial, [name]: value });
   };
 
-  const saveTutorial = () => {
-    var data = {
-      title: tutorial.title,
-      cat: tutorial.cat,
-    };
+  const handleImageChange = (event) => {
+    setTutorial({ ...tutorial, image: event.target.files[0] });
+    // console.log(event.target.files[0])
+  };
 
-    TutorialDataService.create(data)
+  const saveTutorial = () => {
+    let formData = new FormData();
+
+    formData.append("category", tutorial.category);
+    formData.append("zone", tutorial.zone);
+    formData.append("title", tutorial.title);
+    formData.append("image", tutorial.image);
+    formData.append("description", tutorial.description);
+    formData.append("discount", tutorial.discount);
+    formData.append("payment_choice", tutorial.payment_choice);
+
+    TutorialDataService.create(formData)
       .then((response) => {
-        props.history.push("sub-category");
+        props.history.push("services");
         setTutorial({
           id: response.data.id,
+          category: response.data.category,
           title: response.data.title,
-          cat: response.data.cat,
-          published: response.data.published,
+          image: response.data.image,
+          description: response.data.description,
+          discount: response.data.discount,
+          payment_choice: response.data.payment_choice,
         });
         setSubmitted(true);
         console.log(response.data);
@@ -60,10 +77,44 @@ const AddServices = (props) => {
         <div>
           <Grid container>
             <Grid item md={8}>
-              <div className="form-group mt-3 mb-3">
-                <label htmlFor="title">
-                  <Typography variant="h4">Main Category</Typography>
-                </label>
+              <Grid item>
+                <Typography
+                  variant="h4"
+                  gutterBottom
+                  style={{ marginRight: "1rem" }}
+                >
+                  Add Service
+                </Typography>
+              </Grid>
+
+              <div className="form-group  mt-3 mb-3">
+                <label htmlFor="category">Category</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="category"
+                  required
+                  value={tutorial.category}
+                  onChange={handleInputChange}
+                  name="category"
+                />
+              </div>
+
+              <div className="form-group  mt-3 mb-3">
+                <label htmlFor="zone">Zone</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="zone"
+                  required
+                  value={tutorial.zone}
+                  onChange={handleInputChange}
+                  name="zone"
+                />
+              </div>
+
+              <div className="form-group  mt-3 mb-3">
+                <label htmlFor="zone">Title</label>
                 <input
                   type="text"
                   className="form-control"
@@ -74,26 +125,65 @@ const AddServices = (props) => {
                   name="title"
                 />
               </div>
-            </Grid>
-            <Grid item md={8}>
-              <div className="form-group form-group mt-3 mb-3">
-                <label htmlFor="description">Sub Category</label>
+
+              <div className="form-group  mt-3 mb-3">
+                <label htmlFor="image">Image</label>
+                <input
+                  type="file"
+                  className="form-control"
+                  id="image"
+                  required
+                  //   value={tutorial.image}
+                  onChange={handleImageChange}
+                  name="image"
+                />
+              </div>
+
+              <div className="form-group  mt-3 mb-3">
+                <label htmlFor="description">Description</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="subcategory"
+                  id="description"
                   required
-                  value={tutorial.cat}
+                  value={tutorial.description}
                   onChange={handleInputChange}
-                  name="sub category"
+                  name="description"
                 />
               </div>
+
+              <div className="form-group  mt-3 mb-3">
+                <label htmlFor="discount">Discount</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="discount"
+                  required
+                  value={tutorial.discount}
+                  onChange={handleInputChange}
+                  name="discount"
+                />
+              </div>
+
+              <div className="form-group  mt-3 mb-3">
+                <label htmlFor="payment_choice">Payment Choice</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="payment_choice"
+                  required
+                  value={tutorial.payment_choice}
+                  onChange={handleInputChange}
+                  name="payment_choice"
+                />
+              </div>
+
+
+              <button onClick={saveTutorial} className="btn btn-success">
+                Submit
+              </button>
             </Grid>
           </Grid>
-
-          <button onClick={saveTutorial} className="btn btn-success">
-            Submit
-          </button>
         </div>
       )}
     </div>

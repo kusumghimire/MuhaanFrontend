@@ -13,7 +13,6 @@ const AddOnListAdd = (props) => {
     service: "",
     image: "",
     rate: "",
-    published: false,
   };
   const [tutorial, setTutorial] = useState(initialTutorialState);
   const [submitted, setSubmitted] = useState(false);
@@ -24,9 +23,7 @@ const AddOnListAdd = (props) => {
   };
 
   const handleImageChange = (event) => {
-    // const { files } = event.target;
     setTutorial({ ...tutorial, image:event.target.files[0] });
-
     // console.log(event.target.files[0])
   };
 
