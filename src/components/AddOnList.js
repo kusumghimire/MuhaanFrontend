@@ -35,16 +35,17 @@ const AddOnList = (props) => {
     history.push(`/add-on/update/${id }`, data);
   };
 
-  const deleteTutorial = (rowIndex) => {
+  const deleteTutorial = async (rowIndex) => {
     const id = tutorialsRef.current[rowIndex].id;
-
-    AddOnApiService.remove(id)
+    console.log(id);
+    
+    await AddOnApiService.remove(id)
       .then((response) => {
-        props.history.push("/add-on");
-
+        // props.history.push(`category/delete/${id}`);
+  
         let newTutorials = [...tutorialsRef.current];
         newTutorials.splice(rowIndex, 1);
-
+  
         setTutorials(newTutorials);
       })
       .catch((e) => {
@@ -96,7 +97,7 @@ const AddOnList = (props) => {
               <span style={{marginRight:"0.5rem"}} onClick={() => openTutorial(rowIdx)}>
                 <i className="far fa-edit action mr-2"></i>
               </span>
-              
+
               <span onClick={() => deleteTutorial(rowIdx)}>
                 <i className="fas fa-trash action"></i>
               </span>

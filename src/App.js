@@ -45,37 +45,37 @@ function App() {
       <Switch>
         <MainLayout setToken={setToken} token={token}>
           {/* <MainLayout > */}
-          <Route path="/add" component={AddTutorial} />
-          <Route path="/add-category" component={AddTutorialCategory} />
+          <Route exact  path="/add" component={AddTutorial} />
+          <Route exact path="/add-category" component={AddTutorialCategory} />
           <Route exact path="/zone/add" component={AddZone} />
 
-          <Route path="/" exact component={Dashboard} />
-          <Route path="/main-category" component={MainCategory} />
-          <Route path="/sub-category" component={SubCategory} />
+          <Route exact path="/"  component={Dashboard} />
+          <Route exact path="/main-category" component={MainCategory} />
+          <Route exact path="/sub-category" component={SubCategory} />
 
           <Route exact path="/add-on" component={AddOn} />
           <Route exact path="/add-on/addlist" component={AddOnListAdd} />
           <Route exact path="/add-on/update/:id" component={AddOnEdit} />
 
-          <Route path="/services" component={Services} />
-          <Route path="/services/add" component={AddServices} />
+          <Route exact path="/services" component={Services} />
+          <Route exact path="/services/add" component={AddServices} />
 
           <Route exact path="/zone" component={Zone} />
 
-          <Route path="/time-slot" component={TimeSlot} />
-          <Route path="/banner" component={Banner} />
-          <Route path="/service-provider" component={ServiceProvider} />
-          <Route path="/orders" component={Orders} />
-          <Route path="/make-decision" component={MakeDecision} />
-          <Route path="/processing-orders" component={ProcessingOrder} />
-          <Route path="/cancelled-orders" component={CancelledOrder} />
-          <Route path="/completed-orders" component={CompletedOrder} />
+          <Route exact path="/time-slot" component={TimeSlot} />
+          <Route exact path="/banner" component={Banner} />
+          <Route exact path="/service-provider" component={ServiceProvider} />
+          <Route exact path="/orders" component={Orders} />
+          <Route exact path="/make-decision" component={MakeDecision} />
+          <Route exact path="/processing-orders" component={ProcessingOrder} />
+          <Route exact path="/cancelled-orders" component={CancelledOrder} />
+          <Route exact path="/completed-orders" component={CompletedOrder} />
 
-          <Route path="/review" component={Review} />
-          <Route path="/customers" component={Customers} />
-          <Route path="/logout" component={Logout} />
+          <Route exact path="/review" component={Review} />
+          <Route exact path="/customers" component={Customers} />
+          <Route exact path="/logout" component={Logout} />
 
-          <Route path="/category/update/:id" component={UpdateMainCategory} />
+          <Route exact path="/category/update/:id" component={UpdateMainCategory} />
           <Route exact path="/zone/update/:id" component={UpdateZone} />
         </MainLayout>
       </Switch>

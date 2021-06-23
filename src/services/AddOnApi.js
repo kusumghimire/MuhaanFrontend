@@ -17,7 +17,7 @@ const update = (id, data) => {
 };
 
 const remove = (id) => {
-  return http.delete(`add-on/delete/${id}`);
+  return http.delete(`add-on/delete/${id}/`);
 };
 
 const AddOnApi = {

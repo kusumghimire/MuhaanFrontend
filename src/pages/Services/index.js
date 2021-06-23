@@ -35,7 +35,7 @@ export default function Services() {
         </Grid>
         <Grid item>
           {/* <MainCategoryModal /> */}
-          <Link to={"/service/add"}>
+          <Link to={"/services/add"}>
             <Button variant="contained" color="primary">
               Create New
             </Button>

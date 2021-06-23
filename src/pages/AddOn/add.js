@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import { FormatBoldTwoTone } from "@material-ui/icons";
 
-const AddOnListAdd = () => {
+const AddOnListAdd = (props) => {
   const initialTutorialState = {
     id: null,
     name: "",
@@ -58,7 +58,8 @@ const AddOnListAdd = () => {
           image: response.data.image,
           rate: response.data.rate,
         });
-        setSubmitted(true);
+        props.history.push("/add-on");
+        // setSubmitted(true);
         console.log(response.data);
       })
       .catch((e) => {
@@ -66,17 +67,17 @@ const AddOnListAdd = () => {
       });
   };
 
-  const newTutorial = () => {
-    setTutorial(initialTutorialState);
-    setSubmitted(false);
-  };
+  // const newTutorial = () => {
+  //   setTutorial(initialTutorialState);
+  //   setSubmitted(false);
+  // };
 
   return (
     <div className="submit-form">
       {submitted ? (
         <div>
           <h4>You submitted successfully!</h4>
-          <button className="btn btn-success" onClick={newTutorial}>
+          <button className="btn btn-success" >
             Add
           </button>
         </div>
