@@ -28,6 +28,7 @@ import AddTutorialCategory from "./pages/SubCategory/add";
 import AddOnListAdd from "./pages/AddOn/add";
 import AddOnEdit from "./pages/AddOn/edit";
 import AddZone from "./pages/Zone/add";
+import AddServices from "./pages/Services/add";
 import UpdateMainCategory from "./pages/MainCategory/edit";
 import UpdateZone from "./pages/Zone/edit";
 import useToken from "./useToken";
@@ -57,6 +58,8 @@ function App() {
           <Route exact path="/add-on/update/:id" component={AddOnEdit} />
 
           <Route path="/services" component={Services} />
+          <Route path="/services/add" component={AddServices} />
+
           <Route exact path="/zone" component={Zone} />
 
           <Route path="/time-slot" component={TimeSlot} />

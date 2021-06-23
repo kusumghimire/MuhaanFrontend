@@ -26,7 +26,7 @@ const AddOnEdit = props => {
                 name:res[0].name,
                 description:res[0].description,
                 service:res[0].service,
-                image:res[0].image,
+                // image:res[0].image,
                 rate:res[0].rate,
               });
     })
@@ -102,7 +102,7 @@ const AddOnEdit = props => {
             <div className="form-group mt-3 mb-3">
               <label htmlFor="image">Image </label>
               <input
-                type="text"
+                type="file"
                 className="form-control"
                 id="image"
                 name="image"
