@@ -42,7 +42,7 @@ const UpdateZone = props => {
     
       .then(response => {
         console.log(response.data);
-        setMessage("Zone is upadated successfully");
+        props.history.push("/zone");
       })
       .catch(e => {
         console.log(e);
@@ -96,7 +96,6 @@ const UpdateZone = props => {
           >
             Update
           </button>
-          <p>{message}</p>
         </div>
     </div>
   );
