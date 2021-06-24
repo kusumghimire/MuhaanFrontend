@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-// import TutorialDataService from "../services/TutorialService";
-import TutorialDataService from "../../services/TutorialService";
+import React, { useState, useEffect } from "react";
+import ServiceApi from "../../services/ServicesApi";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
+import ZoneApiList from "../../services/ZoneApi";
 
 const AddServices = (props) => {
   const initialTutorialState = {
@@ -17,6 +17,7 @@ const AddServices = (props) => {
   };
   const [tutorial, setTutorial] = useState(initialTutorialState);
   const [submitted, setSubmitted] = useState(false);
+  const [servicedata, setServiceData] = useState([]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -39,7 +40,7 @@ const AddServices = (props) => {
     formData.append("discount", tutorial.discount);
     formData.append("payment_choice", tutorial.payment_choice);
 
-    TutorialDataService.create(formData)
+    ServiceApi.create(formData)
       .then((response) => {
         props.history.push("services");
         setTutorial({
@@ -58,7 +59,18 @@ const AddServices = (props) => {
         console.log(e);
       });
   };
-
+  const retrieveTutorialsZone = () => {
+    ZoneApiList.getAll()
+      .then((response) => {
+        setServiceData(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  useEffect(() => {
+    retrieveTutorialsZone();
+  }, []);
   const newTutorial = () => {
     setTutorial(initialTutorialState);
     setSubmitted(false);
@@ -102,15 +114,13 @@ const AddServices = (props) => {
 
               <div className="form-group  mt-3 mb-3">
                 <label htmlFor="zone">Zone</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="zone"
-                  required
-                  value={tutorial.zone}
-                  onChange={handleInputChange}
-                  name="zone"
-                />
+              
+            <select style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
+              {servicedata &&
+                servicedata.map((item) => {
+                  return <option value={item.id}>{item.name}</option>;
+                })}
+            </select>
               </div>
 
               <div className="form-group  mt-3 mb-3">
@@ -167,17 +177,13 @@ const AddServices = (props) => {
 
               <div className="form-group  mt-3 mb-3">
                 <label htmlFor="payment_choice">Payment Choice</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="payment_choice"
-                  required
-                  value={tutorial.payment_choice}
-                  onChange={handleInputChange}
-                  name="payment_choice"
-                />
+                <select style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
+              
+                <option value={tutorial.discount}>Cash on delivery</option>
+                <option value={tutorial.discount}>Online Payment</option>
+            </select>
+             
               </div>
-
 
               <button onClick={saveTutorial} className="btn btn-success">
                 Submit

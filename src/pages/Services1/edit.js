@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ServiceApi from "../../services/ServicesApi";
 import ZoneApiList from "../../services/ZoneApi";
+import Grid from "@material-ui/core/Grid";
 
 const EditServices = (props) => {
   const initialTutorialState = {
@@ -14,7 +15,6 @@ const EditServices = (props) => {
     payment_choice: "",
   };
   const [currentTutorial, setCurrentTutorial] = useState(initialTutorialState);
-  const [message, setMessage] = useState("");
   const [servicedata, setServiceData] = useState([]);
 
   const retrieveTutorials = () => {
@@ -80,7 +80,7 @@ const EditServices = (props) => {
 
       .then((response) => {
         console.log(response.data);
-        setMessage("Service updated successfully successfully!");
+        
       })
       .catch((e) => {
         console.log(e);
@@ -90,7 +90,9 @@ const EditServices = (props) => {
   return (
     <div>
       <div className="edit-form">
-        <h4>Edit Add On</h4>
+        <h4>Edit Service</h4>
+        <Grid container>
+ <Grid item md={8}>
         <form>
           <div className="form-group  mt-3 mb-3">
             <label htmlFor="category">Category</label>
@@ -108,7 +110,7 @@ const EditServices = (props) => {
           <div className="form-group  mt-3 mb-3">
             <label htmlFor="zone">Zone</label>
 
-            <select>
+            <select style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
               {servicedata &&
                 servicedata.map((item) => {
                   return <option value={item.id}>{item.name}</option>;
@@ -210,6 +212,8 @@ const EditServices = (props) => {
         >
           Update
         </button>
+        </Grid>
+        </Grid>
       </div>
     </div>
   );
