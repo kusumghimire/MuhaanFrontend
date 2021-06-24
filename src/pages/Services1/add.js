@@ -38,7 +38,10 @@ const AddServices = (props) => {
     formData.append("image", tutorial.image);
     formData.append("description", tutorial.description);
     formData.append("discount", tutorial.discount);
+    formData.append("rate", tutorial.rate);
     formData.append("payment_choice", tutorial.payment_choice);
+
+    console.log(tutorial.image,"test image")
 
     ServiceApi.create(formData)
       .then((response) => {
@@ -49,6 +52,7 @@ const AddServices = (props) => {
           title: response.data.title,
           image: response.data.image,
           description: response.data.description,
+          rate: response.data.rate,
           discount: response.data.discount,
           payment_choice: response.data.payment_choice,
         });
@@ -159,6 +163,19 @@ const AddServices = (props) => {
                   value={tutorial.description}
                   onChange={handleInputChange}
                   name="description"
+                />
+              </div>
+
+              <div className="form-group  mt-3 mb-3">
+                <label htmlFor="rate">Rate</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="rate"
+                  required
+                  value={tutorial.rate}
+                  onChange={handleInputChange}
+                  name="rate"
                 />
               </div>
 

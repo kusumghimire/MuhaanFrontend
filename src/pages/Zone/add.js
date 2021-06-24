@@ -26,12 +26,12 @@ const AddZone = (props) => {
 
     ZoneApi.create(data)
       .then((response) => {
-        props.history.push("zone");
+        
         setTutorial({
           id: response.data.id,
           name: response.data.name,
         });
-        setSubmitted(true);
+        props.history.push("/zone");
         console.log(response.data);
       })
       .catch((e) => {
