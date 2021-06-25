@@ -64,12 +64,6 @@ const AddOnListAdd = (props) => {
         console.log(e);
       });
   };
-
-  // const newTutorial = () => {
-  //   setTutorial(initialTutorialState);
-  //   setSubmitted(false);
-  // };
-
   return (
     <div className="submit-form">
       {submitted ? (

@@ -58,7 +58,7 @@ const UpdateMainTutorial = props => {
     
       .then(response => {
         console.log(response.data);
-        setMessage("Main category was updated successfully!");
+        props.history.push("/main-category");
       })
       .catch(e => {
         console.log(e);

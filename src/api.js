@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const token= JSON.parse(localStorage.getItem('token'));
-console.log(token);
+// console.log(token);
 
 //const headers={headers herer}
 //const baseURL=baseurl

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ServiceApi from "../../services/ServicesApi";
 import ZoneApiList from "../../services/ZoneApi";
+import TutorialDataService from "../../services/TutorialService";
 import Grid from "@material-ui/core/Grid";
 
 const EditServices = (props) => {
@@ -16,6 +17,19 @@ const EditServices = (props) => {
   };
   const [currentTutorial, setCurrentTutorial] = useState(initialTutorialState);
   const [servicedata, setServiceData] = useState([]);
+  const [categorydata, setCategoryData] = useState([]);
+
+  const retrieveTutorialsCategory = () => {
+    TutorialDataService.getAll()
+      .then((response) => {
+        setCategoryData(response.data);      
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  console.log(categorydata)
+
 
   const retrieveTutorials = () => {
     ServiceApi.getAll()
@@ -46,15 +60,15 @@ const EditServices = (props) => {
     ZoneApiList.getAll()
       .then((response) => {
         setServiceData(response.data);
-       
       })
       .catch((e) => {
         console.log(e);
       });
   };
-  console.log(servicedata)
+  // console.log(servicedata)
 
   useEffect(() => {
+    retrieveTutorialsCategory();
     retrieveTutorials();
     retrieveTutorialsZone();
   }, []);
@@ -83,7 +97,7 @@ const EditServices = (props) => {
         
       })
       .catch((e) => {
-        console.log(e);
+        console.log(e.response);
       });
   };
 
@@ -96,15 +110,12 @@ const EditServices = (props) => {
         <form>
           <div className="form-group  mt-3 mb-3">
             <label htmlFor="category">Category</label>
-            <input
-              type="text"
-              className="form-control"
-              id="category"
-              required
-              value={currentTutorial.category}
-              onChange={handleInputChange}
-              name="category"
-            />
+            <select style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
+              {categorydata &&
+                categorydata.map((item) => {
+                  return <option value={item.id}>{item.title}</option>;
+                })}
+            </select>
           </div>
 
           <div className="form-group  mt-3 mb-3">

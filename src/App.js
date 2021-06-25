@@ -61,7 +61,7 @@ function App() {
 
           <Route exact path="/services" component={Services} />
           <Route exact path="/services/add" component={AddServices} />
-          <Route exact path="/services/update/:id" component={EditServices} />
+          <Route exact path="/services/update/:id/" component={EditServices} />
 
           <Route exact path="/zone" component={Zone} />
 

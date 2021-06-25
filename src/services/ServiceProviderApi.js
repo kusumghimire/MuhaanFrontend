@@ -1,11 +1,11 @@
 import http from "../api";
 
-const getAll = () => {
-  return http.get(`/service-provider/`);
+const create = () => {
+  return http.create(`/service-provider`);
 };
 
 const ServiceProviderApi = {
-  getAll,
+  create,
 };
 
 export default ServiceProviderApi;

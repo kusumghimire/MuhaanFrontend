@@ -3,7 +3,7 @@ import ServiceApi from "../../services/ServicesApi";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import ZoneApiList from "../../services/ZoneApi";
-
+import TutorialDataService from "../../services/TutorialService";
 const AddServices = (props) => {
   const initialTutorialState = {
     id: null,
@@ -18,6 +18,12 @@ const AddServices = (props) => {
   const [tutorial, setTutorial] = useState(initialTutorialState);
   const [submitted, setSubmitted] = useState(false);
   const [servicedata, setServiceData] = useState([]);
+  const [categorydata, setCategoryData] = useState([]);
+  const [selectedCategory,setSelectedCategory] = useState([]);
+
+  function handleSelectChange(event) {
+    setSelectedCategory(event.target.value);
+}
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -28,11 +34,33 @@ const AddServices = (props) => {
     setTutorial({ ...tutorial, image: event.target.files[0] });
     // console.log(event.target.files[0])
   };
+  const retrieveTutorialsZone = () => {
+    ZoneApiList.getAll()
+      .then((response) => {
+        setServiceData(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  const retrieveTutorialsCategory = () => {
+    TutorialDataService.getAll()
+      .then((response) => {
+        setCategoryData(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  useEffect(() => {
+    retrieveTutorialsZone();
+    retrieveTutorialsCategory();
+  }, []);
 
   const saveTutorial = () => {
     let formData = new FormData();
 
-    formData.append("category", tutorial.category);
+    formData.append("category ",tutorial.category);
     formData.append("zone", tutorial.zone);
     formData.append("title", tutorial.title);
     formData.append("image", tutorial.image);
@@ -41,11 +69,9 @@ const AddServices = (props) => {
     formData.append("rate", tutorial.rate);
     formData.append("payment_choice", tutorial.payment_choice);
 
-    console.log(tutorial.image,"test image")
 
     ServiceApi.create(formData)
-      .then((response) => {
-        props.history.push("services");
+      .then((response) => {       
         setTutorial({
           id: response.data.id,
           category: response.data.category,
@@ -56,40 +82,17 @@ const AddServices = (props) => {
           discount: response.data.discount,
           payment_choice: response.data.payment_choice,
         });
-        setSubmitted(true);
+        
+        props.history.push("/services");
         console.log(response.data);
       })
       .catch((e) => {
         console.log(e);
-      });
-  };
-  const retrieveTutorialsZone = () => {
-    ZoneApiList.getAll()
-      .then((response) => {
-        setServiceData(response.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-  useEffect(() => {
-    retrieveTutorialsZone();
-  }, []);
-  const newTutorial = () => {
-    setTutorial(initialTutorialState);
-    setSubmitted(false);
+      });  
   };
 
   return (
-    <div className="submit-form">
-      {submitted ? (
-        <div>
-          <h2>You submitted successfully!</h2>
-          <button className="btn btn-success" onClick={newTutorial}>
-            Add
-          </button>
-        </div>
-      ) : (
+    <div className="submit-form">  
         <div>
           <Grid container>
             <Grid item md={8}>
@@ -105,21 +108,18 @@ const AddServices = (props) => {
 
               <div className="form-group  mt-3 mb-3">
                 <label htmlFor="category">Category</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="category"
-                  required
-                  value={tutorial.category}
-                  onChange={handleInputChange}
-                  name="category"
-                />
+                <select value={selectedCategory} onChange={handleSelectChange} style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
+              {categorydata &&
+                categorydata.map((item) => {
+                  return <option value={item.id}>{item.title}</option>;
+                })}
+            </select>
               </div>
 
               <div className="form-group  mt-3 mb-3">
                 <label htmlFor="zone">Zone</label>
               
-            <select style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
+            <select value={tutorial.category} style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
               {servicedata &&
                 servicedata.map((item) => {
                   return <option value={item.id}>{item.name}</option>;
@@ -208,7 +208,7 @@ const AddServices = (props) => {
             </Grid>
           </Grid>
         </div>
-      )}
+    
     </div>
   );
 };

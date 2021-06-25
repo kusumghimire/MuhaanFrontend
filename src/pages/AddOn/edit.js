@@ -44,16 +44,53 @@ const AddOnEdit = props => {
   };
 
   const updateTutorial = () => {
-    console.log(currentTutorial)
-    AddOnApiList.update(currentTutorial.id, currentTutorial)
+    // console.log(currentTutorial)
+    // AddOnApiList.update(currentTutorial.id, currentTutorial)
     
-      .then(response => {
+    //   .then(response => {
+    //     console.log(response.data);
+    //     props.history.push("/add-on");
+    //   })
+    //   .catch(e => {
+    //     console.log(e);
+    //   });
+    
+    let formData = new FormData();
+
+    formData.append("name", currentTutorial.name); //append the values with key, value pair
+    formData.append("description", currentTutorial.description);
+    formData.append("service", currentTutorial.service);
+    formData.append("image", currentTutorial.image);
+    formData.append("rate", currentTutorial.rate);
+
+    // var data = {
+    //   name: tutorial.name,
+    //   description: tutorial.description,
+    //   service: tutorial.service,
+    //   image: tutorial.image,
+    //   rate: tutorial.rate,
+    // };
+    
+    // console.log(tutorial.image,"test image");
+
+    AddOnApiList.update(formData)
+      .then((response) => {
+        setCurrentTutorial({
+          id: response.data.id,
+          name: response.data.name,
+          description: response.data.description,
+          service: response.data.service,
+          image: response.data.image,
+          rate: response.data.rate,
+        });
+        props.history.push("/add-on");
+        // setSubmitted(true);
         console.log(response.data);
-        setMessage("The tutorial was updated successfully!");
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
+
   };
 
 

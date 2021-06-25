@@ -70,6 +70,16 @@ const AddOnList = (props) => {
       {
         Header: "Image",
         accessor: "image",
+        maxWidth: 60,
+        minWidth: 40,
+        maxHeight:40,
+        minHeight:20,
+        Cell: ({ cell: { value } }) => (
+          <img
+            src={value}
+            width={60}
+          />
+        )
       },
       {
         Header: "Rate",

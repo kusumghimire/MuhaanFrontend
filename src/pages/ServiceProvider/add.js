@@ -47,7 +47,7 @@ const AddServiceProvider = (props) => {
     formData.append("password", tutorial.password);
     formData.append("confirmpassword", tutorial.confirmpassword);
 
-    ServiceProviderApi.getAll(formData)
+    ServiceProviderApi.create(formData)
       .then((response) => {
         setTutorial({
           id: response.data.id,

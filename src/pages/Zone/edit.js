@@ -55,26 +55,6 @@ const UpdateZone = props => {
         <div className="edit-form">
           <h4>Edit Zone</h4>
           <form>
-          {/* <div className="form-group">
-              <label htmlFor="title">Category</label>
-              
-              <select
-                type="text"
-                className="form-control"
-                id="title"
-                name="cat"
-                value={currentTutorial.title}
-                onChange={handleInputChange}
-              >
-                {
-                  .map(item=>{
-                    return(
-                      <option value="" key="">{.cat}</option>
-                    )
-                  })
-                }
-              </select>
-            </div> */}
             <div className="form-group">
               <label htmlFor="title">Zone</label>
               

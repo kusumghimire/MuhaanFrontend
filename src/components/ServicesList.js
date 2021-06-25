@@ -9,7 +9,7 @@ import { useTable } from "react-table";
 const ServicesList = (props) => {
   const [tutorials, setTutorials] = useState([]);
   const tutorialsRef = useRef();
-  const history= useHistory();
+  const history = useHistory();
 
   tutorialsRef.current = tutorials;
 
@@ -31,32 +31,26 @@ const ServicesList = (props) => {
     retrieveTutorials();
   };
 
-
-
   const openTutorial = (rowIndex, data) => {
     const id = tutorialsRef.current[rowIndex].id;
-    history.push(`/services/update/${id }`, data);
+    history.push(`/services/update/${id}`, data);
   };
-
 
   const deleteTutorial = async (rowIndex) => {
     const id = tutorialsRef.current[rowIndex].id;
     console.log(id);
-    
-  
+
     await ServiceApi.remove(id)
       .then((response) => {
-  
         let newTutorials = [...tutorialsRef.current];
         newTutorials.splice(rowIndex, 1);
-  
+
         setTutorials(newTutorials);
       })
       .catch((e) => {
         console.log(e);
       });
   };
-  
 
   const columns = useMemo(
     () => [
@@ -80,6 +74,15 @@ const ServicesList = (props) => {
       {
         Header: "Image",
         accessor: "image",
+        maxWidth: 60,
+        minWidth: 40,
+        maxHeight:40,
+        Cell: ({ cell: { value } }) => (
+          <img
+            src={value}
+            width={60}
+          />
+        )
       },
       {
         Header: "Description",
@@ -111,15 +114,16 @@ const ServicesList = (props) => {
           const rowIdx = props.row.id;
           return (
             <div>
-            
-              <span style={{marginRight:"0.5rem"}} onClick={() => openTutorial(rowIdx)}>
+              <span
+                style={{ marginRight: "0.5rem" }}
+                onClick={() => openTutorial(rowIdx)}
+              >
                 <i className="far fa-edit action mr-2"></i>
               </span>
 
               <span onClick={() => deleteTutorial(rowIdx)}>
                 <i className="fas fa-trash action"></i>
               </span>
-             
             </div>
           );
         },
@@ -128,16 +132,11 @@ const ServicesList = (props) => {
     []
   );
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable({
-    columns,
-    data: tutorials,
-  });
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({
+      columns,
+      data: tutorials,
+    });
 
   return (
     <div className="list row">
