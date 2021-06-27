@@ -103,9 +103,9 @@ function MainLayout(props) {
         <NavLink to="/main-category" icon={AssignmentIcon}>
           Main Category
         </NavLink>
-        <NavLink to="/sub-category" icon={CalendarViewDayIcon}>
+        {/* <NavLink to="/sub-category" icon={CalendarViewDayIcon}>
           Sub Category
-        </NavLink>
+        </NavLink> */}
         <NavLink to="/services" icon={CalendarViewDayIcon}>
          Services
         </NavLink>

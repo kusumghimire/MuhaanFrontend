@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Grid, Typography, makeStyles, Button } from "@material-ui/core/";
-import ServiceProviderTable from "../../components/tables/serviceProvider/serviceProvider";
-import ServiceProviderModal from "../../components/modal/serviceProvider/servideProvider";
+// import ServiceProviderTable from "../../components/tables/serviceProvider/serviceProvider";
+// import ServiceProviderModal from "../../components/modal/serviceProvider/servideProvider";
+import ServiceProviderList from "../../components/ServiceProviderList";
 const useStyles = makeStyles({
   root: {
     width: "100%",
@@ -34,7 +35,7 @@ export default function ServiceProvider() {
       </Grid>
       <Grid container style={{ width: " 100%" }}>
         <Grid item xs={12} md={12}>
-          <ServiceProviderTable />
+          <ServiceProviderList />
         </Grid>
       </Grid>
     </>

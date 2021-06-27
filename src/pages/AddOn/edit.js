@@ -43,6 +43,11 @@ const AddOnEdit = props => {
     setCurrentTutorial({ ...currentTutorial, [name]: value });
   };
 
+  const handleImageChange = (event) => {
+    setCurrentTutorial({ ...currentTutorial, image:event.target.files[0] });
+    // console.log(event.target.files[0])
+  };
+
   const updateTutorial = () => {
     // console.log(currentTutorial)
     // AddOnApiList.update(currentTutorial.id, currentTutorial)
@@ -136,17 +141,18 @@ const AddOnEdit = props => {
               />
             </div>
 
-            <div className="form-group mt-3 mb-3">
-              <label htmlFor="image">Image </label>
-              <input
-                type="file"
-                className="form-control"
-                id="image"
-                name="image"
-                value={currentTutorial.image}
-                onChange={handleInputChange}
-              />
-            </div>
+            <div className="form-group  mt-3 mb-3">
+                <label htmlFor="image">Image</label>
+                <input
+                  type="file"
+                  className="form-control"
+                  id="image"
+                  required
+                //   value={tutorial.image}
+                  onChange={handleImageChange}
+                  name="image"
+                />
+              </div>
 
             <div className="form-group mt-3 mb-3">
               <label htmlFor="rate">Rate </label>

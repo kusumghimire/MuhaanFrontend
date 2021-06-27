@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
-import AddOnApiService from "../services/AddOnApi";
+import ServiceProviderApi from "../services/ServiceProviderApi";
 import { useTable } from "react-table";
 
 const ServiceProviderList = (props) => {
@@ -17,7 +17,7 @@ const ServiceProviderList = (props) => {
   }, []);
 
   const retrieveTutorials = () => {
-    AddOnApiService.getAll()
+    ServiceProviderApi.getAll()
       .then((response) => {
         setTutorials(response.data);
       })
@@ -39,7 +39,7 @@ const ServiceProviderList = (props) => {
     const id = tutorialsRef.current[rowIndex].id;
     console.log(id);
     
-    await AddOnApiService.remove(id)
+    await ServiceProviderApi.remove(id)
       .then((response) => {
         // props.history.push(`category/delete/${id}`);
   
@@ -60,24 +60,84 @@ const ServiceProviderList = (props) => {
         accessor: "id",
       },
       {
-        Header: "Name",
-        accessor: "name",
+        Header: "First Name",
+        accessor: "first_name",
       },
       {
-        Header: "Description",
-        accessor: "description",
+        Header: "Last Name",
+        accessor: "last_name",
       },
       {
         Header: "Image",
-        accessor: "image",
+        accessor: "profile_pic",
+        maxWidth: 40,
+        minWidth: 20,
+        maxHeight:40,
+        minHeight:20,
+        Cell: ({ cell: { value } }) => (
+          <img
+            src={value}
+            width={60}
+          />
+        )
       },
       {
-        Header: "Rate",
-        accessor: "rate",
+        Header: "Address",
+        accessor: "address",
+      },
+
+      {
+        Header: "Email",
+        accessor: "email",
+      },
+      {
+        Header: "Phone Number",
+        accessor: "phone_no",
+      },      
+      {
+        Header: "Office Name",
+        accessor: "office_name",
+      },
+      
+      {
+        Header: "Office Name",
+        accessor: "office_address",
+      },
+      {
+        Header: "PAN",
+        accessor: "pan",
+      },
+      {
+        Header: "Citizenship",
+        accessor: "citizenship",
+        maxWidth: 40,
+        minWidth: 20,
+        maxHeight:40,
+        minHeight:20,
+        Cell: ({ cell: { value } }) => (
+          <img
+            src={value}
+            width={60}
+          />
+        )
+      },
+      {
+        Header: "Document",
+        accessor: "document",
+        maxWidth: 40,
+        minWidth: 20,
+        maxHeight:40,
+        minHeight:20,
+        Cell: ({ cell: { value } }) => (
+          <img
+            src={value}
+            width={60}
+          />
+        )
       },
       // {
-      //   Header: "Description",
-      //   accessor: "description",
+      //   Header: "Verified OTP",
+      //   accessor: "document",
       // },
       // {
       //   Header: "Status",

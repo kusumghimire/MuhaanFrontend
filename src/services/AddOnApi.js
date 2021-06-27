@@ -1,7 +1,7 @@
 import http from "../api";
 
 const getAll = () => {
-  return http.get("add-on/");
+  return http.get("/add-on/");
 };
 
 const get = (id) => {

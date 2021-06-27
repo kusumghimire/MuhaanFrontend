@@ -21,9 +21,10 @@ const AddServices = (props) => {
   const [categorydata, setCategoryData] = useState([]);
   const [selectedCategory,setSelectedCategory] = useState([]);
 
-  function handleSelectChange(event) {
-    setSelectedCategory(event.target.value);
-}
+//   function handleSelectChange(event) {
+//     const { name, value } = event.target;
+//     setTutorial({ ...tutorial, [name]: value });
+// }
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -108,10 +109,10 @@ const AddServices = (props) => {
 
               <div className="form-group  mt-3 mb-3">
                 <label htmlFor="category">Category</label>
-                <select value={selectedCategory} onChange={handleSelectChange} style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
+                <select name="category" value={tutorial.category} onChange={handleInputChange} style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
               {categorydata &&
                 categorydata.map((item) => {
-                  return <option value={item.id}>{item.title}</option>;
+                 return  <option value={item.id} key={item.id}>{item.title}</option>;
                 })}
             </select>
               </div>
@@ -119,7 +120,7 @@ const AddServices = (props) => {
               <div className="form-group  mt-3 mb-3">
                 <label htmlFor="zone">Zone</label>
               
-            <select value={tutorial.category} style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
+            <select name="zone" value={tutorial.zone}  onChange={handleInputChange} style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
               {servicedata &&
                 servicedata.map((item) => {
                   return <option value={item.id}>{item.name}</option>;
@@ -194,13 +195,25 @@ const AddServices = (props) => {
 
               <div className="form-group  mt-3 mb-3">
                 <label htmlFor="payment_choice">Payment Choice</label>
-                <select style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
+                <select value={tutorial.payment_choice} onChange={handleInputChange} style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
               
                 <option value={tutorial.discount}>Cash on delivery</option>
                 <option value={tutorial.discount}>Online Payment</option>
             </select>
              
               </div>
+                   {/* <div className="form-group  mt-3 mb-3">
+                <label htmlFor="payment_choice">Payment</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="payment_choice"
+                  required
+                  value={tutorial.payment_choice}
+                  onChange={handleInputChange}
+                  name="payment_choice"
+                />
+              </div> */}
 
               <button onClick={saveTutorial} className="btn btn-success">
                 Submit
