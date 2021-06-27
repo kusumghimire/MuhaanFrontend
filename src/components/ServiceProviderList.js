@@ -30,28 +30,26 @@ const ServiceProviderList = (props) => {
     retrieveTutorials();
   };
 
-  const openTutorial = (rowIndex, data) => {
-    const id = tutorialsRef.current[rowIndex].id;
-    history.push(`/add-on/update/${id }`, data);
-  };
+  // const openTutorial = (rowIndex, data) => {
+  //   const id = tutorialsRef.current[rowIndex].id;
+  //   history.push(`/add-on/update/${id }`, data);
+  // };
 
-  const deleteTutorial = async (rowIndex) => {
-    const id = tutorialsRef.current[rowIndex].id;
-    console.log(id);
+  // const deleteTutorial = async (rowIndex) => {
+  //   const id = tutorialsRef.current[rowIndex].id;
+  //   console.log(id);
     
-    await ServiceProviderApi.remove(id)
-      .then((response) => {
-        // props.history.push(`category/delete/${id}`);
+  //   await ServiceProviderApi.remove(id)
+  //     .then((response) => {
+  //       let newTutorials = [...tutorialsRef.current];
+  //       newTutorials.splice(rowIndex, 1);
   
-        let newTutorials = [...tutorialsRef.current];
-        newTutorials.splice(rowIndex, 1);
-  
-        setTutorials(newTutorials);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+  //       setTutorials(newTutorials);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // };
 
   const columns = useMemo(
     () => [
@@ -146,26 +144,26 @@ const ServiceProviderList = (props) => {
       //     return props.value ? "Published" : "Pending";
       //   },
       // },
-      {
-        Header: "Actions",
-        accessor: "actions",
-        Cell: (props) => {
-          const rowIdx = props.row.id;
-          return (
-            <div>
+      // {
+      //   Header: "Actions",
+      //   accessor: "actions",
+      //   Cell: (props) => {
+      //     const rowIdx = props.row.id;
+      //     return (
+      //       <div>
             
-              <span style={{marginRight:"0.5rem"}} onClick={() => openTutorial(rowIdx)}>
-                <i className="far fa-edit action mr-2"></i>
-              </span>
+      //         <span style={{marginRight:"0.5rem"}} onClick={() => openTutorial(rowIdx)}>
+      //           <i className="far fa-edit action mr-2"></i>
+      //         </span>
 
-              <span onClick={() => deleteTutorial(rowIdx)}>
-                <i className="fas fa-trash action"></i>
-              </span>
+      //         <span onClick={() => deleteTutorial(rowIdx)}>
+      //           <i className="fas fa-trash action"></i>
+      //         </span>
              
-            </div>
-          );
-        },
-      },
+      //       </div>
+      //     );
+      //   },
+      // },
     ],
     []
   );
