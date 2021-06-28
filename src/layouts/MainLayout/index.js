@@ -103,30 +103,45 @@ function MainLayout(props) {
         <NavLink to="/main-category" icon={AssignmentIcon}>
           Main Category
         </NavLink>
-        <NavLink to="/sub-category" icon={CalendarViewDayIcon}>
+        {/* <NavLink to="/sub-category" icon={CalendarViewDayIcon}>
           Sub Category
+        </NavLink> */}
+        <NavLink to="/services" icon={CalendarViewDayIcon}>
+         Services
         </NavLink>
-        <NavLink to="/time-slot" icon={QueryBuilderIcon}>
+        <NavLink to="/add-on" icon={CalendarViewDayIcon}>
+         Add On 
+        </NavLink>
+        <NavLink to="/zone" icon={CalendarViewDayIcon}>
+         Zone
+        </NavLink>
+        {/* <NavLink to="/time-slot" icon={QueryBuilderIcon}>
           Time Slot & Date
         </NavLink>
         <NavLink to="/banner" icon={PanoramaIcon}>
           Banner
-        </NavLink>
+        </NavLink> */}
         <NavLink to="/service-provider" icon={GroupAddIcon}>
           Service Provider
         </NavLink>
         <NavLink to="/orders" icon={AddCircleOutlineIcon}>
-          Pending Orders
+          Pending Services
         </NavLink>
         <NavLink to="/processing-orders" icon={ControlPointDuplicateIcon}>
-          Processing Order
+          Processing Services
+        </NavLink>
+        <NavLink to="/completed-orders" icon={ControlPointDuplicateIcon}>
+          Completed Services
+        </NavLink>
+        <NavLink to="/cancelled-orders" icon={ControlPointDuplicateIcon}>
+          Cancelled Services
         </NavLink>
         <NavLink to="/customers" icon={GroupIcon}>
           Customers
         </NavLink>
-        <NavLink to="/review" icon={StarOutlineIcon}>
+        {/* <NavLink to="/review" icon={StarOutlineIcon}>
           Review & Rating
-        </NavLink>
+        </NavLink> */}
       </List>
     </Drawer>
   );
