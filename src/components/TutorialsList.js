@@ -6,7 +6,7 @@ import "@fortawesome/fontawesome-free/js/all.js";
 import TutorialDataService from "../services/TutorialService";
 import { useTable } from "react-table";
 import server from '../api'
-
+import Collapsible from 'react-collapsible';
 
 const TutorialsList = (props) => {
   const [tutorials, setTutorials] = useState([]);
@@ -100,6 +100,23 @@ const deleteTutorial = async (rowIndex) => {
       {
         Header: "Main Category",
         accessor: "title",
+        Cell: (props) => {
+          const rowIdx = props.row.id;
+          return (
+            <Collapsible trigger="Main Category &darr;" style={{color:"green"}}>
+              <p></p>
+            <p style={{color:"blue"}}>
+             Sub category Title
+            </p>
+            <p style={{color:"blue"}}>
+             Sub category Title
+            </p>
+            <p style={{color:"blue"}}>
+             Sub category Title
+            </p>
+          </Collapsible>
+          );
+        },
       },
       {
         Header: "Actions",

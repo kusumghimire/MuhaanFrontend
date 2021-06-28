@@ -59,7 +59,7 @@ const ServicesList = (props) => {
         accessor: "id",
       },
       {
-        Header: "Services",
+        Header: "Category",
         accessor: "category",
       },
       {
