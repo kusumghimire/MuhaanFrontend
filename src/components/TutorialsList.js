@@ -98,8 +98,8 @@ const deleteTutorial = async (rowIndex) => {
   const columns = useMemo(
     () => [
       {
-        Header: "Main Category",
-        accessor: "title",
+        Header: "Main Category24",
+        accessor: "cat",
         Cell: (props) => {
           const rowIdx = props.row.id;
           return (
@@ -117,6 +117,10 @@ const deleteTutorial = async (rowIndex) => {
           </Collapsible>
           );
         },
+      },
+      {
+        Header:"Sub Cat",
+        accessor:"title",
       },
       {
         Header: "Actions",

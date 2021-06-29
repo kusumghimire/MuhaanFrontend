@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import ZoneApiList from "../../services/ZoneApi";
 import TutorialDataService from "../../services/TutorialService";
+import SelectMain from "../../components/SelectMain";
 const AddServices = (props) => {
   const initialTutorialState = {
     id: null,
@@ -106,7 +107,7 @@ const AddServices = (props) => {
                   Add Service
                 </Typography>
               </Grid>
-
+              <SelectMain />
               <div className="form-group  mt-3 mb-3">
                 <label htmlFor="category">Category</label>
                 <select name="category" value={tutorial.category} onChange={handleInputChange} style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
@@ -195,10 +196,10 @@ const AddServices = (props) => {
 
               <div className="form-group  mt-3 mb-3">
                 <label htmlFor="payment_choice">Payment Choice</label>
-                <select value={tutorial.payment_choice} onChange={handleInputChange} style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
+                <select value={tutorial.payment_choice} name="payment_choice" onChange={handleInputChange} style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
               
-                <option value={tutorial.discount}>Cash on delivery</option>
-                <option value={tutorial.discount}>Online Payment</option>
+                <option value="1">Cash Payment</option>
+                <option value="2">Online Payment</option>
             </select>
              
               </div>
