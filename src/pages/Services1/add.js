@@ -5,11 +5,25 @@ import { Typography } from "@material-ui/core";
 import ZoneApiList from "../../services/ZoneApi";
 import TutorialDataService from "../../services/TutorialService";
 import SelectMain from "../../components/SelectMain";
+
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    // width: 500,
+    "& > * + *": {
+      marginTop: theme.spacing(1),
+    },
+  },
+}));
+
 const AddServices = (props) => {
   const initialTutorialState = {
     id: null,
     category: "",
-    zone: "",
+    zone: null,
     title: "",
     image: "",
     description: "",
@@ -20,16 +34,22 @@ const AddServices = (props) => {
   const [submitted, setSubmitted] = useState(false);
   const [servicedata, setServiceData] = useState([]);
   const [categorydata, setCategoryData] = useState([]);
-  const [selectedCategory,setSelectedCategory] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState([]);
 
-//   function handleSelectChange(event) {
-//     const { name, value } = event.target;
-//     setTutorial({ ...tutorial, [name]: value });
-// }
+  //   function handleSelectChange(event) {
+  //     const { name, value } = event.target;
+  //     setTutorial({ ...tutorial, [name]: value });
+  // }
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setTutorial({ ...tutorial, [name]: value });
+  };
+
+  const handleInputZone = (event,option) => {
+    const zoneData = [];
+    option.map((each)=> zoneData.push(each.name))
+    setTutorial({ ...tutorial, zone:zoneData});
   };
 
   const handleImageChange = (event) => {
@@ -39,12 +59,15 @@ const AddServices = (props) => {
   const retrieveTutorialsZone = () => {
     ZoneApiList.getAll()
       .then((response) => {
+        console.log(response,"response data");
         setServiceData(response.data);
       })
       .catch((e) => {
         console.log(e);
       });
-  };
+    };
+    
+
   const retrieveTutorialsCategory = () => {
     TutorialDataService.getAll()
       .then((response) => {
@@ -53,16 +76,19 @@ const AddServices = (props) => {
       .catch((e) => {
         console.log(e);
       });
+      
   };
   useEffect(() => {
     retrieveTutorialsZone();
     retrieveTutorialsCategory();
   }, []);
+console.log(retrieveTutorialsZone)
 
-  const saveTutorial = () => {
+  const saveTutorial = (e) => {
+    e.preventDefault();
     let formData = new FormData();
 
-    formData.append("category ",tutorial.category);
+    formData.append("category ", tutorial.category);
     formData.append("zone", tutorial.zone);
     formData.append("title", tutorial.title);
     formData.append("image", tutorial.image);
@@ -71,9 +97,9 @@ const AddServices = (props) => {
     formData.append("rate", tutorial.rate);
     formData.append("payment_choice", tutorial.payment_choice);
 
-
     ServiceApi.create(formData)
-      .then((response) => {       
+    
+      .then((response) => {
         setTutorial({
           id: response.data.id,
           category: response.data.category,
@@ -84,126 +110,182 @@ const AddServices = (props) => {
           discount: response.data.discount,
           payment_choice: response.data.payment_choice,
         });
-        
         props.history.push("/services");
         console.log(response.data);
       })
       .catch((e) => {
         console.log(e);
-      });  
+      });
+    console.log(tutorial)
   };
 
+  const classes = useStyles();
+
+
   return (
-    <div className="submit-form">  
-        <div>
-          <Grid container>
-            <Grid item md={8}>
-              <Grid item>
-                <Typography
-                  variant="h4"
-                  gutterBottom
-                  style={{ marginRight: "1rem" }}
-                >
-                  Add Service
-                </Typography>
-              </Grid>
-              <SelectMain />
-              <div className="form-group  mt-3 mb-3">
-                <label htmlFor="category">Category</label>
-                <select name="category" value={tutorial.category} onChange={handleInputChange} style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
-              {categorydata &&
-                categorydata.map((item) => {
-                 return  <option value={item.id} key={item.id}>{item.title}</option>;
-                })}
-            </select>
-              </div>
+    <div className="submit-form">
+      <div>
+        <Grid container>
+          <Grid item md={8}>
+            <Grid item>
+              <Typography
+                variant="h4"
+                gutterBottom
+                style={{ marginRight: "1rem" }}
+              >
+                Add Service
+              </Typography>
+            </Grid>
+            <SelectMain />
 
-              <div className="form-group  mt-3 mb-3">
-                <label htmlFor="zone">Zone</label>
-              
-            <select name="zone" value={tutorial.zone}  onChange={handleInputChange} style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
-              {servicedata &&
-                servicedata.map((item) => {
-                  return <option value={item.id}>{item.name}</option>;
-                })}
-            </select>
-              </div>
+            {/* Here is mulitselect started */}
+       <form onSubmit={saveTutorial}>
+            <div className={classes.root}>
+              <label>Zone</label>
+              <Autocomplete
+                multiple
+                id="tags-standard"
+                options={servicedata}
+                // value={tutorial.category}
+                onChange={handleInputZone}
+                getOptionLabel={(option) => option.name}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    placeholder="Select Category"
+                  />
+                )}
+              />
+            </div>
 
-              <div className="form-group  mt-3 mb-3">
-                <label htmlFor="zone">Title</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="title"
-                  required
-                  value={tutorial.title}
-                  onChange={handleInputChange}
-                  name="title"
-                />
-              </div>
+            <div className="form-group  mt-3 mb-3">
+              <label htmlFor="category">Category</label>
+              <select
+                name="category"
+                value={tutorial.category}
+                onChange={handleInputChange}
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  borderRadius: "4px",
+                  border: "1px solid gray",
+                }}
+              >
+                {categorydata &&
+                  categorydata.map((item) => {
+                    return (
+                      <option value={item.id} key={item.id}>
+                        {item.title}
+                      </option>
+                    );
+                  })}
+              </select>
+            </div>
 
-              <div className="form-group  mt-3 mb-3">
-                <label htmlFor="image">Image</label>
-                <input
-                  type="file"
-                  className="form-control"
-                  id="image"
-                  required
-                  //   value={tutorial.image}
-                  onChange={handleImageChange}
-                  name="image"
-                />
-              </div>
+            {/* <div className="form-group  mt-3 mb-3">
+              <label htmlFor="zone">Zone</label>
 
-              <div className="form-group  mt-3 mb-3">
-                <label htmlFor="description">Description</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="description"
-                  required
-                  value={tutorial.description}
-                  onChange={handleInputChange}
-                  name="description"
-                />
-              </div>
+              <select
+                name="zone"
+                value={tutorial.zone}
+                onChange={handleInputChange}
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  borderRadius: "4px",
+                  border: "1px solid gray",
+                }}
+              >
+                {servicedata &&
+                  servicedata.map((item) => {
+                    return <option value={item.id}>{item.name}</option>;
+                  })}
+              </select>
+            </div> */}
 
-              <div className="form-group  mt-3 mb-3">
-                <label htmlFor="rate">Rate</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  id="rate"
-                  required
-                  value={tutorial.rate}
-                  onChange={handleInputChange}
-                  name="rate"
-                />
-              </div>
+            <div className="form-group  mt-3 mb-3">
+              <label htmlFor="zone">Title</label>
+              <input
+                type="text"
+                className="form-control"
+                id="title"
+                required
+                value={tutorial.title}
+                onChange={handleInputChange}
+                name="title"
+              />
+            </div>
 
-              <div className="form-group  mt-3 mb-3">
-                <label htmlFor="discount">Discount</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  id="discount"
-                  required
-                  value={tutorial.discount}
-                  onChange={handleInputChange}
-                  name="discount"
-                />
-              </div>
+            <div className="form-group  mt-3 mb-3">
+              <label htmlFor="image">Image</label>
+              <input
+                type="file"
+                className="form-control"
+                id="image"
+                required
+                onChange={handleImageChange}
+                name="image"
+              />
+            </div>
 
-              <div className="form-group  mt-3 mb-3">
-                <label htmlFor="payment_choice">Payment Choice</label>
-                <select value={tutorial.payment_choice} name="payment_choice" onChange={handleInputChange} style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
-              
+            <div className="form-group  mt-3 mb-3">
+              <label htmlFor="description">Description</label>
+              <input
+                type="text"
+                className="form-control"
+                id="description"
+                required
+                value={tutorial.description}
+                onChange={handleInputChange}
+                name="description"
+              />
+            </div>
+
+            <div className="form-group  mt-3 mb-3">
+              <label htmlFor="rate">Rate</label>
+              <input
+                type="number"
+                className="form-control"
+                id="rate"
+                required
+                value={tutorial.rate}
+                onChange={handleInputChange}
+                name="rate"
+              />
+            </div>
+
+            <div className="form-group  mt-3 mb-3">
+              <label htmlFor="discount">Discount</label>
+              <input
+                type="number"
+                className="form-control"
+                id="discount"
+                required
+                value={tutorial.discount}
+                onChange={handleInputChange}
+                name="discount"
+              />
+            </div>
+
+            <div className="form-group  mt-3 mb-3">
+              <label htmlFor="payment_choice">Payment Choice</label>
+              <select
+                value={tutorial.payment_choice}
+                name="payment_choice"
+                onChange={handleInputChange}
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  borderRadius: "4px",
+                  border: "1px solid gray",
+                }}
+              >
                 <option value="1">Cash Payment</option>
                 <option value="2">Online Payment</option>
-            </select>
-             
-              </div>
-                   {/* <div className="form-group  mt-3 mb-3">
+              </select>
+            </div>
+            {/* <div className="form-group  mt-3 mb-3">
                 <label htmlFor="payment_choice">Payment</label>
                 <input
                   type="text"
@@ -216,13 +298,13 @@ const AddServices = (props) => {
                 />
               </div> */}
 
-              <button onClick={saveTutorial} className="btn btn-success">
-                Submit
-              </button>
-            </Grid>
+            <button type='submit'  className="btn btn-success">
+              Submit
+            </button>
+      </form>
           </Grid>
-        </div>
-    
+        </Grid>
+      </div>
     </div>
   );
 };

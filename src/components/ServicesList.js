@@ -5,6 +5,7 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 import ServiceApi from "../services/ServicesApi";
 import { useTable } from "react-table";
+import { Zone } from "../pages";
 
 const ServicesList = (props) => {
   const [tutorials, setTutorials] = useState([]);
@@ -64,9 +65,17 @@ const ServicesList = (props) => {
       },
       {
         Header: "Zone",
-        accessor: "zone[0].name",
-      },
+        id:'zone',
 
+        accessor: data=>
+          data.zone.map( list => (
+            <div style={{padding:'5px'}}>
+              <span style={{margin:'5px'}}>
+             { list.name}
+              </span>
+            </div>
+          )) ,
+      },
       {
         Header: "Title",
         accessor: "title",

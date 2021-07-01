@@ -100,7 +100,7 @@ function MainLayout(props) {
         <NavLink activeOnlyWhenExact to="/" icon={HomeIcon}>
           Home
         </NavLink>
-        <NavLink to="/sub-category" icon={AssignmentIcon}>
+        <NavLink to="/main-category" icon={AssignmentIcon}>
           Main Category
         </NavLink>
         {/* <NavLink to="/sub-category" icon={CalendarViewDayIcon}>

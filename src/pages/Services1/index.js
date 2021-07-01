@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Grid, Typography, makeStyles, Button } from "@material-ui/core/";
-import MainCategoryTable from "../../components/tables/mainCategory/mainCategory";
-import MainCategoryModal from "../../components/modal/mainCategory/mainCategory";
 import ServicesList from "../../components/ServicesList";
+// import Asynchronous from "../../components/AutoComplete";
 const useStyles = makeStyles({
   root: {
     width: "100%",
@@ -44,6 +43,7 @@ export default function Services() {
       </Grid>
       <Grid container style={{ width: " 100%" }}>
         <Grid item xs={12} md={10}>
+          {/* <Asynchronous /> */}
           <ServicesList />
         </Grid>
       </Grid>
