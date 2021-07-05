@@ -26,18 +26,13 @@ const AddServices = (props) => {
     image: "",
     description: "",
     discount: "",
-    payment_choice: "",
+    payment_choice:null,
   };
   const [tutorial, setTutorial] = useState(initialTutorialState);
   const [submitted, setSubmitted] = useState(false);
   const [servicedata, setServiceData] = useState([]);
   const [categorydata, setCategoryData] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
-
-  //   function handleSelectChange(event) {
-  //     const { name, value } = event.target;
-  //     setTutorial({ ...tutorial, [name]: value });
-  // }
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -48,12 +43,20 @@ const AddServices = (props) => {
     const zoneData = [];
     option.map((each) => zoneData.push(each.name));
     setTutorial({ ...tutorial, zone: zoneData });
+    console.log(tutorial.zoneData,"zone data");
+  };
+
+  const handleInputPayment = (event, option) => {
+    const zoneData = [];
+    option.map((each) => zoneData.push(each.name));
+    setTutorial({ ...tutorial, zone: zoneData });
   };
 
   const handleImageChange = (event) => {
     setTutorial({ ...tutorial, image: event.target.files[0] });
     // console.log(event.target.files[0])
   };
+  
   const retrieveTutorialsZone = () => {
     ZoneApiList.getAll()
       .then((response) => {
@@ -116,7 +119,10 @@ const AddServices = (props) => {
   };
 
   const classes = useStyles();
-
+  const paymentChoice = [
+    { title: "Online Payment" },
+    { title: "Cash Payment" },
+  ];
   return (
     <div className="submit-form">
       <div>
@@ -134,8 +140,7 @@ const AddServices = (props) => {
 
             {/* Here is mulitselect started */}
             <form onSubmit={saveTutorial}>
-
-            <div className="form-group  mt-3 mb-3">
+              <div className="form-group  mt-3 mb-3">
                 <label htmlFor="category">Category</label>
                 <select
                   name="category"
@@ -177,31 +182,8 @@ const AddServices = (props) => {
                 />
               </div>
 
-
-
-              {/* <div className="form-group  mt-3 mb-3">
-              <label htmlFor="zone">Zone</label>
-
-              <select
-                name="zone"
-                value={tutorial.zone}
-                onChange={handleInputChange}
-                style={{
-                  width: "100%",
-                  padding: "10px",
-                  borderRadius: "4px",
-                  border: "1px solid gray",
-                }}
-              >
-                {servicedata &&
-                  servicedata.map((item) => {
-                    return <option value={item.id}>{item.name}</option>;
-                  })}
-              </select>
-            </div> */}
-
               <div className="form-group  mt-3 mb-3">
-                <label htmlFor="zone">Title</label>
+                <label htmlFor="title">Title</label>
                 <input
                   type="text"
                   className="form-control"
@@ -281,6 +263,27 @@ const AddServices = (props) => {
                   <option value="2">Online Payment</option>
                 </select>
               </div>
+
+              {/* <div className="form-group  mt-3 mb-3">
+                <div className={classes.root}>
+                  <label>Payment Choice</label>
+                  <Autocomplete
+                    multiple
+                    id="tags-standard"
+                    options={tutorial.payment_choice}
+                    name="payment_choice"
+                    onChange={handleInputZone}
+                    getOptionLabel={(option) => option.title}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        placeholder="Select Payment"
+                      />
+                    )}
+                  />
+                </div>
+              </div> */}
               {/* <div className="form-group  mt-3 mb-3">
                 <label htmlFor="payment_choice">Payment</label>
                 <input
