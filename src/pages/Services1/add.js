@@ -33,6 +33,7 @@ const AddServices = (props) => {
   const [servicedata, setServiceData] = useState([]);
   const [categorydata, setCategoryData] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
+  const [zonedata, setZoneData] = useState([]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -41,16 +42,18 @@ const AddServices = (props) => {
 
   const handleInputZone = (event, option) => {
     const zoneData = [];
-    option.map((each) => zoneData.push(each.name));
-    setTutorial({ ...tutorial, zone: zoneData });
-    console.log(tutorial.zoneData,"zone data");
+    // option.map((each) => zoneData.push(each.name));
+    // setTutorial({ ...tutorial, zone: zoneData });
+    // console.log(option);
+    setZoneData(option);
   };
+  // console.log(zonedata);
 
-  const handleInputPayment = (event, option) => {
-    const zoneData = [];
-    option.map((each) => zoneData.push(each.name));
-    setTutorial({ ...tutorial, zone: zoneData });
-  };
+  // const handleInputPayment = (event, option) => {
+  //   const zoneData = [];
+  //   option.map((each) => zoneData.push(each.name));
+  //   setTutorial({ ...tutorial, zone: zoneData });
+  // };
 
   const handleImageChange = (event) => {
     setTutorial({ ...tutorial, image: event.target.files[0] });
@@ -67,6 +70,7 @@ const AddServices = (props) => {
         console.log(e);
       });
   };
+  // console.log(servicedata);
 
   const retrieveTutorialsCategory = () => {
     TutorialDataService.getAll()
@@ -81,14 +85,19 @@ const AddServices = (props) => {
     retrieveTutorialsZone();
     retrieveTutorialsCategory();
   }, []);
-  console.log(retrieveTutorialsZone);
+  // console.log(retrieveTutorialsZone);
+console.log(zonedata && zonedata.length>0 ? zonedata[0].id: "hello")
 
   const saveTutorial = (e) => {
     e.preventDefault();
     let formData = new FormData();
 
     formData.append("category ", tutorial.category);
-    formData.append("zone", tutorial.zone);
+    
+    zonedata && zonedata.length>0 && zonedata.map((item,index)=>{console.log(item.id); formData.append(`zone[${index}]`, item.id)});
+  
+    // zonedata.map((item,index)=> formdata.append(zone[index], item[index]?.id));
+    // formData.append("zone", tutorial.zone);
     formData.append("title", tutorial.title);
     formData.append("image", tutorial.image);
     formData.append("description", tutorial.description);
@@ -171,6 +180,7 @@ const AddServices = (props) => {
                   id="tags-standard"
                   options={servicedata}
                   onChange={handleInputZone}
+                  name="zone"
                   getOptionLabel={(option) => option.name}
                   renderInput={(params) => (
                     <TextField
@@ -179,6 +189,7 @@ const AddServices = (props) => {
                       placeholder="Select Zone"
                     />
                   )}
+
                 />
               </div>
 
@@ -246,7 +257,7 @@ const AddServices = (props) => {
                 />
               </div>
 
-              <div className="form-group  mt-3 mb-3">
+              {/* <div className="form-group  mt-3 mb-3">
                 <label htmlFor="payment_choice">Payment Choice</label>
                 <select
                   value={tutorial.payment_choice}
@@ -262,17 +273,17 @@ const AddServices = (props) => {
                   <option value="1">Cash Payment</option>
                   <option value="2">Online Payment</option>
                 </select>
-              </div>
+              </div> */}
 
-              {/* <div className="form-group  mt-3 mb-3">
+           <div className="form-group  mt-3 mb-3">
                 <div className={classes.root}>
                   <label>Payment Choice</label>
                   <Autocomplete
                     multiple
                     id="tags-standard"
-                    options={tutorial.payment_choice}
+                    options={paymentChoice}
                     name="payment_choice"
-                    onChange={handleInputZone}
+                    onChange={handleInputChange}
                     getOptionLabel={(option) => option.title}
                     renderInput={(params) => (
                       <TextField
@@ -283,19 +294,7 @@ const AddServices = (props) => {
                     )}
                   />
                 </div>
-              </div> */}
-              {/* <div className="form-group  mt-3 mb-3">
-                <label htmlFor="payment_choice">Payment</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="payment_choice"
-                  required
-                  value={tutorial.payment_choice}
-                  onChange={handleInputChange}
-                  name="payment_choice"
-                />
-              </div> */}
+              </div> 
 
               <button type="submit" className="btn btn-success">
                 Submit
