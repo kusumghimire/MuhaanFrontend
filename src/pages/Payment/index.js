@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import { Grid, Typography, makeStyles,Button } from "@material-ui/core/";
 import PaymentList from "../../components/PaymentList";
 const useStyles = makeStyles({
@@ -24,9 +24,11 @@ export default function Payment() {
         </Typography>
         </Grid>
         <Grid item>
-        {/* <Button variant="contained" color="primary" >
-      Create New
-      </Button>       */}
+        <Link to={"/payment-gateway/add"}>
+            <Button variant="contained" color="primary">
+              Create New
+            </Button>
+          </Link>
         </Grid>
       </Grid>
       <Grid container style={{ width: " 100%" }}>

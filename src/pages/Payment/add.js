@@ -31,7 +31,7 @@ const AddPayment = (props) => {
           id: response.data.id,
           name: response.data.name,
         });
-        props.history.push("/payment");
+        props.history.push("/payment-gateway");
         console.log(response.data);
       })
       .catch((e) => {
@@ -59,8 +59,24 @@ const AddPayment = (props) => {
             <Grid item md={8}>
               <div className="form-group mt-3 mb-3">
                 <label htmlFor="title">
-                    <Typography variant="h4">
-                    Title
+                    <Typography variant="h6">
+                   Payment Name 
+                    </Typography>
+                    </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="name"
+                  required
+                  value={tutorial.name}
+                  onChange={handleInputChange}
+                  name="name"
+                />
+              </div>
+              <div className="form-group mt-3 mb-3">
+                <label htmlFor="title">
+                    <Typography variant="h6">
+                   Created by 
                     </Typography>
                     </label>
                 <input
@@ -75,19 +91,6 @@ const AddPayment = (props) => {
               </div>
             </Grid>
           </Grid>
-
-          {/* <div className="form-group">
-            <label htmlFor="description">Description</label>
-            <input
-              type="text"
-              className="form-control"
-              id="description"
-              required
-              value={tutorial.description}
-              onChange={handleInputChange}
-              name="description"
-            />
-          </div> */}
 
           <button onClick={saveTutorial} className="btn btn-success">
             Submit
