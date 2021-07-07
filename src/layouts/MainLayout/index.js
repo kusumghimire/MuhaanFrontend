@@ -136,9 +136,6 @@ function MainLayout(props) {
         <NavLink to="/customers" icon={GroupIcon}>
           Customers
         </NavLink>
-        {/* <NavLink to="/review" icon={StarOutlineIcon}>
-          Review & Rating
-        </NavLink> */}
       </List>
     </Drawer>
   );
