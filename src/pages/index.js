@@ -13,6 +13,8 @@ export { default as ProcessingOrder } from "./ProcessingOrder";
 export { default as CompletedOrder } from "./CompletedOrder";
 export { default as CancelledOrder } from "./CancelledOrder";
 
+export { default as Payment } from "./Payment";
+
 export { default as MakeDecision } from "./MakeDecision";
 export { default as Review } from "./Review";
 export { default as Customers } from "./Customers";

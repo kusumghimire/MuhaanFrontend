@@ -22,6 +22,7 @@ import {
   AddOn,
   Services,
   Zone,
+  Payment
 } from "./pages";
 import AddTutorial from "./pages/Add/add";
 import AddTutorialCategory from "./pages/SubCategory/add";
@@ -69,6 +70,8 @@ function App() {
           <Route exact path="/banner" component={Banner} />
           <Route exact path="/service-provider" component={ServiceProvider} />
           <Route exact path="/service-provider/add" component={AddServiceProvider} />
+
+          <Route exact path="/payment" component={Payment} />
 
           <Route exact path="/orders" component={Orders} />
           <Route exact path="/make-decision" component={MakeDecision} />

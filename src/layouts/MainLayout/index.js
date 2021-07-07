@@ -115,14 +115,11 @@ function MainLayout(props) {
         <NavLink to="/zone" icon={CalendarViewDayIcon}>
          Zone
         </NavLink>
-        {/* <NavLink to="/time-slot" icon={QueryBuilderIcon}>
-          Time Slot & Date
-        </NavLink>
-        <NavLink to="/banner" icon={PanoramaIcon}>
-          Banner
-        </NavLink> */}
         <NavLink to="/service-provider" icon={GroupAddIcon}>
           Service Provider
+        </NavLink>
+        <NavLink to="/payment" icon={GroupAddIcon}>
+        Payment
         </NavLink>
         <NavLink to="/orders" icon={AddCircleOutlineIcon}>
           Pending Services
