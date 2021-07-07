@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Typography, makeStyles,Button } from "@material-ui/core/";
-import CustomerTable from "../../components/tables/customers/customers";
+import CustomerList from "../../components/CustomerList";
 const useStyles = makeStyles({
   root: {
     width: "100%",
@@ -30,7 +30,7 @@ export default function Customers() {
       </Grid>
       <Grid container style={{ width: " 100%" }}>
         <Grid item xs={12} md={10}>
-          <CustomerTable />
+          <CustomerList />
         </Grid>
       </Grid>
     </>
