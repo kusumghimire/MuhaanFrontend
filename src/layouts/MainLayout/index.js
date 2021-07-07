@@ -118,7 +118,7 @@ function MainLayout(props) {
         <NavLink to="/service-provider" icon={GroupAddIcon}>
           Service Provider
         </NavLink>
-        <NavLink to="/payment" icon={GroupAddIcon}>
+        <NavLink to="/payment-gateway" icon={GroupAddIcon}>
         Payment
         </NavLink>
         <NavLink to="/orders" icon={AddCircleOutlineIcon}>

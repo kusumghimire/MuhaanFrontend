@@ -34,6 +34,7 @@ import EditServices from "./pages/Services1/edit";
 import AddServiceProvider from "./pages/ServiceProvider/add";
 import UpdateMainCategory from "./pages/MainCategory/edit";
 import UpdateZone from "./pages/Zone/edit";
+import UpdatePayment from "./pages/Payment/edit";
 import useToken from "./useToken";
 
 function App() {
@@ -71,7 +72,8 @@ function App() {
           <Route exact path="/service-provider" component={ServiceProvider} />
           <Route exact path="/service-provider/add" component={AddServiceProvider} />
 
-          <Route exact path="/payment" component={Payment} />
+          <Route exact path="/payment-gateway" component={Payment} />
+          <Route exact path="/payment-gateway/update/:id" component={UpdatePayment} />
 
           <Route exact path="/orders" component={Orders} />
           <Route exact path="/make-decision" component={MakeDecision} />

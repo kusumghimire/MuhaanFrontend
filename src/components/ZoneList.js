@@ -35,9 +35,8 @@ const ZoneList = (props) => {
     console.log(id);
    await ZoneApiList.remove(id)
       .then((response) => {
-        // props.history.push("/add-on");
 
-        let newTutorials = [...tutorialsRef.current];
+       let newTutorials = [...tutorialsRef.current];
         newTutorials.splice(rowIndex, 1);
 
         setTutorials(newTutorials);

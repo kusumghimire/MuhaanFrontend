@@ -35,7 +35,6 @@ const PaymentList = (props) => {
     console.log(id);
    await PaymentApi.remove(id)
       .then((response) => {
-        // props.history.push("/add-on");
 
         let newTutorials = [...tutorialsRef.current];
         newTutorials.splice(rowIndex, 1);
@@ -49,7 +48,7 @@ const PaymentList = (props) => {
 
   const openTutorial = (rowIndex, data) => {
     const id = tutorialsRef.current[rowIndex].id;
-    history.push(`/zone/update/${id}`, data);
+    history.push(`/payment-gateway/update/${id}`, data);
   };
 
   const columns = useMemo(
@@ -72,8 +71,7 @@ const PaymentList = (props) => {
         Cell: (props) => {
           const rowIdx = props.row.id;
           return (
-            <div>
-            
+            <div>            
             <span style={{marginRight:"1.5rem"}} onClick={() => openTutorial(rowIdx)}>
                 <i className="far fa-edit action mr-2"></i>
               </span>
