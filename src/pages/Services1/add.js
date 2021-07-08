@@ -103,7 +103,8 @@ console.log(zonedata && zonedata.length>0 ? zonedata[0].id: "hello")
     formData.append("description", tutorial.description);
     formData.append("discount", tutorial.discount);
     formData.append("rate", tutorial.rate);
-    formData.append("payment_choice", tutorial.payment_choice);
+    // formData.append("payment_choice", tutorial.payment_choice);
+    zonedata && zonedata.length>0 && zonedata.map((item,index)=>{console.log(item.id); formData.append(`payment_choice[${index}]`,item.id)});
 
     ServiceApi.create(formData)
 
@@ -257,7 +258,7 @@ console.log(zonedata && zonedata.length>0 ? zonedata[0].id: "hello")
                 />
               </div>
 
-               <div className="form-group  mt-3 mb-3">
+               {/* <div className="form-group  mt-3 mb-3">
                 <label htmlFor="payment_choice">Payment Choice</label>
                 <select
                   value={tutorial.payment_choice}
@@ -273,9 +274,9 @@ console.log(zonedata && zonedata.length>0 ? zonedata[0].id: "hello")
                   <option value="1">Cash Payment</option>
                   <option value="2">Online Payment</option>
                 </select>
-              </div> 
+              </div>  */}
 
-           {/* <div className="form-group  mt-3 mb-3">
+           <div className="form-group  mt-3 mb-3">
                 <div className={classes.root}>
                   <label>Payment Choice</label>
                   <Autocomplete
@@ -294,7 +295,7 @@ console.log(zonedata && zonedata.length>0 ? zonedata[0].id: "hello")
                     )}
                   />
                 </div>
-              </div>  */}
+              </div> 
 
               <button type="submit" className="btn btn-success">
                 Submit
