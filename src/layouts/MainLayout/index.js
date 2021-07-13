@@ -121,6 +121,9 @@ function MainLayout(props) {
         <NavLink to="/payment-gateway" icon={GroupAddIcon}>
         Payment
         </NavLink>
+        <NavLink to="/transactions" icon={GroupAddIcon}>
+        Transaction
+        </NavLink>
         <NavLink to="/orders" icon={AddCircleOutlineIcon}>
           Pending Services
         </NavLink>

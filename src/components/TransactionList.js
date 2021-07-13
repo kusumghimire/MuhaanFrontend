@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
-import ZoneApiList from "../services/ZoneApi";
+import TransactionApi from "../services/TransactionApi";
 import { useTable } from "react-table";
 
 const TransactionList = (props) => {
@@ -17,7 +17,7 @@ const TransactionList = (props) => {
   }, []);
 
   const retrieveTutorials = () => {
-    ZoneApiList.getAll()
+    TransactionApi.getAll()
       .then((response) => {
         setTutorials(response.data);
       })
@@ -29,57 +29,39 @@ const TransactionList = (props) => {
   const refreshList = () => {
     retrieveTutorials();
   };
-
-  const deleteTutorial = async (rowIndex) => {
-    const id = tutorialsRef.current[rowIndex].id;
-    console.log(id);
-   await ZoneApiList.remove(id)
-      .then((response) => {
-
-       let newTutorials = [...tutorialsRef.current];
-        newTutorials.splice(rowIndex, 1);
-
-        setTutorials(newTutorials);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
-  const openTutorial = (rowIndex, data) => {
-    const id = tutorialsRef.current[rowIndex].id;
-    history.push(`/zone/update/${id}`, data);
-  };
-
   const columns = useMemo(
     () => [
       {
-        Header: "Id",
-        accessor: "id",
+        Header: "Created By",
+        accessor: "created_by",
       },
       {
-        Header: "Zone",
-        accessor: "name",
+        Header: "Service Provider",
+        accessor: "service_provider",
       },
       {
-        Header: "Actions",
-        accessor: "actions",
-        Cell: (props) => {
-          const rowIdx = props.row.id;
-          return (
-            <div>
-            
-            <span style={{marginRight:"1.5rem"}} onClick={() => openTutorial(rowIdx)}>
-                <i className="far fa-edit action mr-2"></i>
-              </span>
-
-              <span onClick={() => deleteTutorial(rowIdx)}>
-                <i className="fas fa-trash action"></i>
-              </span>
-            
-            </div>
-          );
-        },
+        Header: "Content Type",
+        accessor: "content_type",
+      },
+      {
+        Header: "Object ID",
+        accessor: "object_id",
+      },
+      {
+        Header: "Previous Balance",
+        accessor: "previous_balance",
+      },
+      {
+        Header: "New Balance",
+        accessor: "new_balance",
+      },
+      {
+        Header: "Current Balance",
+        accessor: "current_balance",
+      },
+      {
+        Header: "Reason",
+        accessor: "reason"
       },
     ],
     []
