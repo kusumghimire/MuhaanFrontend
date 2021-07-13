@@ -94,7 +94,7 @@ console.log(zonedata && zonedata.length>0 ? zonedata[0].id: "hello")
 
     formData.append("category ", tutorial.category);
     let x=[];
-    zonedata && zonedata.length>0 && zonedata.map((item,index)=>{console.log(item.id); formData.append("zone", item.id)});
+    zonedata && zonedata.length>0 && zonedata.map((item,index)=>{console.log(item.id); formData.append(`zone[${index}]`, item.id)});
     console.log(typeof zonedata);
     // zonedata.map((item,index)=> formdata.append(zone[index], item[index]?.id));
     // formData.append("zone", tutorial.zone);

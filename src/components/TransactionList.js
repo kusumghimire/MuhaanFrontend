@@ -3,15 +3,13 @@ import { useHistory } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
-import ServiceApi from "../services/ServicesApi";
+import ZoneApiList from "../services/ZoneApi";
 import { useTable } from "react-table";
-import { Zone } from "../pages";
 
-const ServicesList = (props) => {
+const TransactionList = (props) => {
   const [tutorials, setTutorials] = useState([]);
   const tutorialsRef = useRef();
-  const history = useHistory();
-
+  const history= useHistory();
   tutorialsRef.current = tutorials;
 
   useEffect(() => {
@@ -19,7 +17,7 @@ const ServicesList = (props) => {
   }, []);
 
   const retrieveTutorials = () => {
-    ServiceApi.getAll()
+    ZoneApiList.getAll()
       .then((response) => {
         setTutorials(response.data);
       })
@@ -32,18 +30,13 @@ const ServicesList = (props) => {
     retrieveTutorials();
   };
 
-  const openTutorial = (rowIndex, data) => {
-    const id = tutorialsRef.current[rowIndex].id;
-    history.push(`/services/update/${id}`, data);
-  };
-
   const deleteTutorial = async (rowIndex) => {
     const id = tutorialsRef.current[rowIndex].id;
     console.log(id);
-
-    await ServiceApi.remove(id)
+   await ZoneApiList.remove(id)
       .then((response) => {
-        let newTutorials = [...tutorialsRef.current];
+
+       let newTutorials = [...tutorialsRef.current];
         newTutorials.splice(rowIndex, 1);
 
         setTutorials(newTutorials);
@@ -53,6 +46,11 @@ const ServicesList = (props) => {
       });
   };
 
+  const openTutorial = (rowIndex, data) => {
+    const id = tutorialsRef.current[rowIndex].id;
+    history.push(`/zone/update/${id}`, data);
+  };
+
   const columns = useMemo(
     () => [
       {
@@ -60,50 +58,8 @@ const ServicesList = (props) => {
         accessor: "id",
       },
       {
-        Header: "Category",
-        accessor: "category",
-      },
-      {
         Header: "Zone",
-        id: "zone",
-        accessor: (data) =>
-          data.zone.map((list) => (
-            <div style={{ padding: "5px" }}>
-              <span style={{ margin: "5px" }}>{list.name}</span>
-            </div>
-          )),
-      },
-      {
-        Header: "Title",
-        accessor: "title",
-      },
-      {
-        Header: "Image",
-        accessor: "image",
-        maxWidth: 60,
-        minWidth: 40,
-        maxHeight: 40,
-        Cell: ({ cell: { value } }) => <img src={value} width={60} />,
-      },
-      {
-        Header: "Description",
-        accessor: "description",
-      },
-      {
-        Header: "Rate",
-        accessor: "rate",
-      },
-      {
-        Header: "Payment Choice",
-        accessor: "payment_choice",
-      },
-      {
-        Header: "Discount",
-        accessor: "discount",
-      },
-      {
-        Header: "Credits Point",
-        accessor: "credit_point",
+        accessor: "name",
       },
       {
         Header: "Actions",
@@ -112,16 +68,15 @@ const ServicesList = (props) => {
           const rowIdx = props.row.id;
           return (
             <div>
-              <span
-                style={{ marginRight: "0.5rem" }}
-                onClick={() => openTutorial(rowIdx)}
-              >
+            
+            <span style={{marginRight:"1.5rem"}} onClick={() => openTutorial(rowIdx)}>
                 <i className="far fa-edit action mr-2"></i>
               </span>
 
               <span onClick={() => deleteTutorial(rowIdx)}>
                 <i className="fas fa-trash action"></i>
               </span>
+            
             </div>
           );
         },
@@ -130,11 +85,16 @@ const ServicesList = (props) => {
     []
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({
-      columns,
-      data: tutorials,
-    });
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+  } = useTable({
+    columns,
+    data: tutorials,
+  });
 
   return (
     <div className="list row">
@@ -170,14 +130,8 @@ const ServicesList = (props) => {
           </tbody>
         </table>
       </div>
-
-      {/* <div className="col-md-8">
-        <button className="btn btn-sm btn-danger" onClick={removeAllTutorials}>
-          Remove All
-        </button>
-      </div> */}
     </div>
   );
 };
 
-export default ServicesList;
+export default TransactionList;

@@ -22,7 +22,8 @@ import {
   AddOn,
   Services,
   Zone,
-  Payment
+  Payment,
+  Transactions
 } from "./pages";
 import AddTutorial from "./pages/Add/add";
 import AddTutorialCategory from "./pages/SubCategory/add";
@@ -77,6 +78,8 @@ function App() {
           <Route exact path="/payment-gateway" component={Payment} />
           <Route exact path="/payment-gateway/update/:id" component={UpdatePayment} />
           <Route exact path="/payment-gateway/add" component={AddPayment} />
+
+          <Route exact path="/transactions" component={Transactions} />
 
           <Route exact path="/orders" component={Orders} />
           <Route exact path="/make-decision" component={MakeDecision} />

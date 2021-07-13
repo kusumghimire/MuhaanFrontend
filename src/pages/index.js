@@ -4,7 +4,7 @@ export { default as SubCategory } from "./SubCategory";
 export {default as AddOn} from "./AddOn";
 export {default as Services} from "./Services1";
 export {default as Zone} from "./Zone";
-
+export {default as Transactions} from "./Transactions";
 export { default as TimeSlot } from "./TimeSlot";
 export { default as Banner } from "./Banner";
 export { default as ServiceProvider } from "./ServiceProvider";
