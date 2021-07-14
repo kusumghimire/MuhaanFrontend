@@ -105,8 +105,7 @@ const deleteTutorial = async (rowIndex) => {
         Cell: (props) => {
           const rowIdx = props.row.id;
           return (
-            <div>
-            
+            <div>            
               <span style={{marginRight:"1.5rem"}} onClick={() => openTutorial(rowIdx)}>
                 <i className="far fa-edit action mr-2"></i>
               </span>

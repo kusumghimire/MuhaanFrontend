@@ -41,20 +41,6 @@ export default function Credits() {
           <CreditsList />
         </Grid>
       </Grid>
-      <Grid container className={classes.contentHeader}>
-        <Grid item>
-          <Typography variant="h4" gutterBottom style={{ marginRight: "1rem" }}>
-        List of Debits
-          </Typography>
-        </Grid>
-        <Grid item>
-        </Grid>
-      </Grid>
-      <Grid container style={{ width: " 100%" }}>
-        <Grid item xs={12} md={10}>
-          <DebitList />
-        </Grid>
-      </Grid>
     </>
   );
 }
