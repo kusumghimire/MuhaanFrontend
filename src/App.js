@@ -23,7 +23,8 @@ import {
   Services,
   Zone,
   Payment,
-  Transactions
+  Transactions,
+  Credits
 } from "./pages";
 import AddTutorial from "./pages/Add/add";
 import AddTutorialCategory from "./pages/SubCategory/add";
@@ -80,6 +81,7 @@ function App() {
           <Route exact path="/payment-gateway/add" component={AddPayment} />
 
           <Route exact path="/transactions" component={Transactions} />
+          <Route exact path="/credits" component={Credits} />
 
           <Route exact path="/orders" component={Orders} />
           <Route exact path="/make-decision" component={MakeDecision} />

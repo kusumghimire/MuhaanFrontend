@@ -14,6 +14,7 @@ export { default as CompletedOrder } from "./CompletedOrder";
 export { default as CancelledOrder } from "./CancelledOrder";
 
 export { default as Payment } from "./Payment";
+export { default as Credits } from "./Credits";
 
 export { default as MakeDecision } from "./MakeDecision";
 export { default as Review } from "./Review";
