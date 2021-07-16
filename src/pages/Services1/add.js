@@ -4,46 +4,74 @@ import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import ZoneApiList from "../../services/ZoneApi";
 import TutorialDataService from "../../services/TutorialService";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    // width: 500,
+    "& > * + *": {
+      marginTop: theme.spacing(1),
+    },
+  },
+}));
+
 const AddServices = (props) => {
   const initialTutorialState = {
     id: null,
     category: "",
-    zone: "",
+    zone: null,
     title: "",
     image: "",
     description: "",
     discount: "",
-    payment_choice: "",
+    payment_choice:null,
   };
   const [tutorial, setTutorial] = useState(initialTutorialState);
   const [submitted, setSubmitted] = useState(false);
   const [servicedata, setServiceData] = useState([]);
   const [categorydata, setCategoryData] = useState([]);
-  const [selectedCategory,setSelectedCategory] = useState([]);
-
-//   function handleSelectChange(event) {
-//     const { name, value } = event.target;
-//     setTutorial({ ...tutorial, [name]: value });
-// }
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const [zonedata, setZoneData] = useState([]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setTutorial({ ...tutorial, [name]: value });
   };
 
+  const handleInputZone = (event, option) => {
+    const zoneData = [];
+    // option.map((each) => zoneData.push(each.name));
+    // setTutorial({ ...tutorial, zone: zoneData });
+    // console.log(option);
+    setZoneData(option);
+  };
+  // console.log(zonedata);
+
+  // const handleInputPayment = (event, option) => {
+  //   const zoneData = [];
+  //   option.map((each) => zoneData.push(each.name));
+  //   setTutorial({ ...tutorial, zone: zoneData });
+  // };
+
   const handleImageChange = (event) => {
     setTutorial({ ...tutorial, image: event.target.files[0] });
     // console.log(event.target.files[0])
   };
+  
   const retrieveTutorialsZone = () => {
     ZoneApiList.getAll()
       .then((response) => {
+        console.log(response, "response data");
         setServiceData(response.data);
       })
       .catch((e) => {
         console.log(e);
       });
   };
+  // console.log(servicedata);
+
   const retrieveTutorialsCategory = () => {
     TutorialDataService.getAll()
       .then((response) => {
@@ -57,22 +85,30 @@ const AddServices = (props) => {
     retrieveTutorialsZone();
     retrieveTutorialsCategory();
   }, []);
+  // console.log(retrieveTutorialsZone);
+console.log(zonedata && zonedata.length>0 ? zonedata[0].id: "hello")
 
-  const saveTutorial = () => {
+  const saveTutorial = (e) => {
+    e.preventDefault();
     let formData = new FormData();
 
-    formData.append("category ",tutorial.category);
-    formData.append("zone", tutorial.zone);
+    formData.append("category ", tutorial.category);
+    let x=[];
+    zonedata && zonedata.length>0 && zonedata.map((item,index)=>{console.log(item.id); formData.append(`zone[${index}]`, item.id)});
+    console.log(typeof zonedata);
+    // zonedata.map((item,index)=> formdata.append(zone[index], item[index]?.id));
+    // formData.append("zone", tutorial.zone);
     formData.append("title", tutorial.title);
     formData.append("image", tutorial.image);
     formData.append("description", tutorial.description);
     formData.append("discount", tutorial.discount);
     formData.append("rate", tutorial.rate);
-    formData.append("payment_choice", tutorial.payment_choice);
-
+    // formData.append("payment_choice", tutorial.payment_choice);
+    zonedata && zonedata.length>0 && zonedata.map((item,index)=>{console.log(item.id); formData.append(`payment_choice[${index}]`,item.id)});
 
     ServiceApi.create(formData)
-      .then((response) => {       
+
+      .then((response) => {
         setTutorial({
           id: response.data.id,
           category: response.data.category,
@@ -83,53 +119,83 @@ const AddServices = (props) => {
           discount: response.data.discount,
           payment_choice: response.data.payment_choice,
         });
-        
         props.history.push("/services");
         console.log(response.data);
       })
       .catch((e) => {
         console.log(e);
-      });  
+      });
+    console.log(tutorial);
   };
 
+  const classes = useStyles();
+  const paymentChoice = [
+    { title: "Online Payment" },
+    { title: "Cash Payment" },
+  ];
   return (
-    <div className="submit-form">  
-        <div>
-          <Grid container>
-            <Grid item md={8}>
-              <Grid item>
-                <Typography
-                  variant="h4"
-                  gutterBottom
-                  style={{ marginRight: "1rem" }}
-                >
-                  Add Service
-                </Typography>
-              </Grid>
+    <div className="submit-form">
+      <div>
+        <Grid container>
+          <Grid item md={8}>
+            <Grid item>
+              <Typography
+                variant="h4"
+                gutterBottom
+                style={{ marginRight: "1rem" }}
+              >
+                Add Service
+              </Typography>
+            </Grid>
 
+            {/* Here is mulitselect started */}
+            <form onSubmit={saveTutorial}>
               <div className="form-group  mt-3 mb-3">
                 <label htmlFor="category">Category</label>
-                <select name="category" value={tutorial.category} onChange={handleInputChange} style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
-              {categorydata &&
-                categorydata.map((item) => {
-                 return  <option value={item.id} key={item.id}>{item.title}</option>;
-                })}
-            </select>
+                <select
+                  name="category"
+                  value={tutorial.category}
+                  onChange={handleInputChange}
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    borderRadius: "4px",
+                    border: "1px solid gray",
+                  }}
+                >
+                  {categorydata &&
+                    categorydata.map((item) => {
+                      return (
+                        <option value={item.id} key={item.id}>
+                          {item.title}
+                        </option>
+                      );
+                    })}
+                </select>
+              </div>
+
+              <div className={classes.root}>
+                <label>Zone</label>
+                <Autocomplete
+                  multiple
+                  id="tags-standard"
+                  options={servicedata}
+                  onChange={handleInputZone}
+                  name="zone"
+                  getOptionLabel={(option) => option.name}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      placeholder="Select Zone"
+                    />
+                  )}
+
+                />
               </div>
 
               <div className="form-group  mt-3 mb-3">
-                <label htmlFor="zone">Zone</label>
-              
-            <select name="zone" value={tutorial.zone}  onChange={handleInputChange} style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
-              {servicedata &&
-                servicedata.map((item) => {
-                  return <option value={item.id}>{item.name}</option>;
-                })}
-            </select>
-              </div>
-
-              <div className="form-group  mt-3 mb-3">
-                <label htmlFor="zone">Title</label>
+                <label htmlFor="title">Title</label>
                 <input
                   type="text"
                   className="form-control"
@@ -148,7 +214,6 @@ const AddServices = (props) => {
                   className="form-control"
                   id="image"
                   required
-                  //   value={tutorial.image}
                   onChange={handleImageChange}
                   name="image"
                 />
@@ -193,35 +258,52 @@ const AddServices = (props) => {
                 />
               </div>
 
-              <div className="form-group  mt-3 mb-3">
+               {/* <div className="form-group  mt-3 mb-3">
                 <label htmlFor="payment_choice">Payment Choice</label>
-                <select value={tutorial.payment_choice} onChange={handleInputChange} style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
-              
-                <option value={tutorial.discount}>Cash on delivery</option>
-                <option value={tutorial.discount}>Online Payment</option>
-            </select>
-             
-              </div>
-                   {/* <div className="form-group  mt-3 mb-3">
-                <label htmlFor="payment_choice">Payment</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="payment_choice"
-                  required
+                <select
                   value={tutorial.payment_choice}
-                  onChange={handleInputChange}
                   name="payment_choice"
-                />
-              </div> */}
+                  onChange={handleInputChange}
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    borderRadius: "4px",
+                    border: "1px solid gray",
+                  }}
+                >
+                  <option value="1">Cash Payment</option>
+                  <option value="2">Online Payment</option>
+                </select>
+              </div>  */}
 
-              <button onClick={saveTutorial} className="btn btn-success">
+           <div className="form-group  mt-3 mb-3">
+                <div className={classes.root}>
+                  <label>Payment Choice</label>
+                  <Autocomplete
+                    multiple
+                    id="tags-standard"
+                    options={paymentChoice}
+                    name="payment_choice"
+                    onChange={handleInputChange}
+                    getOptionLabel={(option) => option.title}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        placeholder="Select Payment"
+                      />
+                    )}
+                  />
+                </div>
+              </div> 
+
+              <button type="submit" className="btn btn-success">
                 Submit
               </button>
-            </Grid>
+            </form>
           </Grid>
-        </div>
-    
+        </Grid>
+      </div>
     </div>
   );
 };

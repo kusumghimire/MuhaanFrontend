@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Grid, Typography, makeStyles,Button } from "@material-ui/core/";
-import CustomerList from "../../components/CustomerList";
+import PaymentList from "../../components/PaymentList";
 const useStyles = makeStyles({
   root: {
     width: "100%",
@@ -12,25 +13,27 @@ const useStyles = makeStyles({
   }
 });
 
-export default function Customers() {
+export default function Payment() {
   const classes = useStyles();
   return (
     <>
       <Grid container className={classes.contentHeader}>
         <Grid item >
         <Typography variant="h4" gutterBottom style={{marginRight:"1rem"}}>
-        Customers
+        Payment
         </Typography>
         </Grid>
         <Grid item>
-        {/* <Button variant="contained" color="primary" >
-      Create New
-      </Button>       */}
+        <Link to={"/payment-gateway/add"}>
+            <Button variant="contained" color="primary">
+              Create New
+            </Button>
+          </Link>
         </Grid>
       </Grid>
       <Grid container style={{ width: " 100%" }}>
-        <Grid item xs={12} md={10}>
-          <CustomerList />
+        <Grid item xs={12} md={12}>
+        <PaymentList />
         </Grid>
       </Grid>
     </>

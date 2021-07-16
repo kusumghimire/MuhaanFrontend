@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 import TutorialDataService from "../services/TutorialService";
-import { useTable } from "react-table";
+import { useTable, useExpanded } from "react-table";
 import server from '../api'
 import Collapsible from 'react-collapsible';
 
@@ -32,45 +32,6 @@ const history= useHistory();
     retrieveTutorials();
   };
 
-  // const removeAllTutorials = () => {
-  //   TutorialDataService.removeAll()
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       refreshList();
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // };
-
-  // const findByTitle = () => {
-  //   TutorialDataService.findByTitle(searchTitle)
-  //     .then((response) => {
-  //       setTutorials(response.data);
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // };
-
-
-//   const token= JSON.parse(localStorage.getItem('token'));
-//   console.log(token);
-// async function deleteTutorial(credentials) {
-//   console.log(credentials)
-//   return fetch(`https://muhaan.enterprisesgravity.com/dashboard/category/delete/${credentials}`, {
-//     method: "DELETE",
-//     headers: {
-
-//           "Authorization":`Token ${token}`,    
-//           "Content-type": "application/json",
-//           "Accept": "application/json",    
-//       "Access-Control-Allow-Origin": "*",
-//     },
-//     // body: JSON.stringify(credentials),
-//   }).then((data) => data.json());
-// }
-
 const deleteTutorial = async (rowIndex) => {
   const id = tutorialsRef.current[rowIndex].id;
   console.log(id);
@@ -97,26 +58,46 @@ const deleteTutorial = async (rowIndex) => {
 
   const columns = useMemo(
     () => [
+      // {
+      //   Header: "Main Category24",
+      //   accessor: "cat",
+      //   Cell: (props) => {
+      //     const rowIdx = props.row.id;
+      //     return (
+      //       <Collapsible trigger="Main Category &darr;" style={{color:"green"}}>
+      //         <p></p>
+      //       <p style={{color:"blue"}}>
+      //        Sub category Title
+      //       </p>
+      //       <p style={{color:"blue"}}>
+      //        Sub category Title
+      //       </p>
+      //       <p style={{color:"blue"}}>
+      //        Sub category Title
+      //       </p>
+      //     </Collapsible>
+      //     );
+      //   },
+      // },
       {
-        Header: "Main Category",
-        accessor: "title",
-        Cell: (props) => {
-          const rowIdx = props.row.id;
-          return (
-            <Collapsible trigger="Main Category &darr;" style={{color:"green"}}>
-              <p></p>
-            <p style={{color:"blue"}}>
-             Sub category Title
-            </p>
-            <p style={{color:"blue"}}>
-             Sub category Title
-            </p>
-            <p style={{color:"blue"}}>
-             Sub category Title
-            </p>
-          </Collapsible>
-          );
-        },
+        // Make an expander cell
+        Header: () => null, // No header
+        id: "expander", // It needs an ID
+        // Cell: ({ row, rows, toggleRowExpanded }: any) => (
+          Cell: ({ row }) => ( 
+          <span>
+           { console.log(row.isExpanded)}
+            {row.isExpanded ? (
+              <i className="fas fa-chevron-up" />
+            ) : (
+              <i className="fas fa-chevron-down" />
+            )}
+          </span>
+        ),
+      },
+      {
+        Header:"Sub Cat",
+        accessor:"title",
       },
       {
         Header: "Actions",
@@ -124,8 +105,7 @@ const deleteTutorial = async (rowIndex) => {
         Cell: (props) => {
           const rowIdx = props.row.id;
           return (
-            <div>
-            
+            <div>            
               <span style={{marginRight:"1.5rem"}} onClick={() => openTutorial(rowIdx)}>
                 <i className="far fa-edit action mr-2"></i>
               </span>

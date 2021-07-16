@@ -3,10 +3,10 @@ import { useHistory } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
-import ZoneApiList from "../services/ZoneApi";
+import PaymentApi from "../services/PaymentApi";
 import { useTable } from "react-table";
 
-const ZoneList = (props) => {
+const PaymentList = (props) => {
   const [tutorials, setTutorials] = useState([]);
   const tutorialsRef = useRef();
   const history= useHistory();
@@ -17,7 +17,7 @@ const ZoneList = (props) => {
   }, []);
 
   const retrieveTutorials = () => {
-    ZoneApiList.getAll()
+    PaymentApi.getAll()
       .then((response) => {
         setTutorials(response.data);
       })
@@ -33,10 +33,10 @@ const ZoneList = (props) => {
   const deleteTutorial = async (rowIndex) => {
     const id = tutorialsRef.current[rowIndex].id;
     console.log(id);
-   await ZoneApiList.remove(id)
+   await PaymentApi.remove(id)
       .then((response) => {
 
-       let newTutorials = [...tutorialsRef.current];
+        let newTutorials = [...tutorialsRef.current];
         newTutorials.splice(rowIndex, 1);
 
         setTutorials(newTutorials);
@@ -48,17 +48,21 @@ const ZoneList = (props) => {
 
   const openTutorial = (rowIndex, data) => {
     const id = tutorialsRef.current[rowIndex].id;
-    history.push(`/zone/update/${id}`, data);
+    history.push(`/payment-gateway/update/${id}`, data);
   };
 
   const columns = useMemo(
     () => [
+    //   {
+    //     Header: "Id",
+    //     accessor: "id",
+    //   },
       {
-        Header: "Id",
-        accessor: "id",
+        Header: "Created By",
+        accessor: "created_by",
       },
       {
-        Header: "Zone",
+        Header: "Name",
         accessor: "name",
       },
       {
@@ -67,8 +71,7 @@ const ZoneList = (props) => {
         Cell: (props) => {
           const rowIdx = props.row.id;
           return (
-            <div>
-            
+            <div>            
             <span style={{marginRight:"1.5rem"}} onClick={() => openTutorial(rowIdx)}>
                 <i className="far fa-edit action mr-2"></i>
               </span>
@@ -134,4 +137,4 @@ const ZoneList = (props) => {
   );
 };
 
-export default ZoneList;
+export default PaymentList;
