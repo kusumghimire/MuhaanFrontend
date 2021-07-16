@@ -212,8 +212,8 @@ function MainLayout(props) {
   );
 }
 // }
-MainLayout.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+// MainLayout.propTypes = {
+//   classes: PropTypes.object.isRequired,
+// };
 
 export default MainLayout;

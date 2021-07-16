@@ -1,10 +1,76 @@
-import React from "react";
-import styled from "styled-components";
-import { useTable, useExpanded } from "react-table";
+import React from 'react';
+import { useExpanded, useTable } from 'react-table';
 
+import makeData from './makeData';
 
-// A simple way to support a renderRowSubComponent is to make a render prop
-// This is NOT part of the React Table API, it's merely a rendering
+// This could be inlined into SubRowAsync, this this lets you reuse it across tables
+function SubRows({ row, rowProps, visibleColumns, data, loading }) {
+  if (loading) {
+    return (
+      <tr>
+        <td/>
+        <td colSpan={visibleColumns.length - 1}>
+          Loading...
+        </td>
+      </tr>
+    );
+  }
+
+  return (
+    <>
+      {data.map((x, i) => {
+        return (
+          <tr
+            {...rowProps}
+            key={`${rowProps.key}-expanded-${i}`}
+          >
+            {row.cells.map((cell) => {
+              return (
+                <td
+                  {...cell.getCellProps()}
+                >
+                  {cell.render(cell.column.SubCell ? 'SubCell' : 'Cell', {
+                    value:
+                      cell.column.accessor &&
+                      cell.column.accessor(x, i),
+                    row: { ...row, original: x }
+                  })}
+                </td>
+              );
+            })}
+          </tr>
+        );
+      })}
+    </>
+  );
+}
+
+function SubRowAsync({ row, rowProps, visibleColumns }) {
+  const [loading, setLoading] = React.useState(true);
+  const [data, setData] = React.useState([]);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setData(makeData(3));
+      setLoading(false);
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
+  return (
+    <SubRows
+      row={row}
+      rowProps={rowProps}
+      visibleColumns={visibleColumns}
+      data={data}
+      loading={loading}
+    />
+  );
+}
+
 // option we are creating for ourselves in our table renderer
 function Table({ columns: userColumns, data, renderRowSubComponent }) {
   const {
@@ -26,57 +92,38 @@ function Table({ columns: userColumns, data, renderRowSubComponent }) {
 
   return (
     <>
-      <pre>
-        <code>{JSON.stringify({ expanded: expanded }, null, 2)}</code>
-      </pre>
       <table {...getTableProps()}>
         <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
-              ))}
-            </tr>
-          ))}
+        {headerGroups.map(headerGroup => (
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map(column => (
+              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+            ))}
+          </tr>
+        ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
-            prepareRow(row);
-            return (
-              // Use a React.Fragment here so the table markup is still valid
-              <React.Fragment {...row.getRowProps()}>
-                <tr>
-                  {row.cells.map((cell) => {
-                    return (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                    );
-                  })}
-                </tr>
-                {/*
-                    If the row is in an expanded state, render a row with a
-                    column that fills the entire length of the table.
-                  */}
-                {row.isExpanded ? (
-                  <tr>
-                    <td colSpan={visibleColumns.length}>
-                      {/*
-                          Inside it, call our renderRowSubComponent function. In reality,
-                          you could pass whatever you want as props to
-                          a component like this, including the entire
-                          table instance. But for this example, we'll just
-                          pass the row
-                        */}
-                      {renderRowSubComponent({ row })}
-                    </td>
-                  </tr>
-                ) : null}
-              </React.Fragment>
-            );
-          })}
+        {rows.map((row, i) => {
+          prepareRow(row);
+          const rowProps = row.getRowProps();
+          return (
+            // Use a React.Fragment here so the table markup is still valid
+            <React.Fragment key={rowProps.key}>
+              <tr {...rowProps}>
+                {row.cells.map(cell => {
+                  return (
+                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  );
+                })}
+              </tr>
+              {row.isExpanded &&
+                renderRowSubComponent({ row, rowProps, visibleColumns })}
+            </React.Fragment>
+          );
+        })}
         </tbody>
       </table>
-      <br />
-      <div>Showing the first 20 results of {rows.length} rows</div>
+      <br/>
     </>
   );
 }
@@ -87,53 +134,48 @@ function App() {
       {
         // Make an expander cell
         Header: () => null, // No header
-        id: "expander", // It needs an ID
+        id: 'expander', // It needs an ID
         Cell: ({ row }) => (
-          // Use Cell to render an expander for each row.
-          // We can use the getToggleRowExpandedProps prop-getter
-          // to build the expander.
           <span {...row.getToggleRowExpandedProps()}>
-            {row.isExpanded ? 
-            (
-                <i className="fas fa-chevron-up" />
-              ) : (
-                <i className="fas fa-chevron-down" />
-              )
-            }
+            {row.isExpanded ? '👇' : '👉'}
           </span>
-        )
+        ),
+        SubCell: () => null // No expander on an expanded row
       },
       {
-        Header: "Name",
+        Header: 'Name',
         columns: [
           {
-            Header: "First Name",
-            accessor: "firstName"
+            Header: 'First Name',
+            accessor: (d) => d.firstName,
+            SubCell: (cellProps) => (
+              <> {cellProps.value}</>
+            )
           },
           {
-            Header: "Last Name",
-            accessor: "lastName"
+            Header: 'Last Name',
+            accessor: (d) => d.lastName
           }
         ]
       },
       {
-        Header: "Info",
+        Header: 'Info',
         columns: [
           {
-            Header: "Age",
-            accessor: "age"
+            Header: 'Age',
+            accessor: (d) => d.age
           },
           {
-            Header: "Visits",
-            accessor: "visits"
+            Header: 'Visits',
+            accessor: (d) => d.visits
           },
           {
-            Header: "Status",
-            accessor: "status"
+            Header: 'Status',
+            accessor: (d) => d.status
           },
           {
-            Header: "Profile Progress",
-            accessor: "progress"
+            Header: 'Profile Progress',
+            accessor: (d) => d.progress
           }
         ]
       }
@@ -145,31 +187,22 @@ function App() {
 
   // Create a function that will render our row sub components
   const renderRowSubComponent = React.useCallback(
-    ({ row }) => (
-      <pre
-        style={{
-          fontSize: "10px"
-        }}
-      >
-        {/* <code>{JSON.stringify({ values: row.values }, null, 2)}</code> */}
-        ENter sub component
-      </pre>
+    ({ row, rowProps, visibleColumns }) => (
+      <SubRowAsync
+        row={row}
+        rowProps={rowProps}
+        visibleColumns={visibleColumns}
+      />
     ),
     []
   );
 
   return (
-    <Styles>
       <Table
         columns={columns}
         data={data}
-        // We added this as a prop for our table component
-        // Remember, this is not part of the React Table API,
-        // it's merely a rendering option we created for
-        // ourselves
         renderRowSubComponent={renderRowSubComponent}
       />
-    </Styles>
   );
 }
 
