@@ -10,7 +10,7 @@ const Styles = styled.div`
   table {
     border-spacing: 0;
     border: 1px solid black;
-
+    width: 60vw,
     tr {
       :last-child {
         td {
@@ -76,6 +76,7 @@ function SubRows({ row, rowProps, visibleColumns, data, loading }) {
 }
 
 function SubRowAsync({ row, rowProps, visibleColumns }) {
+  
   const [loading, setLoading] = React.useState(true);
   const [data, setData] = React.useState([]);
 
@@ -192,25 +193,7 @@ function App() {
         accessor: (d) => d.cat
       },
       {
-        Header: 'Info',
-        columns: [
-          {
-            Header: 'Age',
-            accessor: (d) => d.age
-          },
-          {
-            Header: 'Visits',
-            accessor: (d) => d.visits
-          },
-          {
-            Header: 'Status',
-            accessor: (d) => d.status
-          },
-          {
-            Header: 'Profile Progress',
-            accessor: (d) => d.progress
-          }
-        ]
+        Header: 'Actions',
       }
     ],
     []

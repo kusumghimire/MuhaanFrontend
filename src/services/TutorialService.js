@@ -4,7 +4,7 @@ const getAll = () => {
   // console.log(getAll())
   return http.get(`/category/`);
 };
-const getSubCategory = (data) => {
+const getSubCategory = (id,data) => {
   // console.log(getAll())
   return http.get(`/sub/${id}/`, data);
 };
