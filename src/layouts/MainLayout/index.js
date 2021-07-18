@@ -211,9 +211,5 @@ function MainLayout(props) {
     </div>
   );
 }
-// }
-// MainLayout.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
 
 export default MainLayout;

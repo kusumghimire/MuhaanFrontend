@@ -1,7 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useExpanded, useTable } from 'react-table';
+import styled from 'styled-components';
+import TutorialDataService from "../services/TutorialService";
 
 import makeData from './makeData';
+const Styles = styled.div`
+  padding: 1rem;
+
+  table {
+    border-spacing: 0;
+    border: 1px solid black;
+
+    tr {
+      :last-child {
+        td {
+          border-bottom: 0;
+        }
+      }
+    }
+
+    th,
+    td {
+      margin: 0;
+      padding: 0.5rem;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+
+      :last-child {
+        border-right: 0;
+      }
+    }
+  }
+`;
 
 // This could be inlined into SubRowAsync, this this lets you reuse it across tables
 function SubRows({ row, rowProps, visibleColumns, data, loading }) {
@@ -73,6 +103,20 @@ function SubRowAsync({ row, rowProps, visibleColumns }) {
 
 // option we are creating for ourselves in our table renderer
 function Table({ columns: userColumns, data, renderRowSubComponent }) {
+  const [tutorials, setTutorials] = useState([]);
+  const tutorialsRef = useRef();
+  const retrieveTutorials = () => {
+    TutorialDataService.getAll()
+      .then((response) => {
+        setTutorials(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  useEffect(() => {
+    retrieveTutorials();
+  }, []);
   const {
     getTableProps,
     getTableBodyProps,
@@ -84,7 +128,7 @@ function Table({ columns: userColumns, data, renderRowSubComponent }) {
   } = useTable(
     {
       columns: userColumns,
-      data
+      data: tutorials,
     },
     useExpanded // We can useExpanded to track the expanded state
     // for sub components too!
@@ -129,6 +173,7 @@ function Table({ columns: userColumns, data, renderRowSubComponent }) {
 }
 
 function App() {
+
   const columns = React.useMemo(
     () => [
       {
@@ -143,20 +188,8 @@ function App() {
         SubCell: () => null // No expander on an expanded row
       },
       {
-        Header: 'Name',
-        columns: [
-          {
-            Header: 'First Name',
-            accessor: (d) => d.firstName,
-            SubCell: (cellProps) => (
-              <> {cellProps.value}</>
-            )
-          },
-          {
-            Header: 'Last Name',
-            accessor: (d) => d.lastName
-          }
-        ]
+        Header: 'Maincategory',
+        accessor: (d) => d.cat
       },
       {
         Header: 'Info',
@@ -198,11 +231,13 @@ function App() {
   );
 
   return (
+    <Styles>
       <Table
         columns={columns}
         data={data}
         renderRowSubComponent={renderRowSubComponent}
       />
+      </Styles>
   );
 }
 
