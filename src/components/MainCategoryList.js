@@ -25,7 +25,7 @@ const Styles = styled.div`
       padding: 0.5rem;
       border-bottom: 1px solid black;
       border-right: 1px solid black;
-
+      width:200px,
       :last-child {
         border-right: 0;
       }
@@ -80,9 +80,18 @@ function SubRowAsync({ row, rowProps, visibleColumns }) {
   const [loading, setLoading] = React.useState(true);
   const [data, setData] = React.useState([]);
 
+  const retrieveTutorialsSubCat = () => {
+    TutorialDataService.getAll()
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   React.useEffect(() => {
     const timer = setTimeout(() => {
-      setData(makeData(3));
+      retrieveTutorialsSubCat();
       setLoading(false);
     }, 500);
 
@@ -105,7 +114,6 @@ function SubRowAsync({ row, rowProps, visibleColumns }) {
 // option we are creating for ourselves in our table renderer
 function Table({ columns: userColumns, data, renderRowSubComponent }) {
   const [tutorials, setTutorials] = useState([]);
-  const tutorialsRef = useRef();
   const retrieveTutorials = () => {
     TutorialDataService.getAll()
       .then((response) => {
@@ -118,6 +126,8 @@ function Table({ columns: userColumns, data, renderRowSubComponent }) {
   useEffect(() => {
     retrieveTutorials();
   }, []);
+
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -140,7 +150,7 @@ function Table({ columns: userColumns, data, renderRowSubComponent }) {
       <table {...getTableProps()}>
         <thead>
         {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
+          <tr {...headerGroup.getHeaderGroupProps()} >
             {headerGroup.headers.map(column => (
               <th {...column.getHeaderProps()}>{column.render('Header')}</th>
             ))}
@@ -183,18 +193,45 @@ function App() {
         id: 'expander', // It needs an ID
         Cell: ({ row }) => (
           <span {...row.getToggleRowExpandedProps()}>
-            {row.isExpanded ? '👇' : '👉'}
+              {row.isExpanded ? (
+              <i className="fas fa-chevron-up" />
+            ) : (
+              <i className="fas fa-chevron-down" />
+            )}
           </span>
         ),
         SubCell: () => null // No expander on an expanded row
       },
       {
         Header: 'Maincategory',
-        accessor: (d) => d.cat
+        accessor: (d) => d.title,
+        SubCell: (cellProps) => (
+          <>{cellProps.value}</>
+        )
       },
       {
-        Header: 'Actions',
-      }
+        Header: "Actions",
+        accessor: "actions",
+        Cell: (props) => {
+          const rowIdx = props.row.id;
+          return (
+            <div>
+              <span
+                style={{ marginRight: "1.5rem" }}
+                // onClick={() => openTutorial(rowIdx)}
+              >
+                <i className="far fa-edit action mr-2"></i>
+              </span>
+
+              <span 
+              // onClick={() => deleteTutorial(rowIdx)}
+              >
+                <i className="fas fa-trash action"></i>
+              </span>
+            </div>
+          );
+        },
+      },
     ],
     []
   );

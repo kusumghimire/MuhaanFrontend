@@ -27,11 +27,7 @@ const TutorialsList = (props) => {
         console.log(e);
       });
   };
-
-  const refreshList = () => {
-    retrieveTutorials();
-  };
-
+  
   const deleteTutorial = async (rowIndex) => {
     const id = tutorialsRef.current[rowIndex].id;
     console.log(id);
