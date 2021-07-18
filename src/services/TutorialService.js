@@ -3,7 +3,10 @@ import http from "../api";
 const getAll = () => {
   // console.log(getAll())
   return http.get(`/category/`);
-  
+};
+const getSubCategory = (data) => {
+  // console.log(getAll())
+  return http.get(`/sub/${id}/`, data);
 };
 
 const get = (id) => {
@@ -33,6 +36,7 @@ const TutorialService = {
   update,
   remove,
   findByTitle,
+  getSubCategory
 };
 
 export default TutorialService;
