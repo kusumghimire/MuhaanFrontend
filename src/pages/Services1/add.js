@@ -4,19 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import ZoneApiList from "../../services/ZoneApi";
 import TutorialDataService from "../../services/TutorialService";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    // width: 500,
-    "& > * + *": {
-      marginTop: theme.spacing(1),
-    },
-  },
-}));
-
 const AddServices = (props) => {
   const initialTutorialState = {
     id: "",
@@ -42,8 +29,9 @@ const AddServices = (props) => {
   const [finalData, setFinalData] = useState({});
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setTutorial({ ...tutorial, [name]: value });
-  };
+    setTutorial((prevTutorial)=>{ 
+      return {...prevTutorial, [name]: value} 
+    });
 
   const handleInputZone = (event, option) => {
     setZone(
@@ -70,18 +58,23 @@ const AddServices = (props) => {
     setTutorial({ ...tutorial, image: event.target.files[0] });
     // console.log(event.target.files[0])
   };
+<<<<<<< HEAD
 
+=======
+>>>>>>> 90ba2812534c162f7185beb217e6110da83287e0
   const retrieveTutorialsZone = () => {
     ZoneApiList.getAll()
       .then((response) => {
-        console.log(response, "response data");
         setServiceData(response.data);
       })
       .catch((e) => {
         console.log(e);
       });
   };
+<<<<<<< HEAD
 
+=======
+>>>>>>> 90ba2812534c162f7185beb217e6110da83287e0
   const retrieveTutorialsCategory = () => {
     TutorialDataService.getAll()
       .then((response) => {
@@ -98,8 +91,7 @@ const AddServices = (props) => {
 
   // console.log(zonedata && zonedata.length > 0 ? zonedata[0].id : "hello");
 
-  const saveTutorial = (e) => {
-    e.preventDefault();
+  const saveTutorial = () => {
     let formData = new FormData();
 
     formData.append("category ", tutorial.category);
@@ -147,44 +139,28 @@ const AddServices = (props) => {
     { choice:2,title: "Cash Payment" },
   ];
   return (
-    <div className="submit-form">
-      <div>
-        <Grid container>
-          <Grid item md={8}>
-            <Grid item>
-              <Typography
-                variant="h4"
-                gutterBottom
-                style={{ marginRight: "1rem" }}
-              >
-                Add Service
-              </Typography>
-            </Grid>
+    <div className="submit-form">  
+        <div>
+          <Grid container>
+            <Grid item md={8}>
+              <Grid item>
+                <Typography
+                  variant="h4"
+                  gutterBottom
+                  style={{ marginRight: "1rem" }}
+                >
+                  Add Service
+                </Typography>
+              </Grid>
 
-            {/* Here is mulitselect started */}
-            <form onSubmit={saveTutorial}>
               <div className="form-group  mt-3 mb-3">
                 <label htmlFor="category">Category</label>
-                <select
-                  name="category"
-                  value={tutorial.category}
-                  onChange={handleInputChange}
-                  style={{
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "4px",
-                    border: "1px solid gray",
-                  }}
-                >
-                  {categorydata &&
-                    categorydata.map((item) => {
-                      return (
-                        <option value={item.id} key={item.id}>
-                          {item.title}
-                        </option>
-                      );
-                    })}
-                </select>
+                <select name="category" value={tutorial.category} onChange={handleInputChange} style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
+              {categorydata &&
+                categorydata.map((item) => {
+                 return  <option value={item.id} key={item.id}>{item.title}</option>;
+                })}
+            </select>
               </div>
 
               <div className={classes.root}>
@@ -207,7 +183,7 @@ const AddServices = (props) => {
               </div>
 
               <div className="form-group  mt-3 mb-3">
-                <label htmlFor="title">Title</label>
+                <label htmlFor="zone">Title</label>
                 <input
                   type="text"
                   className="form-control"
@@ -226,6 +202,7 @@ const AddServices = (props) => {
                   className="form-control"
                   id="image"
                   required
+                  //   value={tutorial.image}
                   onChange={handleImageChange}
                   name="image"
                 />
@@ -303,13 +280,13 @@ const AddServices = (props) => {
                 />
               </div>
 
-              <button type="submit" className="btn btn-success">
+              <button onClick={saveTutorial} className="btn btn-success">
                 Submit
               </button>
-            </form>
+            </Grid>
           </Grid>
-        </Grid>
-      </div>
+        </div>
+    
     </div>
   );
 };
