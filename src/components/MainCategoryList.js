@@ -1,4 +1,3 @@
-import { Button } from "bootstrap";
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useExpanded, useTable } from 'react-table';
 import styled from 'styled-components';
@@ -11,11 +10,11 @@ const Styles = styled.div`
   table {
     border-spacing: 0;
     border: 1px solid black;
-    width: 60vw,
+    width:800px;
     tr {
       :last-child {
         td {
-          border-bottom: 0;
+         border-right: 1px solid transparent;
         }
       }
     }
@@ -25,10 +24,9 @@ const Styles = styled.div`
       margin: 0;
       padding: 0.5rem;
       border-bottom: 1px solid black;
-      border-right: 1px solid black;
-      width:200px,
+      // border-right: 1px solid black;
       :last-child {
-        border-right: 0;
+        // border-right: 1px solid transparent;
       }
     }
   }
@@ -76,39 +74,49 @@ function SubRows({ row, rowProps, visibleColumns, data, loading }) {
   );
 }
 
-function SubRowAsync({ row, rowProps, visibleColumns,data }) {
+function SubRowAsync({ row, rowProps, visibleColumns }) {
   
   const [loading, setLoading] = React.useState(true);
+  const [subCat, setSubData] = React.useState([]);
 
-  // React.useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     retrieveTutorialsSubCat();
-  //     setLoading(false);
-  //   }, 500);
+  const retrieveTutorialsSubCat = () => {
+    TutorialDataService.getAll()
+      .then((response) => {
+        setSubData(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      retrieveTutorialsSubCat();
+      setLoading(false);
+    }, 500);
 
-  //   return () => {
-  //     clearTimeout(timer);
-  //   };
-  // }, []);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
   return (
     <SubRows
       row={row}
       rowProps={rowProps}
       visibleColumns={visibleColumns}
-      data={data}
-      // loading={loading}
+      data={subCat}
+      loading={loading}
     />
   );
 }
 
 // option we are creating for ourselves in our table renderer
 function Table({ columns: userColumns, data, renderRowSubComponent }) {
-  const [tutorials, setTutorials] = useState([]);
+  const [mainCategory, setMainCategory] = useState([]);
   const retrieveTutorials = () => {
     TutorialDataService.getAll()
       .then((response) => {
-        setTutorials(response.data);
+        setMainCategory(response.data);
       })
       .catch((e) => {
         console.log(e);
@@ -130,7 +138,7 @@ function Table({ columns: userColumns, data, renderRowSubComponent }) {
   } = useTable(
     {
       columns: userColumns,
-      data: tutorials,
+      data: mainCategory,
     },
     useExpanded // We can useExpanded to track the expanded state
     // for sub components too!
@@ -175,20 +183,6 @@ function Table({ columns: userColumns, data, renderRowSubComponent }) {
 }
 
 function App() {
-  const [data, setData] = React.useState([]);
-
-  const retrieveTutorialsSubCat = (data) => {
-    console.log(data);
-    TutorialDataService.getSubCategory(data)
-      .then((response) => {
-        setData(response.data);
-        
-      })
-      // .catch((e) => {
-      //   console.log(e);
-      // });
-    
-  };
 
   const columns = React.useMemo(
     () => [
@@ -197,15 +191,11 @@ function App() {
         Header: () => null, // No header
         id: 'expander', // It needs an ID
         Cell: ({ row }) => (
-          <span {...row.getToggleRowExpandedProps(
-            {onclick:()=>
-              console.log(row)
-            }
-            )}>
+          <span {...row.getToggleRowExpandedProps()}>
               {row.isExpanded ? (
-              <i onClick={()=>retrieveTutorialsSubCat(row.original.id)} className="fas fa-chevron-up" />
+              <i className="fas fa-chevron-up" />
             ) : (
-              <i onClick={()=>retrieveTutorialsSubCat(row.original.id)} className="fas fa-chevron-down" />
+              <i className="fas fa-chevron-down" />
             )}
           </span>
         ),
@@ -245,16 +235,15 @@ function App() {
     []
   );
 
+  const data = React.useMemo(() => makeData(10), []);
 
   // Create a function that will render our row sub components
   const renderRowSubComponent = React.useCallback(
     ({ row, rowProps, visibleColumns }) => (
-
       <SubRowAsync
         row={row}
         rowProps={rowProps}
         visibleColumns={visibleColumns}
-        data={data}
       />
     ),
     []
