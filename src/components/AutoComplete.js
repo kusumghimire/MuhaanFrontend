@@ -21,6 +21,7 @@ export default function Asynchronous() {
 
     const countries = await response.json();
     setOptions(Object.keys(countries).map(key => countries[key].item[0]));
+    console.log(response);
   };
 
   React.useEffect(() => {

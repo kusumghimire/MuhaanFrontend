@@ -19,47 +19,58 @@ const useStyles = makeStyles((theme) => ({
 
 const AddServices = (props) => {
   const initialTutorialState = {
-    id: null,
+    id: "",
     category: "",
-    zone: null,
     title: "",
     image: "",
     description: "",
     discount: "",
-    payment_choice:null,
+    credit_point: "",
   };
+  const initialZoneState = {
+    zone: [],
+  };
+  const initialPayment = { payment_choice: [] };
   const [tutorial, setTutorial] = useState(initialTutorialState);
+  const [zone, setZone] = useState(initialZoneState);
+  const [payment_choice, setPayment] = useState(initialPayment);
+
   const [submitted, setSubmitted] = useState(false);
   const [servicedata, setServiceData] = useState([]);
   const [categorydata, setCategoryData] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState([]);
-  const [zonedata, setZoneData] = useState([]);
-
+  // const [selectedCategory, setSelectedCategory] = useState([]);
+  const [finalData, setFinalData] = useState({});
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setTutorial({ ...tutorial, [name]: value });
   };
 
   const handleInputZone = (event, option) => {
-    const zoneData = [];
-    // option.map((each) => zoneData.push(each.name));
-    // setTutorial({ ...tutorial, zone: zoneData });
-    // console.log(option);
-    setZoneData(option);
+    setZone(
+      option.map((el) => {
+        return el.id;
+      })
+    );
   };
-  // console.log(zonedata);
-
-  // const handleInputPayment = (event, option) => {
-  //   const zoneData = [];
-  //   option.map((each) => zoneData.push(each.name));
-  //   setTutorial({ ...tutorial, zone: zoneData });
-  // };
+  const handleInputPay = (event, option) => {
+    console.log(event);
+    setPayment(
+      option.map((el) => {
+        return el.choice;
+      })
+    );
+    console.log(
+      option.map((el) => {
+        return el.choice;
+      })
+    );
+  };
 
   const handleImageChange = (event) => {
     setTutorial({ ...tutorial, image: event.target.files[0] });
     // console.log(event.target.files[0])
   };
-  
+
   const retrieveTutorialsZone = () => {
     ZoneApiList.getAll()
       .then((response) => {
@@ -70,7 +81,6 @@ const AddServices = (props) => {
         console.log(e);
       });
   };
-  // console.log(servicedata);
 
   const retrieveTutorialsCategory = () => {
     TutorialDataService.getAll()
@@ -85,53 +95,56 @@ const AddServices = (props) => {
     retrieveTutorialsZone();
     retrieveTutorialsCategory();
   }, []);
-  // console.log(retrieveTutorialsZone);
-console.log(zonedata && zonedata.length>0 ? zonedata[0].id: "hello")
+
+  // console.log(zonedata && zonedata.length > 0 ? zonedata[0].id : "hello");
 
   const saveTutorial = (e) => {
     e.preventDefault();
     let formData = new FormData();
 
     formData.append("category ", tutorial.category);
-    let x=[];
-    zonedata && zonedata.length>0 && zonedata.map((item,index)=>{console.log(item.id); formData.append(`zone[${index}]`, item.id)});
-    console.log(typeof zonedata);
-    // zonedata.map((item,index)=> formdata.append(zone[index], item[index]?.id));
-    // formData.append("zone", tutorial.zone);
+    // let x=[];
+    // zonedata &&
+    //   zonedata.length > 0 &&
+    //   zonedata.map((item, index) => {
+
+    //    console.log(zonedata);
+    //     // return formData.append(`zone[${index}]`,tutorial.zone.concat(zonedata));
+    //   });
     formData.append("title", tutorial.title);
     formData.append("image", tutorial.image);
     formData.append("description", tutorial.description);
     formData.append("discount", tutorial.discount);
     formData.append("rate", tutorial.rate);
-    // formData.append("payment_choice", tutorial.payment_choice);
-    zonedata && zonedata.length>0 && zonedata.map((item,index)=>{console.log(item.id); formData.append(`payment_choice[${index}]`,item.id)});
+    formData.append("zone", zone);
+
+    // string_data.replace(/"/g,'')
+    formData.append("payment_choice", payment_choice);
+    formData.append("credit_point", tutorial.credit_point);
+    let finalState;
+    finalState = { ...tutorial, zone, payment_choice };
+    console.log(finalState);
 
     ServiceApi.create(formData)
 
       .then((response) => {
-        setTutorial({
-          id: response.data.id,
-          category: response.data.category,
-          title: response.data.title,
-          image: response.data.image,
-          description: response.data.description,
-          rate: response.data.rate,
-          discount: response.data.discount,
-          payment_choice: response.data.payment_choice,
-        });
+        setFinalData(finalState);
+
         props.history.push("/services");
-        console.log(response.data);
       })
       .catch((e) => {
         console.log(e);
       });
-    console.log(tutorial);
+
+    // console.log(tutorial);
+    // console.log(zone);
+    // console.log(payment);
   };
 
   const classes = useStyles();
   const paymentChoice = [
-    { title: "Online Payment" },
-    { title: "Cash Payment" },
+    { choice:1, title: "Online Payment" },
+    { choice:2,title: "Cash Payment" },
   ];
   return (
     <div className="submit-form">
@@ -190,7 +203,6 @@ console.log(zonedata && zonedata.length>0 ? zonedata[0].id: "hello")
                       placeholder="Select Zone"
                     />
                   )}
-
                 />
               </div>
 
@@ -258,25 +270,7 @@ console.log(zonedata && zonedata.length>0 ? zonedata[0].id: "hello")
                 />
               </div>
 
-               {/* <div className="form-group  mt-3 mb-3">
-                <label htmlFor="payment_choice">Payment Choice</label>
-                <select
-                  value={tutorial.payment_choice}
-                  name="payment_choice"
-                  onChange={handleInputChange}
-                  style={{
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "4px",
-                    border: "1px solid gray",
-                  }}
-                >
-                  <option value="1">Cash Payment</option>
-                  <option value="2">Online Payment</option>
-                </select>
-              </div>  */}
-
-           <div className="form-group  mt-3 mb-3">
+              <div className="form-group  mt-3 mb-3">
                 <div className={classes.root}>
                   <label>Payment Choice</label>
                   <Autocomplete
@@ -284,7 +278,7 @@ console.log(zonedata && zonedata.length>0 ? zonedata[0].id: "hello")
                     id="tags-standard"
                     options={paymentChoice}
                     name="payment_choice"
-                    onChange={handleInputChange}
+                    onChange={handleInputPay}
                     getOptionLabel={(option) => option.title}
                     renderInput={(params) => (
                       <TextField
@@ -295,7 +289,19 @@ console.log(zonedata && zonedata.length>0 ? zonedata[0].id: "hello")
                     )}
                   />
                 </div>
-              </div> 
+              </div>
+              <div className="form-group  mt-3 mb-3">
+                <label htmlFor="credit_point">Credit Point</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="credit_point"
+                  required
+                  value={tutorial.credit_point}
+                  onChange={handleInputChange}
+                  name="credit_point"
+                />
+              </div>
 
               <button type="submit" className="btn btn-success">
                 Submit
