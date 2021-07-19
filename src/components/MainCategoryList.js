@@ -1,3 +1,4 @@
+import { Button } from "bootstrap";
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useExpanded, useTable } from 'react-table';
 import styled from 'styled-components';
@@ -75,30 +76,20 @@ function SubRows({ row, rowProps, visibleColumns, data, loading }) {
   );
 }
 
-function SubRowAsync({ row, rowProps, visibleColumns }) {
+function SubRowAsync({ row, rowProps, visibleColumns,data }) {
   
   const [loading, setLoading] = React.useState(true);
-  const [data, setData] = React.useState([]);
 
-  const retrieveTutorialsSubCat = () => {
-    TutorialDataService.getAll()
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-  React.useEffect(() => {
-    const timer = setTimeout(() => {
-      retrieveTutorialsSubCat();
-      setLoading(false);
-    }, 500);
+  // React.useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     retrieveTutorialsSubCat();
+  //     setLoading(false);
+  //   }, 500);
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
+  //   return () => {
+  //     clearTimeout(timer);
+  //   };
+  // }, []);
 
   return (
     <SubRows
@@ -106,7 +97,7 @@ function SubRowAsync({ row, rowProps, visibleColumns }) {
       rowProps={rowProps}
       visibleColumns={visibleColumns}
       data={data}
-      loading={loading}
+      // loading={loading}
     />
   );
 }
@@ -184,6 +175,20 @@ function Table({ columns: userColumns, data, renderRowSubComponent }) {
 }
 
 function App() {
+  const [data, setData] = React.useState([]);
+
+  const retrieveTutorialsSubCat = (data) => {
+    console.log(data);
+    TutorialDataService.getSubCategory(data)
+      .then((response) => {
+        setData(response.data);
+        
+      })
+      // .catch((e) => {
+      //   console.log(e);
+      // });
+    
+  };
 
   const columns = React.useMemo(
     () => [
@@ -192,11 +197,15 @@ function App() {
         Header: () => null, // No header
         id: 'expander', // It needs an ID
         Cell: ({ row }) => (
-          <span {...row.getToggleRowExpandedProps()}>
+          <span {...row.getToggleRowExpandedProps(
+            {onclick:()=>
+              console.log(row)
+            }
+            )}>
               {row.isExpanded ? (
-              <i className="fas fa-chevron-up" />
+              <i onClick={()=>retrieveTutorialsSubCat(row.original.id)} className="fas fa-chevron-up" />
             ) : (
-              <i className="fas fa-chevron-down" />
+              <i onClick={()=>retrieveTutorialsSubCat(row.original.id)} className="fas fa-chevron-down" />
             )}
           </span>
         ),
@@ -236,15 +245,16 @@ function App() {
     []
   );
 
-  const data = React.useMemo(() => makeData(10), []);
 
   // Create a function that will render our row sub components
   const renderRowSubComponent = React.useCallback(
     ({ row, rowProps, visibleColumns }) => (
+
       <SubRowAsync
         row={row}
         rowProps={rowProps}
         visibleColumns={visibleColumns}
+        data={data}
       />
     ),
     []

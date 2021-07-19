@@ -45,7 +45,7 @@ export default function MainCategory() {
       </Grid>
       <Grid container style={{ width: " 100%" }}>
         <Grid item xs={12} md={10}>
-          <TutorialsList />
+          {/* <TutorialsList /> */}
           <MainCategoryList/>
         </Grid>
       </Grid>
