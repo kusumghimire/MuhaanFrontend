@@ -58,10 +58,6 @@ const AddServices = (props) => {
     setTutorial({ ...tutorial, image: event.target.files[0] });
     // console.log(event.target.files[0])
   };
-<<<<<<< HEAD
-
-=======
->>>>>>> 90ba2812534c162f7185beb217e6110da83287e0
   const retrieveTutorialsZone = () => {
     ZoneApiList.getAll()
       .then((response) => {
@@ -71,10 +67,6 @@ const AddServices = (props) => {
         console.log(e);
       });
   };
-<<<<<<< HEAD
-
-=======
->>>>>>> 90ba2812534c162f7185beb217e6110da83287e0
   const retrieveTutorialsCategory = () => {
     TutorialDataService.getAll()
       .then((response) => {
