@@ -74,26 +74,26 @@ function SubRows({ row, rowProps, visibleColumns, data, loading }) {
   );
 }
 
-function SubRowAsync({ row, rowProps, visibleColumns }) {
+function SubRowAsync({ row, rowProps, visibleColumns ,id}) {
   
   const [loading, setLoading] = React.useState(true);
   const [subCat, setSubData] = React.useState([]);
 
   const retrieveTutorialsSubCat = () => {
-    TutorialDataService.getAll()
+    TutorialDataService.getSubCategory()
       .then((response) => {
+        // if(id){
+        //   const sub= response.data.filter((each)=>each.id===id)
+        // }
         setSubData(response.data);
       })
       .catch((e) => {
         console.log(e);
       });
   };
-  React.useEffect(() => {
-    const timer = setTimeout(() => {
+  React.useEffect(() => { 
       retrieveTutorialsSubCat();
       setLoading(false);
-    }, 500);
-
     return () => {
       clearTimeout(timer);
     };
@@ -106,6 +106,7 @@ function SubRowAsync({ row, rowProps, visibleColumns }) {
       visibleColumns={visibleColumns}
       data={subCat}
       loading={loading}
+    
     />
   );
 }
@@ -113,6 +114,7 @@ function SubRowAsync({ row, rowProps, visibleColumns }) {
 // option we are creating for ourselves in our table renderer
 function Table({ columns: userColumns, data, renderRowSubComponent }) {
   const [mainCategory, setMainCategory] = useState([]);
+
   const retrieveTutorials = () => {
     TutorialDataService.getAll()
       .then((response) => {
@@ -125,7 +127,6 @@ function Table({ columns: userColumns, data, renderRowSubComponent }) {
   useEffect(() => {
     retrieveTutorials();
   }, []);
-
 
   const {
     getTableProps,
@@ -182,8 +183,8 @@ function Table({ columns: userColumns, data, renderRowSubComponent }) {
   );
 }
 
-function App() {
-
+function MainCategoryList() {
+  // const [id, setId]= useState(null);
   const columns = React.useMemo(
     () => [
       {
@@ -193,7 +194,9 @@ function App() {
         Cell: ({ row }) => (
           <span {...row.getToggleRowExpandedProps()}>
               {row.isExpanded ? (
-              <i className="fas fa-chevron-up" />
+              <i
+              //  onClick={()=>setId(row.id)}
+                 className="fas fa-chevron-up" />
             ) : (
               <i className="fas fa-chevron-down" />
             )}
@@ -235,8 +238,6 @@ function App() {
     []
   );
 
-  const data = React.useMemo(() => makeData(10), []);
-
   // Create a function that will render our row sub components
   const renderRowSubComponent = React.useCallback(
     ({ row, rowProps, visibleColumns }) => (
@@ -244,6 +245,7 @@ function App() {
         row={row}
         rowProps={rowProps}
         visibleColumns={visibleColumns}
+        // id={id}
       />
     ),
     []
@@ -260,4 +262,4 @@ function App() {
   );
 }
 
-export default App;
+export default MainCategoryList;

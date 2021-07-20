@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Grid, Typography, makeStyles, Button } from "@material-ui/core/";
-import ZoneList from "../../components/ZoneList";
+import ChangePassword from "../../components/profile/changePassword";
 const useStyles = makeStyles({
   root: {
     width: "100%",
@@ -41,7 +41,7 @@ export default function Profile() {
       </Grid>
       <Grid container style={{ width: " 100%" }}>
         <Grid item xs={12} md={10}>
-         Enter component and subcomponent here
+        <ChangePassword />
         </Grid>
       </Grid>
     </>
