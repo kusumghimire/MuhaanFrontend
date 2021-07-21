@@ -40,10 +40,10 @@ const AddServices = (props) => {
   const [finalData, setFinalData] = useState({});
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setTutorial((prevTutorial)=>{ 
-      return {...prevTutorial, [name]: value} 
+    setTutorial((prevTutorial) => {
+      return { ...prevTutorial, [name]: value };
     });
-  }
+  };
 
   const handleInputZone = (event, option) => {
     setZone(
@@ -67,7 +67,7 @@ const AddServices = (props) => {
   };
 
   const handleImageChange = (event) => {
-    setTutorial({ ...tutorial, image: event.target.files[0] });
+    setTutorial({ ...tutorial, image:event.target.files[0] });
     // console.log(event.target.files[0])
   };
   const retrieveTutorialsZone = () => {
@@ -95,7 +95,8 @@ const AddServices = (props) => {
 
   // console.log(zonedata && zonedata.length > 0 ? zonedata[0].id : "hello");
 
-  const saveTutorial = () => {
+  const saveTutorial = (e) => {
+    e.preventDefault();
     let formData = new FormData();
 
     formData.append("category ", tutorial.category);
@@ -113,8 +114,18 @@ const AddServices = (props) => {
     formData.append("discount", tutorial.discount);
     formData.append("rate", tutorial.rate);
     formData.append("zone", zone);
+    // let newForm = {
+    //   category: tutorial.category,
+    //   title: tutorial.title,
+    //   image: tutorial.image,
+    //   description: tutorial.description,
+    //   discount: tutorial.discount,
+    //   rate: tutorial.rate,
+    //   zone: zone,
+    //   payment_choice: payment_choice,
+    //   credit_point: tutorial.credit_point,
+    // };
 
-    // string_data.replace(/"/g,'')
     formData.append("payment_choice", payment_choice);
     formData.append("credit_point", tutorial.credit_point);
     let finalState;
@@ -124,6 +135,7 @@ const AddServices = (props) => {
     ServiceApi.create(formData)
 
       .then((response) => {
+        console.log(response);
         setFinalData(finalState);
 
         props.history.push("/services");
@@ -134,16 +146,16 @@ const AddServices = (props) => {
 
     // console.log(tutorial);
     // console.log(zone);
-    // console.log(payment);
   };
 
   const classes = useStyles();
   const paymentChoice = [
-    { choice:1, title: "Online Payment" },
-    { choice:2,title: "Cash Payment" },
+    { choice: 1, title: "Online Payment" },
+    { choice: 2, title: "Cash Payment" },
   ];
   return (
-    <div className="submit-form">  
+    <form onSubmit={saveTutorial}>
+      <div className="submit-form">
         <div>
           <Grid container>
             <Grid item md={8}>
@@ -159,12 +171,26 @@ const AddServices = (props) => {
 
               <div className="form-group  mt-3 mb-3">
                 <label htmlFor="category">Category</label>
-                <select name="category" value={tutorial.category} onChange={handleInputChange} style={{width:"100%",padding:"10px",borderRadius:"4px", border:"1px solid gray"}}>
-              {categorydata &&
-                categorydata.map((item) => {
-                 return  <option value={item.id} key={item.id}>{item.title}</option>;
-                })}
-            </select>
+                <select
+                  name="category"
+                  value={tutorial.category}
+                  onChange={handleInputChange}
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    borderRadius: "4px",
+                    border: "1px solid gray",
+                  }}
+                >
+                  {categorydata &&
+                    categorydata.map((item) => {
+                      return (
+                        <option value={item.id} key={item.id}>
+                          {item.title}
+                        </option>
+                      );
+                    })}
+                </select>
               </div>
 
               <div className={classes.root}>
@@ -284,14 +310,14 @@ const AddServices = (props) => {
                 />
               </div>
 
-              <button onClick={saveTutorial} className="btn btn-success">
+              <button type="submit" className="btn btn-success">
                 Submit
               </button>
             </Grid>
           </Grid>
         </div>
-    
-    </div>
+      </div>
+    </form>
   );
 };
 
