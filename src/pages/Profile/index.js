@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Grid, Typography, makeStyles, Button } from "@material-ui/core/";
-import ChangePassword from "../../components/profile/changePassword";
+import ChangePassword from "../../components/profile/password/changePassword";
 const useStyles = makeStyles({
   root: {
     width: "100%",

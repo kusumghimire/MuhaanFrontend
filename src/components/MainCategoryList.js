@@ -3,10 +3,8 @@ import { useExpanded, useTable } from 'react-table';
 import styled from 'styled-components';
 import TutorialDataService from "../services/TutorialService";
 
-import makeData from './makeData';
 const Styles = styled.div`
   padding: 1rem;
-
   table {
     border-spacing: 0;
     border: 1px solid black;
@@ -18,7 +16,6 @@ const Styles = styled.div`
         }
       }
     }
-
     th,
     td {
       margin: 0;
@@ -74,13 +71,13 @@ function SubRows({ row, rowProps, visibleColumns, data, loading }) {
   );
 }
 
-function SubRowAsync({ row, rowProps, visibleColumns ,id}) {
+function SubRowAsync({ row,rowProps, visibleColumns}) {
   
   const [loading, setLoading] = React.useState(true);
   const [subCat, setSubData] = React.useState([]);
 
-  const retrieveTutorialsSubCat = () => {
-    TutorialDataService.getSubCategory()
+  const retrieveTutorialsSubCat = (id) => {
+    TutorialDataService.getSubCategory(id)
       .then((response) => {
         // if(id){
         //   const sub= response.data.filter((each)=>each.id===id)
@@ -92,10 +89,10 @@ function SubRowAsync({ row, rowProps, visibleColumns ,id}) {
       });
   };
   React.useEffect(() => { 
-      retrieveTutorialsSubCat();
+      retrieveTutorialsSubCat(row.id);
       setLoading(false);
     return () => {
-      clearTimeout(timer);
+      // clearTimeout(timer);
     };
   }, []);
 
@@ -112,8 +109,8 @@ function SubRowAsync({ row, rowProps, visibleColumns ,id}) {
 }
 
 // option we are creating for ourselves in our table renderer
-function Table({ columns: userColumns, data, renderRowSubComponent }) {
-  const [mainCategory, setMainCategory] = useState([]);
+function Table({ columns: userColumns, renderRowSubComponent }) {
+  const [mainCat, setMainCategory] = useState([]);
 
   const retrieveTutorials = () => {
     TutorialDataService.getAll()
@@ -139,7 +136,7 @@ function Table({ columns: userColumns, data, renderRowSubComponent }) {
   } = useTable(
     {
       columns: userColumns,
-      data: mainCategory,
+      data: mainCat,
     },
     useExpanded // We can useExpanded to track the expanded state
     // for sub components too!
@@ -184,7 +181,7 @@ function Table({ columns: userColumns, data, renderRowSubComponent }) {
 }
 
 function MainCategoryList() {
-  // const [id, setId]= useState(null);
+  const [id, setId]= useState(null);
   const columns = React.useMemo(
     () => [
       {
@@ -194,12 +191,11 @@ function MainCategoryList() {
         Cell: ({ row }) => (
           <span {...row.getToggleRowExpandedProps()}>
               {row.isExpanded ? (
-              <i
-              //  onClick={()=>setId(row.id)}
-                 className="fas fa-chevron-up" />
+              <i  className="fas fa-chevron-up" />
             ) : (
-              <i className="fas fa-chevron-down" />
+              <i onClick={()=>setId(row.id)} className="fas fa-chevron-down" />
             )}
+            {/* {row.isExpanded ? '👇' : '👉'} */}
           </span>
         ),
         SubCell: () => null // No expander on an expanded row
@@ -242,10 +238,9 @@ function MainCategoryList() {
   const renderRowSubComponent = React.useCallback(
     ({ row, rowProps, visibleColumns }) => (
       <SubRowAsync
-        row={row}
-        rowProps={rowProps}
-        visibleColumns={visibleColumns}
-        // id={id}
+      row={row}
+      rowProps={rowProps}
+      visibleColumns={visibleColumns}
       />
     ),
     []
@@ -255,7 +250,7 @@ function MainCategoryList() {
     <Styles>
       <Table
         columns={columns}
-        data={data}
+        // data={mainCat}
         renderRowSubComponent={renderRowSubComponent}
       />
       </Styles>
