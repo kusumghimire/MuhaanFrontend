@@ -1,4 +1,5 @@
 export { default as Dashboard } from "./Dashboard";
+export { default as Profile } from "./Profile";
 export { default as MainCategory } from "./MainCategory";
 export { default as SubCategory } from "./SubCategory";
 export {default as AddOn} from "./AddOn";

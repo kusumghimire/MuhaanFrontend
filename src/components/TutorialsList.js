@@ -5,13 +5,13 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 import TutorialDataService from "../services/TutorialService";
 import { useTable, useExpanded } from "react-table";
-import server from '../api'
-import Collapsible from 'react-collapsible';
+import server from "../api";
+import Collapsible from "react-collapsible";
 
 const TutorialsList = (props) => {
   const [tutorials, setTutorials] = useState([]);
   const tutorialsRef = useRef();
-const history= useHistory();
+  const history = useHistory();
   tutorialsRef.current = tutorials;
 
   useEffect(() => {
@@ -27,29 +27,24 @@ const history= useHistory();
         console.log(e);
       });
   };
-
-  const refreshList = () => {
-    retrieveTutorials();
-  };
-
-const deleteTutorial = async (rowIndex) => {
-  const id = tutorialsRef.current[rowIndex].id;
-  console.log(id);
   
+  const deleteTutorial = async (rowIndex) => {
+    const id = tutorialsRef.current[rowIndex].id;
+    console.log(id);
 
-  await TutorialDataService.remove(id)
-    .then((response) => {
-      // props.history.push(`category/delete/${id}`);
+    await TutorialDataService.remove(id)
+      .then((response) => {
+        // props.history.push(`category/delete/${id}`);
 
-      let newTutorials = [...tutorialsRef.current];
-      newTutorials.splice(rowIndex, 1);
+        let newTutorials = [...tutorialsRef.current];
+        newTutorials.splice(rowIndex, 1);
 
-      setTutorials(newTutorials);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-};
+        setTutorials(newTutorials);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   const openTutorial = (rowIndex, data) => {
     const id = tutorialsRef.current[rowIndex].id;
@@ -84,9 +79,9 @@ const deleteTutorial = async (rowIndex) => {
         Header: () => null, // No header
         id: "expander", // It needs an ID
         // Cell: ({ row, rows, toggleRowExpanded }: any) => (
-          Cell: ({ row }) => ( 
+        Cell: ({ row }) => (
           <span>
-           { console.log(row.isExpanded)}
+            {console.log(row.isExpanded)}
             {row.isExpanded ? (
               <i className="fas fa-chevron-up" />
             ) : (
@@ -96,8 +91,8 @@ const deleteTutorial = async (rowIndex) => {
         ),
       },
       {
-        Header:"Sub Cat",
-        accessor:"title",
+        Header: "Sub Cat",
+        accessor: "title",
       },
       {
         Header: "Actions",
@@ -105,15 +100,17 @@ const deleteTutorial = async (rowIndex) => {
         Cell: (props) => {
           const rowIdx = props.row.id;
           return (
-            <div>            
-              <span style={{marginRight:"1.5rem"}} onClick={() => openTutorial(rowIdx)}>
+            <div>
+              <span
+                style={{ marginRight: "1.5rem" }}
+                onClick={() => openTutorial(rowIdx)}
+              >
                 <i className="far fa-edit action mr-2"></i>
               </span>
-              
+
               <span onClick={() => deleteTutorial(rowIdx)}>
                 <i className="fas fa-trash action"></i>
               </span>
-             
             </div>
           );
         },
@@ -122,16 +119,11 @@ const deleteTutorial = async (rowIndex) => {
     []
   );
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable({
-    columns,
-    data: tutorials,
-  });
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({
+      columns,
+      data: tutorials,
+    });
 
   return (
     <div className="list row">

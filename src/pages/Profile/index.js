@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Grid, Typography, makeStyles, Button } from "@material-ui/core/";
-import ZoneList from "../../components/ZoneList";
+import ChangePassword from "../../components/profile/password/changePassword";
 const useStyles = makeStyles({
   root: {
     width: "100%",
@@ -13,7 +13,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Zone() {
+export default function Profile() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -28,21 +28,20 @@ export default function Zone() {
       <Grid container className={classes.contentHeader}>
         <Grid item>
           <Typography variant="h4" gutterBottom style={{ marginRight: "1rem" }}>
-        Zone
+        Change Password 
           </Typography>
         </Grid>
         <Grid item>
-          {/* <MainCategoryModal /> */}
-          <Link to={"/zone/add"}>
+          {/* <Link to={"/zone/add"}>
             <Button variant="contained" color="primary">
               Create New
             </Button>
-          </Link>
+          </Link> */}
         </Grid>
       </Grid>
       <Grid container style={{ width: " 100%" }}>
         <Grid item xs={12} md={10}>
-          <ZoneList />
+        <ChangePassword />
         </Grid>
       </Grid>
     </>

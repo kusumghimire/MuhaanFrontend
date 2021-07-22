@@ -24,7 +24,8 @@ import {
   Zone,
   Payment,
   Transactions,
-  Credits
+  Credits,
+  Profile,
 } from "./pages";
 import AddTutorial from "./pages/Add/add";
 import AddTutorialCategory from "./pages/SubCategory/add";
@@ -53,7 +54,9 @@ function App() {
       <Switch>
         <MainLayout setToken={setToken} token={token}>
           {/* <MainLayout > */}
+          <Route exact  path="/profile" component={Profile} />
           <Route exact  path="/add" component={AddTutorial} />
+
           <Route exact path="/add-category" component={AddTutorialCategory} />
           <Route exact path="/zone/add" component={AddZone} />
 
