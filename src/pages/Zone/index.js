@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Grid, Typography, makeStyles, Button } from "@material-ui/core/";
-import MainCategoryTable from "../../components/tables/mainCategory/mainCategory";
-import MainCategoryModal from "../../components/modal/mainCategory/mainCategory";
 import ZoneList from "../../components/ZoneList";
 const useStyles = makeStyles({
   root: {

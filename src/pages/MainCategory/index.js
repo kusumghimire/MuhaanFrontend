@@ -4,6 +4,7 @@ import { Grid, Typography, makeStyles, Button } from "@material-ui/core/";
 import MainCategoryTable from "../../components/tables/mainCategory/mainCategory";
 import MainCategoryModal from "../../components/modal/mainCategory/mainCategory";
 import TutorialsList from "../../components/TutorialsList";
+import MainCategoryList from "../../components/MainCategoryList";
 const useStyles = makeStyles({
   root: {
     width: "100%",
@@ -44,7 +45,8 @@ export default function MainCategory() {
       </Grid>
       <Grid container style={{ width: " 100%" }}>
         <Grid item xs={12} md={10}>
-          <TutorialsList />
+          {/* <TutorialsList /> */}
+          <MainCategoryList/>
         </Grid>
       </Grid>
     </>

@@ -3,15 +3,13 @@ import { useHistory } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
-import TutorialDataService from "../services/TutorialService";
-import { useTable, useExpanded } from "react-table";
-import server from "../api";
-import Collapsible from "react-collapsible";
+import PaymentApi from "../services/PaymentApi";
+import { useTable } from "react-table";
 
-const TutorialsList = (props) => {
+const PaymentList = (props) => {
   const [tutorials, setTutorials] = useState([]);
   const tutorialsRef = useRef();
-  const history = useHistory();
+  const history= useHistory();
   tutorialsRef.current = tutorials;
 
   useEffect(() => {
@@ -19,7 +17,7 @@ const TutorialsList = (props) => {
   }, []);
 
   const retrieveTutorials = () => {
-    TutorialDataService.getAll()
+    PaymentApi.getAll()
       .then((response) => {
         setTutorials(response.data);
       })
@@ -27,14 +25,16 @@ const TutorialsList = (props) => {
         console.log(e);
       });
   };
-  
+
+  const refreshList = () => {
+    retrieveTutorials();
+  };
+
   const deleteTutorial = async (rowIndex) => {
     const id = tutorialsRef.current[rowIndex].id;
     console.log(id);
-
-    await TutorialDataService.remove(id)
+   await PaymentApi.remove(id)
       .then((response) => {
-        // props.history.push(`category/delete/${id}`);
 
         let newTutorials = [...tutorialsRef.current];
         newTutorials.splice(rowIndex, 1);
@@ -48,51 +48,22 @@ const TutorialsList = (props) => {
 
   const openTutorial = (rowIndex, data) => {
     const id = tutorialsRef.current[rowIndex].id;
-    history.push(`/category/update/${id}`, data);
+    history.push(`/payment-gateway/update/${id}`, data);
   };
 
   const columns = useMemo(
     () => [
-      // {
-      //   Header: "Main Category24",
-      //   accessor: "cat",
-      //   Cell: (props) => {
-      //     const rowIdx = props.row.id;
-      //     return (
-      //       <Collapsible trigger="Main Category &darr;" style={{color:"green"}}>
-      //         <p></p>
-      //       <p style={{color:"blue"}}>
-      //        Sub category Title
-      //       </p>
-      //       <p style={{color:"blue"}}>
-      //        Sub category Title
-      //       </p>
-      //       <p style={{color:"blue"}}>
-      //        Sub category Title
-      //       </p>
-      //     </Collapsible>
-      //     );
-      //   },
-      // },
+    //   {
+    //     Header: "Id",
+    //     accessor: "id",
+    //   },
       {
-        // Make an expander cell
-        Header: () => null, // No header
-        id: "expander", // It needs an ID
-        // Cell: ({ row, rows, toggleRowExpanded }: any) => (
-        Cell: ({ row }) => (
-          <span>
-            {console.log(row.isExpanded)}
-            {row.isExpanded ? (
-              <i className="fas fa-chevron-up" />
-            ) : (
-              <i className="fas fa-chevron-down" />
-            )}
-          </span>
-        ),
+        Header: "Created By",
+        accessor: "created_by",
       },
       {
-        Header: "Sub Cat",
-        accessor: "title",
+        Header: "Name",
+        accessor: "name",
       },
       {
         Header: "Actions",
@@ -100,17 +71,15 @@ const TutorialsList = (props) => {
         Cell: (props) => {
           const rowIdx = props.row.id;
           return (
-            <div>
-              <span
-                style={{ marginRight: "1.5rem" }}
-                onClick={() => openTutorial(rowIdx)}
-              >
+            <div>            
+            <span style={{marginRight:"1.5rem"}} onClick={() => openTutorial(rowIdx)}>
                 <i className="far fa-edit action mr-2"></i>
               </span>
 
               <span onClick={() => deleteTutorial(rowIdx)}>
                 <i className="fas fa-trash action"></i>
               </span>
+            
             </div>
           );
         },
@@ -119,11 +88,16 @@ const TutorialsList = (props) => {
     []
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({
-      columns,
-      data: tutorials,
-    });
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+  } = useTable({
+    columns,
+    data: tutorials,
+  });
 
   return (
     <div className="list row">
@@ -163,4 +137,4 @@ const TutorialsList = (props) => {
   );
 };
 
-export default TutorialsList;
+export default PaymentList;

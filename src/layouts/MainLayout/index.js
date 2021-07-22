@@ -115,14 +115,17 @@ function MainLayout(props) {
         <NavLink to="/zone" icon={CalendarViewDayIcon}>
          Zone
         </NavLink>
-        {/* <NavLink to="/time-slot" icon={QueryBuilderIcon}>
-          Time Slot & Date
-        </NavLink>
-        <NavLink to="/banner" icon={PanoramaIcon}>
-          Banner
-        </NavLink> */}
         <NavLink to="/service-provider" icon={GroupAddIcon}>
           Service Provider
+        </NavLink>
+        <NavLink to="/payment-gateway" icon={GroupAddIcon}>
+        Payment
+        </NavLink>
+        <NavLink to="/credits" icon={GroupAddIcon}>
+       Credits
+        </NavLink>
+        <NavLink to="/transactions" icon={GroupAddIcon}>
+        Transaction
         </NavLink>
         <NavLink to="/orders" icon={AddCircleOutlineIcon}>
           Pending Services
@@ -139,9 +142,6 @@ function MainLayout(props) {
         <NavLink to="/customers" icon={GroupIcon}>
           Customers
         </NavLink>
-        {/* <NavLink to="/review" icon={StarOutlineIcon}>
-          Review & Rating
-        </NavLink> */}
       </List>
     </Drawer>
   );
@@ -211,9 +211,5 @@ function MainLayout(props) {
     </div>
   );
 }
-// }
-MainLayout.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default MainLayout;

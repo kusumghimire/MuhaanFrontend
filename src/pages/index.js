@@ -1,10 +1,11 @@
 export { default as Dashboard } from "./Dashboard";
+export { default as Profile } from "./Profile";
 export { default as MainCategory } from "./MainCategory";
 export { default as SubCategory } from "./SubCategory";
 export {default as AddOn} from "./AddOn";
 export {default as Services} from "./Services1";
 export {default as Zone} from "./Zone";
-
+export {default as Transactions} from "./Transactions";
 export { default as TimeSlot } from "./TimeSlot";
 export { default as Banner } from "./Banner";
 export { default as ServiceProvider } from "./ServiceProvider";
@@ -12,6 +13,9 @@ export { default as Orders } from "./OrdersRequest";
 export { default as ProcessingOrder } from "./ProcessingOrder";
 export { default as CompletedOrder } from "./CompletedOrder";
 export { default as CancelledOrder } from "./CancelledOrder";
+
+export { default as Payment } from "./Payment";
+export { default as Credits } from "./Credits";
 
 export { default as MakeDecision } from "./MakeDecision";
 export { default as Review } from "./Review";

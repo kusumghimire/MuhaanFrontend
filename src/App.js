@@ -22,6 +22,10 @@ import {
   AddOn,
   Services,
   Zone,
+  Payment,
+  Transactions,
+  Credits,
+  Profile,
 } from "./pages";
 import AddTutorial from "./pages/Add/add";
 import AddTutorialCategory from "./pages/SubCategory/add";
@@ -33,6 +37,9 @@ import EditServices from "./pages/Services1/edit";
 import AddServiceProvider from "./pages/ServiceProvider/add";
 import UpdateMainCategory from "./pages/MainCategory/edit";
 import UpdateZone from "./pages/Zone/edit";
+import UpdatePayment from "./pages/Payment/edit";
+import AddPayment from "./pages/Payment/add";
+
 import useToken from "./useToken";
 
 function App() {
@@ -47,7 +54,9 @@ function App() {
       <Switch>
         <MainLayout setToken={setToken} token={token}>
           {/* <MainLayout > */}
+          <Route exact  path="/profile" component={Profile} />
           <Route exact  path="/add" component={AddTutorial} />
+
           <Route exact path="/add-category" component={AddTutorialCategory} />
           <Route exact path="/zone/add" component={AddZone} />
 
@@ -69,6 +78,13 @@ function App() {
           <Route exact path="/banner" component={Banner} />
           <Route exact path="/service-provider" component={ServiceProvider} />
           <Route exact path="/service-provider/add" component={AddServiceProvider} />
+
+          <Route exact path="/payment-gateway" component={Payment} />
+          <Route exact path="/payment-gateway/update/:id" component={UpdatePayment} />
+          <Route exact path="/payment-gateway/add" component={AddPayment} />
+
+          <Route exact path="/transactions" component={Transactions} />
+          <Route exact path="/credits" component={Credits} />
 
           <Route exact path="/orders" component={Orders} />
           <Route exact path="/make-decision" component={MakeDecision} />

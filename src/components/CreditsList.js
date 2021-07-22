@@ -3,10 +3,10 @@ import { useHistory } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
-import ZoneApiList from "../services/ZoneApi";
+import CreditsListApi from "../services/CreditsListApi";
 import { useTable } from "react-table";
 
-const ZoneList = (props) => {
+const CreditsList = (props) => {
   const [tutorials, setTutorials] = useState([]);
   const tutorialsRef = useRef();
   const history= useHistory();
@@ -17,7 +17,7 @@ const ZoneList = (props) => {
   }, []);
 
   const retrieveTutorials = () => {
-    ZoneApiList.getAll()
+    CreditsListApi.getAll()
       .then((response) => {
         setTutorials(response.data);
       })
@@ -33,7 +33,7 @@ const ZoneList = (props) => {
   const deleteTutorial = async (rowIndex) => {
     const id = tutorialsRef.current[rowIndex].id;
     console.log(id);
-   await ZoneApiList.remove(id)
+   await CreditsListApi.remove(id)
       .then((response) => {
 
        let newTutorials = [...tutorialsRef.current];
@@ -54,33 +54,41 @@ const ZoneList = (props) => {
   const columns = useMemo(
     () => [
       {
-        Header: "Id",
-        accessor: "id",
+        Header: "Created By",
+        accessor: "created_by",
       },
       {
-        Header: "Zone",
-        accessor: "name",
+        Header: "Payment Choice",
+        accessor: "payment_choice",
       },
       {
-        Header: "Actions",
-        accessor: "actions",
-        Cell: (props) => {
-          const rowIdx = props.row.id;
-          return (
-            <div>
+        Header: "Payment Gateway",
+        accessor: "payment_gateway",
+      },
+      {
+        Header: "Amount",
+        accessor: "amount",
+      },
+    //   {
+    //     Header: "Actions",
+    //     accessor: "actions",
+    //     Cell: (props) => {
+    //       const rowIdx = props.row.id;
+    //       return (
+    //         <div>
             
-            <span style={{marginRight:"1.5rem"}} onClick={() => openTutorial(rowIdx)}>
-                <i className="far fa-edit action mr-2"></i>
-              </span>
+    //         <span style={{marginRight:"1.5rem"}} onClick={() => openTutorial(rowIdx)}>
+    //             <i className="far fa-edit action mr-2"></i>
+    //           </span>
 
-              <span onClick={() => deleteTutorial(rowIdx)}>
-                <i className="fas fa-trash action"></i>
-              </span>
+    //           <span onClick={() => deleteTutorial(rowIdx)}>
+    //             <i className="fas fa-trash action"></i>
+    //           </span>
             
-            </div>
-          );
-        },
-      },
+    //         </div>
+    //       );
+    //     },
+    //   },
     ],
     []
   );
@@ -134,4 +142,4 @@ const ZoneList = (props) => {
   );
 };
 
-export default ZoneList;
+export default CreditsList;

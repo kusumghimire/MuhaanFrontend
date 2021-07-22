@@ -5,6 +5,7 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 import ServiceApi from "../services/ServicesApi";
 import { useTable } from "react-table";
+import { Zone } from "../pages";
 
 const ServicesList = (props) => {
   const [tutorials, setTutorials] = useState([]);
@@ -64,9 +65,14 @@ const ServicesList = (props) => {
       },
       {
         Header: "Zone",
-        accessor: "zone[0].name",
+        id: "zone",
+        accessor: (data) =>
+          data.zone.map((list) => (
+            <div style={{ padding: "5px" }}>
+              <span style={{ margin: "5px" }}>{list.name}</span>
+            </div>
+          )),
       },
-
       {
         Header: "Title",
         accessor: "title",
@@ -76,13 +82,8 @@ const ServicesList = (props) => {
         accessor: "image",
         maxWidth: 60,
         minWidth: 40,
-        maxHeight:40,
-        Cell: ({ cell: { value } }) => (
-          <img
-            src={value}
-            width={60}
-          />
-        )
+        maxHeight: 40,
+        Cell: ({ cell: { value } }) => <img src={value} width={60} />,
       },
       {
         Header: "Description",
@@ -93,20 +94,17 @@ const ServicesList = (props) => {
         accessor: "rate",
       },
       {
+        Header: "Payment Choice",
+        accessor: "payment_choice",
+      },
+      {
         Header: "Discount",
         accessor: "discount",
       },
       {
-        Header: "Payment Choice",
-        accessor: "payment_choice",
+        Header: "Credits Point",
+        accessor: "credit_point",
       },
-      // {
-      //   Header: "Status",
-      //   accessor: "published",
-      //   Cell: (props) => {
-      //     return props.value ? "Published" : "Pending";
-      //   },
-      // },
       {
         Header: "Actions",
         accessor: "actions",
