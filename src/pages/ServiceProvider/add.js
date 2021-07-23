@@ -21,7 +21,9 @@ const AddServiceProvider = (props) => {
   };
   const [tutorial, setTutorial] = useState(initialTutorialState);
   const [submitted, setSubmitted] = useState(false);
-
+  const [errors, setErrors] = useState({});
+  const [dataIsCorrect, setDataIsCorrect] = useState(false);
+  
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setTutorial({ ...tutorial, [name]: value });
@@ -71,6 +73,8 @@ const AddServiceProvider = (props) => {
       .catch((e) => {
         console.log(e);
       });
+      setErrors(validation(values));
+      setDataIsCorrect(true);
   };
 
   // const newTutorial = () => {
