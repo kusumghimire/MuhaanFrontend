@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 // import TutorialDataService from "../services/TutorialService";
 import TutorialDataService from "../../services/TutorialService";
 import Grid from "@material-ui/core/Grid";
@@ -11,12 +11,18 @@ const AddTutorial = (props) => {
   };
   const [tutorial, setTutorial] = useState(initialTutorialState);
   const [categorydata, setCategoryData] = useState([]);
+  const [category, setCategory] = useState("");
   const [submitted, setSubmitted] = useState(false);
-
+  const [finalData, setFinalData] = useState({});
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setTutorial({ ...tutorial, [name]: value });
   };
+  const selectInputChange = (event) => {
+    const { name, value } = event.target;
+    setCategory({ [name]: value });
+  };
+  console.log(category);
   const retrieveTutorialsCategory = () => {
     TutorialDataService.getAll()
       .then((response) => {
@@ -30,19 +36,20 @@ const AddTutorial = (props) => {
     retrieveTutorialsCategory();
   }, []);
 
-  const saveTutorial = () => {
+  const saveTutorial = (e) => {
+    e.preventDefault();
     var data = {
+      id: tutorial.id,
       title: tutorial.title,
+      cat: category.category,
     };
+    console.log(data);
+
     TutorialDataService.create(data)
       .then((response) => {
         props.history.push("main-category");
-        setTutorial({
-          id: response.data.id,
-          title: response.data.title,
-        });
+        setFinalData(data);
         setSubmitted(true);
-        console.log(response.data);
       })
       .catch((e) => {
         console.log(e);
@@ -64,19 +71,17 @@ const AddTutorial = (props) => {
           </button>
         </div>
       ) : (
-        <div>
-           <Grid container>
+        <form onSubmit={saveTutorial}>
+          <Grid container>
             <Grid item md={8}>
               <div className="form-group mt-3 mb-3">
                 <label htmlFor="cat">
-                    <Typography variant="h4">
-                   Main Category
-                    </Typography>
-                    </label>
-                    <select
+                  <Typography variant="h4">Main Category</Typography>
+                </label>
+                <select
                   name="category"
                   value={tutorial.category}
-                  onChange={handleInputChange}
+                  onChange={selectInputChange}
                   style={{
                     width: "100%",
                     padding: "10px",
@@ -96,10 +101,8 @@ const AddTutorial = (props) => {
               </div>
               <div className="form-group mt-3 mb-3">
                 <label htmlFor="title">
-                    <Typography variant="h4">
-                  Sub Category
-                    </Typography>
-                    </label>
+                  <Typography variant="h4">Sub Category</Typography>
+                </label>
                 <input
                   type="text"
                   className="form-control"
@@ -113,10 +116,10 @@ const AddTutorial = (props) => {
             </Grid>
           </Grid>
 
-          <button onClick={saveTutorial} className="btn btn-success">
+          <button type="submit" className="btn btn-success">
             Submit
           </button>
-        </div>
+        </form>
       )}
     </div>
   );
