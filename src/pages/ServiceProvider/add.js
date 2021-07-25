@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ServiceProviderApi from "../../services/ServiceProviderApi";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
-
+import validation from "../../validation/validation";
 const AddServiceProvider = (props) => {
   const initialTutorialState = {
     id: null,
@@ -73,8 +73,8 @@ const AddServiceProvider = (props) => {
       .catch((e) => {
         console.log(e);
       });
-      // setErrors(validation(values));
-      // setDataIsCorrect(true);
+      setErrors(validation(tutorial));
+      setDataIsCorrect(true);
   };
 
   // const newTutorial = () => {
@@ -210,9 +210,10 @@ const AddServiceProvider = (props) => {
                   id="password"
                   required
                   value={tutorial.password}
-                  onChange={handleInputChange}
                   name="password"
+               onChange={handleInputChange}
                 />
+               {errors.password && <p className='error' style={{color:"red"}}>{errors.password}</p>}
               </div>
 
               <div className="form-group mt-3 mb-3">
@@ -223,9 +224,10 @@ const AddServiceProvider = (props) => {
                   id="confirmpassword"
                   required
                   value={tutorial.confirmpassword}
-                  onChange={handleInputChange}
                   name="confirmpassword"
+                  onChange={handleInputChange}
                 />
+                 {errors.confirmpassword && <p className='error' style={{color:"red"}}>{errors.confirmpassword}</p>}
               </div>
 
               <button onClick={saveTutorial} className="btn btn-success">

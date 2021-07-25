@@ -15,10 +15,10 @@ const validation =(values) =>{
     }else if(values.password.length < 6){
        errors.password = "Password must be more than five characters.";
     }
-    if(!values.password2){
-        errors.password2 = 'Password is required'        
-    }else if (values.password2 !== values.password){
-        errors.password2 = "Passwords do not match"
+    if(!values.confirmpassword){
+        errors.confirmpassword = 'Password is required'        
+    }else if (values.confirmpassword !== values.password){
+        errors.confirmpassword = "Passwords do not match"
     }
 
  return errors;   
