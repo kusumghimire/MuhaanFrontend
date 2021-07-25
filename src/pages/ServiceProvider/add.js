@@ -73,8 +73,8 @@ const AddServiceProvider = (props) => {
       .catch((e) => {
         console.log(e);
       });
-      setErrors(validation(values));
-      setDataIsCorrect(true);
+      // setErrors(validation(values));
+      // setDataIsCorrect(true);
   };
 
   // const newTutorial = () => {
