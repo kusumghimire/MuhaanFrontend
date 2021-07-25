@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Grid, Typography, makeStyles,Button } from "@material-ui/core/";
-import InprogressServiceRequest from "../../components/InprogressServiceRequest";
+import CompletedServiceList from "../../components/CompletedServiceList";
 const useStyles = makeStyles({
   root: {
     width: "100%",
@@ -31,7 +31,7 @@ export default function CompletedService() {
       </Grid>
       <Grid container style={{ width: " 100%" }}>
         <Grid item xs={12} md={12}>
-          <InprogressServiceRequest />
+          <CompletedServiceList />
         </Grid>
       </Grid>
     </>

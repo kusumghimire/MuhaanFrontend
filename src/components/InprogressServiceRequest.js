@@ -53,6 +53,20 @@ const decisionRequest = (rowIndex, data) => {
         accessor: "service",
       },
       {
+        Header: "Add On",
+        id: "add_ons",
+        accessor: (data) =>
+        data.add_ons.map((list) => (
+          <div style={{ padding: "5px" }}>
+            <span style={{ margin: "5px" }}>{list.name}</span>
+          </div>
+        )),
+      },
+      {
+        Header: "Cart",
+        accessor: "cart",
+      },
+      {
         Header: "Service Provider",
         accessor: "service_provider",
       },
