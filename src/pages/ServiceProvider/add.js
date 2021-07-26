@@ -41,7 +41,7 @@ const AddServiceProvider = (props) => {
     formData.append("lastname", tutorial.lastname);
     formData.append("profile", tutorial.proflie);
     formData.append("address", tutorial.address);
-    formData.append("number", tutorial.number);
+    formData.append("number", tutorial.phone_no);
     formData.append("officenumber", tutorial.officenumber);
     formData.append("pan", tutorial.pan);
     formData.append("citizenship", tutorial.citizenship);
@@ -57,7 +57,7 @@ const AddServiceProvider = (props) => {
           lastname: response.data.lastname,
           profile: response.data.profile,
           address: response.data.address,
-          number: response.data.number,
+          number: response.data.phone_no,
           officenumber: response.data.officenumber,
           pan: response.data.pan,
           citizenship: response.data.citizenship,
@@ -104,6 +104,7 @@ const AddServiceProvider = (props) => {
                Service Provider
                 </Typography>
               </Grid>
+              <form>
               <div className="form-group  mt-3 mb-3">
                 <label htmlFor="firstname">First Name</label>
                 <input
@@ -135,7 +136,7 @@ const AddServiceProvider = (props) => {
                   type="file"
                   className="form-control"
                   id="profile"
-                  required
+                
                   onChange={handleImageChange}
                   name="profile"
                 />
@@ -147,7 +148,7 @@ const AddServiceProvider = (props) => {
                   className="form-control"
                   id="number"
                   required
-                  value={tutorial.number}
+                  value={tutorial.phone_no}
                   onChange={handleInputChange}
                   name="number"
                 />
@@ -159,7 +160,7 @@ const AddServiceProvider = (props) => {
                   type="text"
                   className="form-control"
                   id="officename"
-                  required
+          
                   value={tutorial.officename}
                   onChange={handleInputChange}
                   name="officename"
@@ -172,7 +173,7 @@ const AddServiceProvider = (props) => {
                   type="text"
                   className="form-control"
                   id="pan"
-                  required
+           
                   value={tutorial.pan}
                   onChange={handleInputChange}
                   name="pan"
@@ -184,7 +185,7 @@ const AddServiceProvider = (props) => {
                   type="file"
                   className="form-control"
                   id="citizenship"
-                  required
+           
                   onChange={handleImageChange}
                   name="citizenship"
                 />
@@ -196,7 +197,7 @@ const AddServiceProvider = (props) => {
                   type="file"
                   className="form-control"
                   id="document"
-                  required
+              
                   onChange={handleImageChange}
                   name="document"
                 />
@@ -233,8 +234,9 @@ const AddServiceProvider = (props) => {
               <button onClick={saveTutorial} className="btn btn-success">
                 Submit
               </button>
+              </form>
             </Grid>
-          </Grid>
+          </Grid>         
         </div>
       )}
     </div>
