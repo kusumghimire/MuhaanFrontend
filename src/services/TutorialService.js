@@ -4,6 +4,9 @@ const getAll = () => {
   // console.log(getAll())
   return http.get(`/category/`);
 };
+const getTopCategory=()=>{
+  return http.get(`/top_level_category/`);
+}
 const getSubCategory = (id,data) => {
   // console.log(getAll())
   return http.get(`/sub/${id}/`, data);
@@ -36,7 +39,8 @@ const TutorialService = {
   update,
   remove,
   findByTitle,
-  getSubCategory
+  getSubCategory,
+  getTopCategory
 };
 
 export default TutorialService;
