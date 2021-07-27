@@ -34,7 +34,8 @@ const AddServiceProvider = (props) => {
     // console.log(event.target.files[0])
   };
 
-  const saveTutorial = () => {
+  const saveTutorial = (e) => {
+    e.preventDefault();
     let formData = new FormData();
 
     formData.append("firstname", tutorial.firstname); //append the values with key, value pair
@@ -184,8 +185,7 @@ const AddServiceProvider = (props) => {
                 <input
                   type="file"
                   className="form-control"
-                  id="citizenship"
-           
+                  id="citizenship"       
                   onChange={handleImageChange}
                   name="citizenship"
                 />

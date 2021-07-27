@@ -24,7 +24,7 @@ import ControlPointDuplicateIcon from "@material-ui/icons/ControlPointDuplicate"
 import StarOutlineIcon from "@material-ui/icons/StarOutline";
 import NavLink from "./NavLink";
  import useToken  from "../../useToken";
-const drawerWidth = 240;
+const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -95,8 +95,8 @@ function MainLayout(props) {
       anchor="left"
     >
       <div className={classes.toolbar} />
-      <Divider />
       <List>
+      <Divider />
         <NavLink activeOnlyWhenExact to="/" icon={HomeIcon}>
           Home
         </NavLink>
