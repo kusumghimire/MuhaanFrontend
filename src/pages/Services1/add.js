@@ -63,7 +63,7 @@ const AddServices = (props) => {
   const retrieveTutorialsZone = () => {
     ZoneApiList.getAll()
       .then((response) => {
-        console.log(response, "response data");
+        // console.log(response, "response data");
         setServiceData(response.data);
       })
       .catch((e) => {
@@ -81,6 +81,7 @@ const AddServices = (props) => {
         console.log(e);
       });
   };
+  
   useEffect(() => {
     retrieveTutorialsZone();
     retrieveTutorialsCategory();

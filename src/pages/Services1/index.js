@@ -34,8 +34,8 @@ export default function Services() {
         </Grid>
         <Grid item>
           {/* <MainCategoryModal /> */}
-          <Link to={"/services/add"}>
-            <Button variant="contained" color="primary">
+          <Link to={"/services/add"} style={{textDecoration:"none"}}>
+            <Button variant="contained" style={{background:"#237f76",color:"#ffffff"}}>
               Create New
             </Button>
           </Link>

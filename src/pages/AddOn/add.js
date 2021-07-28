@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect  } from "react";
 // import AddOnApiList from "../services/TutorialService";
 import AddOnApiList from "../../services/AddOnApi";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import { FormatBoldTwoTone } from "@material-ui/icons";
-
+import ServiceApi from "../../services/ServicesApi";
 const AddOnListAdd = (props) => {
   const initialTutorialState = {
     id: null,
@@ -15,7 +15,22 @@ const AddOnListAdd = (props) => {
     rate: "",
   };
   const [tutorial, setTutorial] = useState(initialTutorialState);
+  const [servicedata, setServiceData] = useState([]);
   const [submitted, setSubmitted] = useState(false);
+
+  const retrieveService = () => {
+    ServiceApi.getAll()
+      .then((response) => {
+        setServiceData(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  useEffect(() => {
+    retrieveService();
+  }, []);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -114,17 +129,30 @@ const AddOnListAdd = (props) => {
               </div>
 
               <div className="form-group  mt-3 mb-3">
-                <label htmlFor="service">Service</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="service"
-                  required
+              <label htmlFor="service">Service</label>
+                <select
+                  name="service"
                   value={tutorial.service}
                   onChange={handleInputChange}
-                  name="service"
-                />
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    borderRadius: "4px",
+                    border: "1px solid gray",
+                  }}
+                >
+                  {servicedata &&
+                    servicedata.map((item) => {
+                      return (
+                        <option value={item.id} key={item.id}>
+                          {item.title}
+                        </option>
+                      );
+                    })}
+                </select>
               </div>
+
+
 
               <div className="form-group  mt-3 mb-3">
                 <label htmlFor="image">Image</label>

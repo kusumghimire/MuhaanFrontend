@@ -36,8 +36,8 @@ export default function MainCategory() {
         </Grid>
         <Grid item>
           {/* <MainCategoryModal /> */}
-          <Link to={"/add"}>
-            <Button variant="contained" color="primary">
+          <Link to={"/add"} style={{textDecoration:"none"}}>
+            <Button variant="contained" style={{background:"#237f76",color:"#ffffff"}}>
               Create New
             </Button>
           </Link>

@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
+      background:" #26a69a",
     },
   },
   menuButton: {
@@ -50,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
+
   drawerPaper: {
     width: drawerWidth,
   },

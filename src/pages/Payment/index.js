@@ -24,8 +24,8 @@ export default function Payment() {
         </Typography>
         </Grid>
         <Grid item>
-        <Link to={"/payment-gateway/add"}>
-            <Button variant="contained" color="primary">
+        <Link to={"/payment-gateway/add"} style={{textDecoration:"none"}}>
+            <Button variant="contained" style={{background:"#237f76",color:"#ffffff"}}>
               Create New
             </Button>
           </Link>
