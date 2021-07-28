@@ -1,29 +1,31 @@
 import React from "react";
-import SimpleCard from "../../components/cards/card";
-import { Grid } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
+import OverViews from "../../components/chart/OverViews";
+import Analytics from "../../components/chart/Analytics";
+
+
+
 export default function Home() {
   return (
-    <>
-      <Grid container spacing={3}>
-        <Grid item md={4}>
-          <SimpleCard />
-        </Grid>
-        <Grid item md={4}>
-          <SimpleCard />
-        </Grid>
-        <Grid item md={4}>
-          <SimpleCard />
-        </Grid>
-        <Grid item md={4}>
-          <SimpleCard />
-        </Grid>
-        <Grid item md={4}>
-          <SimpleCard />
-        </Grid>
-        <Grid item md={4}>
-          <SimpleCard />
-        </Grid>
-      </Grid>
-    </>
+    <div>
+          <Typography
+          variant="h4"
+          gutterBottom
+          style={{ marginTop: "2rem", marginBottom: "2rem" }}
+        >
+          Overview
+        </Typography>
+        <OverViews />
+
+        <Typography
+          variant="h4"
+          gutterBottom
+          style={{ marginTop: "2rem" }}
+        >
+          Analytics
+        </Typography>
+
+        <Analytics />
+    </div>
   );
 }
