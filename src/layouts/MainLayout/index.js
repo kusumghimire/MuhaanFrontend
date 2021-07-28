@@ -26,9 +26,26 @@ import NavLink from "./NavLink";
  import useToken  from "../../useToken";
 const drawerWidth = 250;
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    "&::-webkit-scrollbar": {
+      width: 7,
+    },
+    "&::-webkit-scrollbar-track": {
+      boxShadow: `none`,
+    },
+    "&:hover::-webkit-scrollbar-track": {
+      boxShadow: `inset 0 0 6px rgba(0, 0, 0, 0.3)`,
+    },
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: "transparent",
+    },
+    "&:hover::-webkit-scrollbar-thumb": {
+      backgroundColor: "rgba(0, 0, 0, 0.1)",
+      borderRadius:`15px`,
+    }
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
