@@ -106,7 +106,7 @@ const MainCategoryList = () => {
             // append the current value to its list of values.
             // o[occurs].cat = o[occurs].cat.concat(cur.cat);
 
-            o[occurs].title = o[occurs].title.concat(cur.title);
+            o[occurs].title = o[occurs].title.concat(", ",cur.title);
 
             // Otherwise,
           } 

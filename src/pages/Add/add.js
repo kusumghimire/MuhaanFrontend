@@ -20,7 +20,9 @@ const AddTutorial = (props) => {
   };
   const selectInputChange = (event) => {
     const { name, value } = event.target;
+    // setCategory({ [name]: value });
     setCategory({ [name]: value });
+
   };
   console.log(category);
   const retrieveTutorialsCategory = () => {
