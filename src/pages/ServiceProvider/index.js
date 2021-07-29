@@ -26,8 +26,8 @@ export default function ServiceProvider() {
           </Typography>
         </Grid>
           <Grid item>
-            <Link to={"/service-provider/add"}>
-              <Button variant="contained" color="primary">
+            <Link to={"/service-provider/add"} style={{textDecoration:"none"}}>
+              <Button variant="contained" style={{background:"#237f76",color:"#ffffff"}}>
                 Create New
               </Button>
             </Link>

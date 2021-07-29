@@ -5,15 +5,13 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
+import validation from "../../validation/validation";
 
 function Copyright() {
   return (
@@ -29,8 +27,16 @@ function Copyright() {
 }
 
 const useStyles = makeStyles((theme) => ({
+  root:{
+    background:` linear-gradient(135deg,#3c3d70, #509977)`,
+    width:"100%",
+    height:"100vh",
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center",
+  },
   paper: {
-    marginTop: theme.spacing(8),
+    // marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -46,14 +52,19 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    background:"#1e5297",
+    color:"#ffffff",
+    textTransform:"capitalize",
+   " &:hover":{
+     color:"#000",
+   }
   },
 }));
 
 async function loginUser(credentials) {
   return fetch('https://muhaan.enterprisesgravity.com/dashboard/login/', {
     method: 'POST',
-    headers: {
-      
+    headers: {      
       "Content-Type": "application/json ",
       "Accept":'application/json',
       // "Access-Control-Allow-Origin": "*",
@@ -78,20 +89,21 @@ export default function Login({ setToken }) {
       password
     });
    await setToken(token.token);
+  //  setErrors(validation(tutorial));
   }
  
 
   return (
-    <Container component="main" maxWidth="xs">
+    <div className={classes.root}> 
+    <Container component="main" maxWidth="xs" >
       <CssBaseline />
-      <Paper className={classes.paper} elevation={1}>
+      <Paper className={classes.paper} elevation={0}>
         <Avatar>M</Avatar>
         <Typography component="h1" variant="h5">
-          Login
+         Muhaan
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit} noValidate>
           <TextField
-            variant="outlined"
             margin="normal"
             required
             fullWidth
@@ -103,8 +115,7 @@ export default function Login({ setToken }) {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-          <TextField
-            variant="outlined"
+          <TextField         
             margin="normal"
             required
             fullWidth
@@ -116,15 +127,14 @@ export default function Login({ setToken }) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-          />
+          /> */}
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
             className={classes.submit}
           >
             Sign In
@@ -135,7 +145,8 @@ export default function Login({ setToken }) {
       <Box mt={8}>
         <Copyright />
       </Box>
-    </Container>
+    </Container>        
+    </div>
   );
 }
 Login.propTypes = {

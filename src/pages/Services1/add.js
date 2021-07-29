@@ -88,6 +88,7 @@ const AddServices = (props) => {
         console.log(e);
       });
   };
+  
   useEffect(() => {
     retrieveTutorialsZone();
     retrieveTutorialsCategory();

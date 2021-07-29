@@ -33,8 +33,8 @@ export default function Zone() {
         </Grid>
         <Grid item>
           {/* <MainCategoryModal /> */}
-          <Link to={"/zone/add"}>
-            <Button variant="contained" color="primary">
+          <Link to={"/zone/add"} style={{textDecoration:"none"}}>
+            <Button variant="contained" style={{background:"#237f76",color:"#ffffff"}}>
               Create New
             </Button>
           </Link>

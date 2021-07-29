@@ -2,26 +2,30 @@ import React, { useState } from "react";
 import ServiceProviderApi from "../../services/ServiceProviderApi";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
-
+import validation from "../../validation/validation";
 const AddServiceProvider = (props) => {
   const initialTutorialState = {
     id: null,
-    firstname: "",
-    lastname: "",
-    profile:"",
+    first_name: "",
+    last_name: "",
+    email:"",
+    phone_no:"",
+    proflie_pic:"",
     address:"",
     number:"",
-    officename:"",
+    office_name:"",
+    office_address:"",
     pan:"",
     citizenship:"",
     document:"",
     password:"",
-    confirmpassword:"",
-    description: "",
+    confirm_password:"",
   };
   const [tutorial, setTutorial] = useState(initialTutorialState);
   const [submitted, setSubmitted] = useState(false);
-
+  const [errors, setErrors] = useState({});
+  const [dataIsCorrect, setDataIsCorrect] = useState(false);
+  
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setTutorial({ ...tutorial, [name]: value });
@@ -32,36 +36,41 @@ const AddServiceProvider = (props) => {
     // console.log(event.target.files[0])
   };
 
-  const saveTutorial = () => {
+  const saveTutorial = (e) => {
+    e.preventDefault();
     let formData = new FormData();
 
-    formData.append("firstname", tutorial.firstname); //append the values with key, value pair
-    formData.append("lastname", tutorial.lastname);
-    formData.append("profile", tutorial.proflie);
+    formData.append("firstname", tutorial.first_name); //append the values with key, value pair
+    formData.append("lastname", tutorial.last_name);
+    formData.append("email", tutorial.email);
+    formData.append("number", tutorial.phone_no);
+    formData.append("profile", tutorial.proflie_pic);
     formData.append("address", tutorial.address);
-    formData.append("number", tutorial.number);
-    formData.append("officenumber", tutorial.officenumber);
-    formData.append("pan", tutorial.pan);
     formData.append("citizenship", tutorial.citizenship);
     formData.append("document", tutorial.document);
+    formData.append("officename",tutorial.office_name);
+    formData.append("officeaddress", tutorial.office_address);
+    formData.append("pan", tutorial.pan);
     formData.append("password", tutorial.password);
-    formData.append("confirmpassword", tutorial.confirmpassword);
+    formData.append("confirmpassword", tutorial.confirm_password);
 
     ServiceProviderApi.create(formData)
       .then((response) => {
         setTutorial({
           id: response.data.id,
-          firstname: response.data.firstname,
-          lastname: response.data.lastname,
-          profile: response.data.profile,
+          firstname: response.data.first_name,
+          lastname: response.data.last_name,
+          email: response.data.email,
+          number: response.data.phone_no,
+          profile: response.data.profile_pic,
           address: response.data.address,
-          number: response.data.number,
-          officenumber: response.data.officenumber,
-          pan: response.data.pan,
           citizenship: response.data.citizenship,
           document: response.data.document,
+          officename: response.data.office_name,
+          officeaddress:response.data.office_address,
+          pan: response.data.pan,
           password: response.data.password,
-          confirmpassword: response.data.confirmpassword,
+          confirmpassword: response.data.confirm_password,
         });
 
         props.history.push("/service-provider");
@@ -71,6 +80,8 @@ const AddServiceProvider = (props) => {
       .catch((e) => {
         console.log(e);
       });
+      setErrors(validation(tutorial));
+      setDataIsCorrect(true);
   };
 
   // const newTutorial = () => {
@@ -100,65 +111,105 @@ const AddServiceProvider = (props) => {
                Service Provider
                 </Typography>
               </Grid>
+              <form>
               <div className="form-group  mt-3 mb-3">
-                <label htmlFor="firstname">First Name</label>
+                <label htmlFor="first_name">First Name</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="firstname"
+                  id="first_name"
                   required
-                  value={tutorial.firstname}
+                  value={tutorial.first_name}
                   onChange={handleInputChange}
-                  name="firstname"
+                  name="first_name"
                 />
               </div>
 
               <div className="form-group  mt-3 mb-3">
-                <label htmlFor="lastname">Last Name</label>
+                <label htmlFor="last_name">Last Name</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="lastname"
+                  id="last_name"
                   required
-                  value={tutorial.lastname}
+                  value={tutorial.last_name}
                   onChange={handleInputChange}
-                  name="lastname"
+                  name="last_name"
                 />
               </div>
+
               <div className="form-group  mt-3 mb-3">
-                <label htmlFor="profile">Profile Pic</label>
+                <label htmlFor="email">Email</label>
                 <input
-                  type="file"
+                  type="email"
                   className="form-control"
-                  id="profile"
+                  id="email"
                   required
-                  onChange={handleImageChange}
-                  name="profile"
+                  value={tutorial.email}
+                  onChange={handleInputChange}
+                  name="email"
                 />
               </div>
+
+              
               <div className="form-group  mt-3 mb-3">
-                <label htmlFor="number">Phone Number</label>
+                <label htmlFor="phone_no">Phone Number</label>
                 <input
                   type="number"
                   className="form-control"
-                  id="number"
+                  id="phone_no"
                   required
-                  value={tutorial.number}
+                  value={tutorial.phone_no}
                   onChange={handleInputChange}
-                  name="number"
+                  name="phone_no"
                 />
               </div>
 
               <div className="form-group  mt-3 mb-3">
-                <label htmlFor="officename">Office Name </label>
+                <label htmlFor="profile_pic">Profile Pic</label>
+                <input
+                  type="file"
+                  className="form-control"
+                  id="profile_pic"
+                  value={tutorial.profile_pic}
+                  onChange={handleImageChange}
+                  name="profile_pic"
+                />
+              </div>
+              <div className="form-group  mt-3 mb-3">
+                <label htmlFor="address">Address</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="officename"
-                  required
-                  value={tutorial.officename}
+                  id="address"
+                  value={tutorial.address}
                   onChange={handleInputChange}
-                  name="officename"
+                  name="address"
+                />
+              </div>
+
+              <div className="form-group  mt-3 mb-3">
+                <label htmlFor="office_name">Office Name </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="office_name"          
+                  value={tutorial.office_name}
+                  onChange={handleInputChange}
+                  name="office_name"
+                />
+              </div>
+
+              <div className="form-group  mt-3 mb-3">
+                <label htmlFor="office_address">Office Address</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="office_address"
+          
+                  value={tutorial.office_address}
+                  onChange={handleInputChange}
+                  name="office_address"
                 />
               </div>
 
@@ -168,7 +219,7 @@ const AddServiceProvider = (props) => {
                   type="text"
                   className="form-control"
                   id="pan"
-                  required
+           
                   value={tutorial.pan}
                   onChange={handleInputChange}
                   name="pan"
@@ -179,8 +230,7 @@ const AddServiceProvider = (props) => {
                 <input
                   type="file"
                   className="form-control"
-                  id="citizenship"
-                  required
+                  id="citizenship"       
                   onChange={handleImageChange}
                   name="citizenship"
                 />
@@ -192,7 +242,7 @@ const AddServiceProvider = (props) => {
                   type="file"
                   className="form-control"
                   id="document"
-                  required
+              
                   onChange={handleImageChange}
                   name="document"
                 />
@@ -206,29 +256,32 @@ const AddServiceProvider = (props) => {
                   id="password"
                   required
                   value={tutorial.password}
-                  onChange={handleInputChange}
                   name="password"
+               onChange={handleInputChange}
                 />
+               {errors.password && <p className='error' style={{color:"red"}}>{errors.password}</p>}
               </div>
 
               <div className="form-group mt-3 mb-3">
-                <label htmlFor="confirmpassword">Confirm Password</label>
+                <label htmlFor="confirm_password">Confirm Password</label>
                 <input
                   type="password"
                   className="form-control"
-                  id="confirmpassword"
+                  id="confirm_password"
                   required
-                  value={tutorial.confirmpassword}
+                  value={tutorial.confirm_password}
+                  name="confirm_password"
                   onChange={handleInputChange}
-                  name="confirmpassword"
                 />
+                 {errors.confirm_password && <p className='error' style={{color:"red"}}>{errors.confirm_password}</p>}
               </div>
 
               <button onClick={saveTutorial} className="btn btn-success">
                 Submit
               </button>
+              </form>
             </Grid>
-          </Grid>
+          </Grid>         
         </div>
       )}
     </div>

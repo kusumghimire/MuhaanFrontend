@@ -64,6 +64,10 @@ const AddOnList = (props) => {
         accessor: "name",
       },
       {
+        Header: "Service",
+        accessor: "service",
+      },
+      {
         Header: "Description",
         accessor: "description",
       },
