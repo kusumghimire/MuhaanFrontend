@@ -4,8 +4,8 @@ const getAll = () => {
   return http.get("/service-provider/");
 };
 
-const create = () => {
-  return http.post(`/service-provider/registration/`);
+const create = (data) => {
+  return http.post(`/service-provider/registration/`,data);
 };
 
 const ServiceProviderApi = {

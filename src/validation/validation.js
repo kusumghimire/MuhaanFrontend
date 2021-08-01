@@ -2,12 +2,16 @@
 const validation =(values) =>{
     let errors ={};
 
-    if(!values.fullname){
-        errors.fullname='Name is required.'
+    // if(!values.fullname){
+    //     errors.fullname='Name is required.'
+    // }
+    if(!values.phone_no){
+        errors.phone_no='Phone no. is required.'
     }
+   
     if(!values.email){
         errors.email="Email is required."
-    }else if (!/\S+@\S+\.\S+/.test(values.email)){
+    }if (!/\S+@\S+\.\S+/.test(values.email)){
         errors.email= "Email is invalid"
     }
     if(!values.password){
