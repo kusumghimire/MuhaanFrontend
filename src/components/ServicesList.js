@@ -37,21 +37,26 @@ const ServicesList = (props) => {
     history.push(`/services/update/${id}`, data);
   };
 
-  const deleteTutorial = async (rowIndex) => {
-    const id = tutorialsRef.current[rowIndex].id;
-    console.log(id);
-
-    await ServiceApi.remove(id)
-      .then((response) => {
-        let newTutorials = [...tutorialsRef.current];
+  const deleteTutorial =  (rowIndex) => {
+    const id1 = tutorialsRef.current[rowIndex].id;
+    console.log(id1);
+    let newTutorials = [...tutorialsRef.current];
         newTutorials.splice(rowIndex, 1);
-
+  
+        ServiceApi.remove(id1);
         setTutorials(newTutorials);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+  
+    //   .then((response) => {
+    //     let newTutorials = [...tutorialsRef.current];
+    //     newTutorials.splice(rowIndex, 1);
+  
+    //     setTutorials(newTutorials);
+    //   })
+    //   .catch((e) => {
+    //     console.log(e);
+    //   });
   };
+  // console.log(tutorials);
 
   const columns = useMemo(
     () => [

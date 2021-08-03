@@ -86,13 +86,13 @@ const MainCategoryList = () => {
   };
 
   // delete data
- const deleteRow =async (index) => {
+ const deleteRow =async (id) => {
 
      var updatedRows = [...mainCat];
-     var indexToRemove = updatedRows.findIndex(x => x.id==index);
+     var indexToRemove = updatedRows.findIndex(x => x.id==id);
      if(indexToRemove > -1){
        updatedRows.splice(indexToRemove, 1)
-       await TutorialDataService.remove(index)
+       await TutorialDataService.remove(id)
        setMainCategory(updatedRows);
       }
       //  console.log(indexToRemove);
