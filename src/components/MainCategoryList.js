@@ -25,64 +25,7 @@ const useStyles = makeStyles({
 });
 
 // row component
-function Row(props) {
-  const { row } = props;
-  const [open, setOpen] = React.useState(false);
-  const classes = useStyles();
 
-  return (
-    <React.Fragment>
-      <TableRow className={classes.root}>
-        <TableCell align="left">
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell component="th" scope="row" align="left">
-          {row.cat ? row.cat : row.title}
-        </TableCell>
-        <TableCell component="th" scope="row" align="left">
-          <div>
-            <span
-              style={{ marginRight: "1.5rem" }}
-              // onClick={() => openTutorial(rowIdx)}
-            >
-              <i className="far fa-edit action mr-2"></i>
-            </span>
-
-            <span
-            // onClick={() => deleteTutorial(rowIdx)}
-            >
-              <i className="fas fa-trash action"></i>
-            </span>
-          </div>
-        </TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell
-          style={{ paddingBottom: 0, paddingTop: 0 }}
-          colSpan={6}
-          align="left"
-        >
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box margin={1}>
-              <Typography variant="p" gutterBottom component="div">
-                SubCategory
-              </Typography>
-              <p>{row.cat ? row.title : "--"}</p>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </React.Fragment>
-  );
-}
-
-//
 
 const MainCategoryList = () => {
   const [mainCat, setMainCategory] = useState([]);
@@ -141,6 +84,85 @@ const MainCategoryList = () => {
         console.log(e);
       });
   };
+
+  // delete data
+ const deleteRow =async (index) => {
+
+     var updatedRows = [...mainCat];
+     var indexToRemove = updatedRows.findIndex(x => x.id==index);
+     if(indexToRemove > -1){
+       updatedRows.splice(indexToRemove, 1)
+       await TutorialDataService.remove(index)
+       setMainCategory(updatedRows);
+      }
+      //  console.log(indexToRemove);
+     
+  
+}
+
+
+  function Row(props) {
+    const {row, deleteRow} = props;
+    let index=row.id;
+    const [open, setOpen] = React.useState(false);
+    const classes = useStyles();
+    const removeRow = () => {
+      deleteRow(index)
+   }
+    return (
+      <React.Fragment>
+        <TableRow className={classes.root} >
+          <TableCell align="left">
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={() => setOpen(!open)}
+            >
+              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          </TableCell>
+          <TableCell component="th" scope="row" align="left">
+            {row.cat ? row.cat : row.title}
+          </TableCell>
+          <TableCell component="th" scope="row" align="left">
+            <div>
+              <span
+                style={{ marginRight: "1.5rem" }}
+                // onClick={() => openTutorial(rowIdx)}
+              >
+                <i className="far fa-edit action mr-2"></i>
+              </span>
+  
+              <button
+              onClick={removeRow}
+              >
+                <i className="fas fa-trash action" ></i>
+              </button>
+            </div>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell
+            style={{ paddingBottom: 0, paddingTop: 0 }}
+            colSpan={6}
+            align="left"
+          >
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box margin={1}>
+                <Typography variant="p" gutterBottom component="div">
+                  SubCategory
+                </Typography>
+                <p>{row.cat ? row.title : "--"}</p>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      </React.Fragment>
+    );
+  }
+  
+  //
+  // 
   useEffect(() => {
     retrieveTutorials();
   }, []);
@@ -157,8 +179,8 @@ const MainCategoryList = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {mainCat.map((row) => (
-            <Row key={row.id} row={row} />
+          {mainCat.map((row,index) => (
+            <Row key={index} row={row} deleteRow={deleteRow} />
           ))}
         </TableBody>
       </Table>

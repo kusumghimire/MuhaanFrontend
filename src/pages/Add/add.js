@@ -40,10 +40,11 @@ const AddTutorial = (props) => {
 
   const saveTutorial = (e) => {
     e.preventDefault();
+
     var data = {
       id: tutorial.id,
       title: tutorial.title,
-      cat: category.category,
+      cat: category.category
     };
     console.log(data);
 
