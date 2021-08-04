@@ -17,7 +17,7 @@ const update = (id, data) => {
 };
 
 const remove = (id) => {
-  return http.delete(`service/delete/${id}`);
+  return http.delete(`service/delete/${id}/`);
 };
 
 const ServiceApi = {

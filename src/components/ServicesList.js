@@ -37,15 +37,30 @@ const ServicesList = (props) => {
     history.push(`/services/update/${id}`, data);
   };
 
+  // const deleteTutorial = async (rowIndex) => {
+  //   const id = tutorialsRef.current[rowIndex].id;
+  //   console.log(id);
+
+  //   await ServiceApi.remove(id)
+  //     .then((response) => {
+  //       let newTutorials = [...tutorialsRef.current];
+  //       newTutorials.splice(rowIndex, 1);
+
+  //       setTutorials(newTutorials);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // };
   const deleteTutorial = async (rowIndex) => {
     const id = tutorialsRef.current[rowIndex].id;
     console.log(id);
-
+    
     await ServiceApi.remove(id)
-      .then((response) => {
+      .then((response) => {  
         let newTutorials = [...tutorialsRef.current];
         newTutorials.splice(rowIndex, 1);
-
+  
         setTutorials(newTutorials);
       })
       .catch((e) => {
@@ -170,12 +185,6 @@ const ServicesList = (props) => {
           </tbody>
         </table>
       </div>
-
-      {/* <div className="col-md-8">
-        <button className="btn btn-sm btn-danger" onClick={removeAllTutorials}>
-          Remove All
-        </button>
-      </div> */}
     </div>
   );
 };
