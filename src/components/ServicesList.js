@@ -175,12 +175,6 @@ const ServicesList = (props) => {
           </tbody>
         </table>
       </div>
-
-      {/* <div className="col-md-8">
-        <button className="btn btn-sm btn-danger" onClick={removeAllTutorials}>
-          Remove All
-        </button>
-      </div> */}
     </div>
   );
 };
