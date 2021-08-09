@@ -1,4 +1,5 @@
 import React,{useState} from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import Drawer from "@material-ui/core/Drawer";
@@ -23,6 +24,7 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import ControlPointDuplicateIcon from "@material-ui/icons/ControlPointDuplicate";
 import StarOutlineIcon from "@material-ui/icons/StarOutline";
 import NavLink from "./NavLink";
+import {Avatar} from "@material-ui/core";
  import useToken  from "../../useToken";
 const drawerWidth = 250;
 
@@ -183,12 +185,17 @@ function MainLayout(props) {
           <Typography variant="h6"  style={{flexGrow:" 1"}}>
             Muhaan
           </Typography>
+          <div style={{display:"flex"}} >
+<Link to={"/profile"} style={{textDecoration:"none", marginRight:"8px"}} >
+          <Avatar>H</Avatar>
+</Link>
           <Button
             variant="outlined"
             onClick={logOut}
           >
             Logout
           </Button>
+          </div>
         </Toolbar>
       </AppBar>
 

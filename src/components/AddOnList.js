@@ -40,9 +40,7 @@ const AddOnList = (props) => {
     console.log(id);
     
     await AddOnApiService.remove(id)
-      .then((response) => {
-        // props.history.push(`category/delete/${id}`);
-  
+      .then((response) => {  
         let newTutorials = [...tutorialsRef.current];
         newTutorials.splice(rowIndex, 1);
   
