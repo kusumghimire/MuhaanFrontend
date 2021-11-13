@@ -8,7 +8,7 @@ const token= JSON.parse(localStorage.getItem('token'));
 
 //const server=axios.create({})
 export default axios.create({
-  baseURL: "https://muhaan.enterprisesgravity.com/dashboard/",
+  baseURL: "https://jurikhabar.com/dashboard/",
   headers: {
     // "Authorization":`Token 7644fe2df45b1e279c396e77e2bc83534f87d79e`,    
     "Authorization":`Token ${token}`,    
